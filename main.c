@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/03/11 18:59:35 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/03/14 16:10:27 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ void	print_current_dir()
 		i++;
 	}
 	len = i - keep_index;
-	write(1, YEL, ft_strlen(YEL));
+	write(1, GRN, ft_strlen(YEL));
 	write(1, "➜    ", 5);
 	write(1, curr_dir + keep_index, len);
 	write(1, " ", 1);
 	free(curr_dir);
-	write(1, RED, ft_strlen(RED));
+	write(1, PRP, ft_strlen(RED));
 }
 
 void	print_header()
 {
-	printf("\e[1;96m");
+	printf(CYN);
 	printf("╭━╮╭━┳━━┳━╮╱╭┳━━┳━━━┳╮╱╭┳━━━┳╮╱╱╭╮   \n");
 	printf("┃┃╰╯┃┣┫┣┫┃╰╮┃┣┫┣┫╭━╮┃┃╱┃┃╭━━┫┃╱╱┃┃   \n"); 
 	printf("┃╭╮╭╮┃┃┃┃╭╮╰╯┃┃┃┃╰━━┫╰━╯┃╰━━┫┃╱╱┃┃   \n"); 
@@ -63,7 +63,7 @@ t_node	*create_pipline()
 {
 	t_node *node = create_single_node();
 
-	node->e_tag = pipeline;
+	node->tag = e_pipeline_node;
 	
 
 	return (node);
@@ -73,7 +73,7 @@ t_node	*create_word(char *cmd_part)
 {
 	t_node *node = create_single_node();
 	
-	node->e_tag = word;
+	node->tag = e_word_node;
 	node->u_infos.word = cmd_part;
 
 	return (node);
@@ -83,7 +83,7 @@ t_node	*create_simple_command(char *input_files, char *outputfiles)
 {
 	t_node *node = create_single_node();
 	
-	node->e_tag = simple_cmd;
+	node->tag = e_simple_cmd_node;
 	node->u_infos.redirections.input_files = input_files;
 	node->u_infos.redirections.output_files = outputfiles;
 	
@@ -105,12 +105,12 @@ void	print_preorder(t_node *node)
 		printf("\n");
 		return ;
 	}
-	if (node->e_tag == pipeline)
-		printf(">>>>>> pipline <<<<<<\n");
-	else if (node->e_tag == word)
-		printf("%s ", node->u_infos.word);
-	else if (node->e_tag == simple_cmd)
-		printf("\n\n>>>simple command<<<\n");
+	if (node->tag == e_pipeline_node)
+		printf("%s>>>>>> pipline <<<<<<\n",RED);
+	else if (node->tag == e_word_node)
+		printf("%s%s ", YEL, node->u_infos.word);
+	else if (node->tag == e_simple_cmd_node)
+		printf("%s\n\n>>>simple command<<<\n",RED);
 	print_preorder(node->bottom);
 	print_preorder(node->next);
 }
@@ -215,7 +215,7 @@ t_node	**get_node(t_node **curr_node, int dir)
 	return (&((*curr_node)->next));
 }
 
-char	*get_token(char **line)
+char	*get_token_dnt_need_this(char **line)
 {
 	int		i;
 	int		len;
@@ -226,7 +226,23 @@ char	*get_token(char **line)
 	ptr = *line;
 	while (ptr[i])
 	{
-		if (ptr[i] != ' ' && ptr[i] != '|')
+		if (ptr[i] == '|')
+		{
+			*line = *line + i + 1;
+			return (ft_substr(ptr, i, 1));
+		}
+		else if (ptr[i] == '"')
+		{
+			i++;
+			len = 0;
+			while (ptr[i + len] != '"' && ptr[i + len] != '\0')
+				len++;
+			if (ptr[i + len] == '\0')
+				printf("syntax error\n");
+			*line = *line + i + len;
+			return (ft_substr(ptr, i, len));
+		}
+		else if (ptr[i] != ' ')
 		{
 			len = 0;
 			while (ptr[i + len] != ' ' && ptr[i + len] != '\0' && ptr[i + len] != '|')
@@ -234,78 +250,166 @@ char	*get_token(char **line)
 			*line = *line + i + len;
 			return (ft_substr(ptr, i, len));
 		}
-		else if (ptr[i] == '|')
-		{
-			*line = *line + i + 1;
-			return (ft_substr(ptr, i, 1));
-		}
 		i++;
 	}
 	return (*line);
 }
 
-void	fill_ast(char **line)
+void	parse_line(char **line, t_node **mother_node)
 {
-	t_node	*mother_node;
 	t_node	**curr_cmd_node;
 	t_node	**curr_word_node;
 	char	*token;
-	int		dir;
+	int		new_cmd_node;
 	
-	mother_node = create_pipline();
-	curr_cmd_node = &mother_node;
+	*mother_node = create_pipline();
+	curr_cmd_node = mother_node;
 
 	curr_cmd_node = get_node(curr_cmd_node, BOTTOM);
 	fill_cmd_node(curr_cmd_node);
 	
-	token = get_token(line);
+	token = get_token_dnt_need_this(line);
 	curr_word_node = get_node(curr_cmd_node, BOTTOM);
 	fill_word_node(curr_word_node, token);
 
 
-	//printf("%s    \n",token);
+	printf("%s\nTokens given from the cmd line : \n\n|%s|    \n",WHT,token);
 	while ((*line)[0] != '\0')
 	{
-		token = get_token(line);
+		token = get_token_dnt_need_this(line);
 		if (strcmp(token, "|") == 0)
 		{
 			curr_cmd_node = get_node(curr_cmd_node, NEXT);
 			fill_cmd_node(curr_cmd_node);
-
-			curr_word_node = get_node(curr_cmd_node, BOTTOM);
-			fill_word_node(curr_word_node, token);
+			new_cmd_node = 1;
 		}
-		else if (token != NULL)
+		else if (token[0] != '\0')
 		{
-			curr_word_node = get_node(curr_word_node, NEXT);
+			if (new_cmd_node)
+			{
+				curr_word_node = get_node(curr_cmd_node, BOTTOM);
+				new_cmd_node = 0;
+			}
+			else
+				curr_word_node = get_node(curr_word_node, NEXT);
 			fill_word_node(curr_word_node, token);
 		}
 		printf("|%s|    \n", token);
-		sleep(1);
+	}
+
+}
+///////////////////////////////////////////////////////////////////////////////////
+t_tokens	*create_single_token(char *data, t_type type)
+{
+	t_tokens	*token_node;
+
+	token_node = malloc(sizeof(t_tokens));
+	token_node->data = data;
+	token_node->type = type;
+	token_node->next = NULL;
+	return (token_node);
+}
+
+char	*treat_double_quotes(char **line)
+{
+	char		*token;
+	int			i;
+
+	i = 0;
+	(*line)++;
+	while ((*line)[i] != '"' && (*line)[i] != '\0')
+		i++;
+	token = ft_substr(*line, 0, i);
+	*line = *line + i;
+	return (token);
+}
+
+char	*treat_simple_word(char **line)
+{
+	char		*token;
+	int			i;
+	
+	i = 0;
+	while ((*line)[i] != ' ' && (*line)[i] != '\''
+	&& (*line)[i] != '"' && (*line)[i] != '\0')
+		i++;
+	token = ft_substr(*line, 0, i);
+	*line = *line + i;
+	return (token);
+}
+
+char	*get_token(char **line)
+{
+	char	*token;
+
+	token = NULL;
+	if (**line == '"')
+		token = treat_double_quotes(line);
+	else if (**line != ' ')
+		token = treat_simple_word(line);
+	return (token);
+}
+
+
+void	print_tokens(t_tokens *tokens)
+{
+	printf("MAH TOKENS BRO\n");
+	while (tokens)
+	{
+		printf("|%s|\n", tokens->data);
+		tokens = tokens->next;
+	}
+}
+
+void	line_tokenizing(char *line, t_tokens **tokens_list)
+{
+	char		*token;
+	t_type		type;
+	t_tokens	*curr_token;
+
+	///
+	type = e_word;
+	///
+	token = get_token(&line);
+	*tokens_list = create_single_token(token, type);
+	curr_token = *tokens_list;
+	
+	while (*line)
+	{
+		token = get_token(&line);
+		if (token != NULL)
+		{
+			curr_token->next = create_single_token(token, type);
+			curr_token = curr_token->next;
+		}
+		line++;
 	}
 
 
-
-	print_preorder(mother_node);
-
+	print_tokens(*tokens_list);
 }
+///////////////////////////////////////////////////////////////////////////////////
+
 
 int		main(int argc, char **argv, char **env)
 {
-	char	*line;
-	
+	char		*line;
+	t_node		*mother_node;
+	t_tokens	*tokens;
 
-	
 
 	print_header();
 	while (1337)
 	{
 		print_current_dir();
 		get_next_line(0, &line);
-		printf(">%s<\n", line);
+		printf("\ncmd line given : >%s<\n", line);
 		
+		line_tokenizing(line, &tokens);
+		// print_tokens(tokens);
 
-		fill_ast(&line);
+		//parse_line(&line, &mother_node);
+		print_preorder(mother_node);
 
 	}
 
@@ -348,13 +452,13 @@ int		main(int argc, char **argv, char **env)
 	// next_cmd_node = NULL;
 	// curr_cmd_node = next_cmd_node;
 	//fill_cmd_node(curr_cmd_node, next_cmd_node);
-	// printf(">%d<\n", mother_node->bottom->next->e_tag);
+	// printf(">%d<\n", mother_node->bottom->next->tag);
 
 	
 	// t_node	**curr_cmd_node;
 	// curr_cmd_node = &(mother_node->bottom);
 	// *curr_cmd_node = create_simple_command(NULL, NULL);
-	// printf(">%d<\n", mother_node->bottom->e_tag);
+	// printf(">%d<\n", mother_node->bottom->tag);
 		
 	
 
@@ -377,14 +481,14 @@ int		main(int argc, char **argv, char **env)
 
 	
 
-	/////////execute cat command example//////////////	
+	// ///////execute cat command example//////////////	
 	// char	**newargv = malloc(sizeof(char*) * 4);	//
 	// newargv[0] = strdup("/bin/cat");				//
 	// newargv[1] = strdup("main.c");				//
 	// newargv[2] = strdup("minishell.h");			//
 	// newargv[3] = 0;								//
 	// execve("/bin/cat", newargv, env);			//
-	//////////////////////////////////////////////////
+	// ////////////////////////////////////////////////
 
 	
 
