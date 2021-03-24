@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/03/16 12:43:14 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/03/24 17:14:39 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ t_node *create_single_node()
 	return (node);
 }
 
+t_node *create_cmdline()
+{
+	t_node	*node = create_single_node();
+
+	node->tag = e_cmdline_node;
+
+	return (node);
+}
+
 t_node *create_pipline()
 {
 	t_node *node = create_single_node();
@@ -88,6 +97,8 @@ t_node *create_simple_command(char *input_files, char *outputfiles)
 
 	return (node);
 }
+
+
 
 // t_node *create_list_of_nodes(char *lable)
 // {
@@ -179,6 +190,12 @@ void print_inorder(t_node *node)
 // 		////////
 // }
 
+void fill_pipeline(t_node **curr_pipeline_node)
+{
+	*curr_pipeline_node = create_pipline(NULL);
+}
+
+
 void fill_cmd_node(t_node **curr_cmd_node)
 {
 	*curr_cmd_node = create_simple_command(NULL, NULL);
@@ -188,6 +205,7 @@ void fill_word_node(t_node **curr_word_node, char *word)
 {
 	*curr_word_node = create_word(word);
 }
+
 
 //////////////////////////////////////////////
 t_node **get_next_node(t_node **curr_node)
@@ -290,144 +308,183 @@ void parse_line(char **line, t_node **mother_node)
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////
-t_tokens *create_single_token(char *data, t_type type)
-{
-	t_tokens *token_node;
 
-	token_node = malloc(sizeof(t_tokens));
-	token_node->data = data;
-	token_node->type = type;
-	token_node->next = NULL;
-	return (token_node);
-}
 
-char *treat_double_quotes(char **line)
-{
-	int		i;
-	int		closed;
-	char	*token;
-
-	i = 1;
-	closed = 0;
-	while (((*line)[i] != ' ' || closed == 0) && (*line)[i] != '|' && (*line)[i] != ';' &&
-	(*line)[i] != '>' && (*line)[i] != '<'  && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
-	return (token);
-}
-
-char *treat_single_quotes(char **line)
-{
-	int		i;
-	int		closed;
-	char	*token;
-
-	i = 0;
-	closed = 0;
-	while (((*line)[i] != ' ' || closed == 0) && (*line)[i] != '|' && (*line)[i] != ';' &&
-	(*line)[i] != '>' && (*line)[i] != '<'  && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
-	return (token);
-}
-
-char *treat_pipe(char **line)
-{
-	char *token;
-	int i;
-
-	i = 0;
-	while ((*line)[i] == '|' && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
-	return (token);
-}
-
-char *treat_semicolon(char **line)
-{
-	char *token;
-	int i;
-
-	i = 0;
-	while ((*line)[i] == ';' && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
-	return (token);
-}
-
-char *treat_simple_word(char **line)
-{
-	char *token;
-	int i;
-
-	i = 0;
-	while ((*line)[i] != ' ' && (*line)[i] != '\'' && (*line)[i] != '"'
-	&& (*line)[i] != '|' && (*line)[i] != ';' && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
-	return (token);
-}
-
-char *get_token(char **line)
-{
-	char *token;
-
-	token = NULL;
-	if (**line == '"')
-		token = treat_double_quotes(line);
-	else if (**line == '\'')
-		token = treat_single_quotes(line);
-	else if (**line == '|')
-		token = treat_pipe(line);
-	else if (**line == ';')
-		token = treat_semicolon(line);
-	else if (**line != ' ')
-		token = treat_simple_word(line);
-	return (token);
-}
 
 void print_tokens(t_tokens *tokens)
 {
 	printf("MAH TOKENS BRO\n");
+	int		spaces = 50;
+	int		len;
+	int		spaces_time;
+	
 	while (tokens)
 	{
-		printf("|%s|\n", tokens->data);
+		len = strlen(tokens->data);
+		spaces_time = spaces - len;
+		printf("|%s| %*s type : = %s\n",tokens->data,  spaces_time, " ", tokens->type == 0 ? "pipe" : tokens->type == 1 ? "semicolon" : "word");
 		tokens = tokens->next;
 	}
 }
 
-void line_tokenizing(char *line, t_tokens **tokens_list)
+/////////////////////////////////////
+// int		count_dquotes(char *line)
+// {
+// 	int		i;
+// 	int		count;
+// 	int		backslash;
+// 	int		single_quotes;
+
+// 	i = 0;
+// 	count = 0;
+// 	backslash = 0;
+// 	single_quotes = 0;
+// 	while (line[i] != '\0')
+// 	{
+// 		if (line[i] == '\\')
+// 			backslash = 1;
+// 		else
+// 			backslash = 0;
+			
+// 		if (line[i] == '\'' && backslash == 0)
+
+		
+// 		if (line[i] == '"' && backslash == 0)
+// 			count++;
+// 		i++;
+// 	}
+// 	return (count);
+// }
+
+// int		count_squotes(char *line)
+// {
+// 	int		i;
+// 	int		backslash;
+// 	int		double_quotes;
+// 	int		count;
+
+// 	i = 0;
+// 	count = 0;
+// 	backslash = 0;
+// 	double_quotes = 0;
+// 	while (line[i] != '\0')
+// 	{
+// 		if (line[i] == '\\')
+// 			backslash = 1;
+// 		else
+// 			backslash = 0;
+// 		if (line[i] == '\'')
+// 			double_quotes = 1;
+// 		else
+// 			double_quotes = 0;
+// 		if (line[i] == '\'')
+// 			count++;
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+///////////////////////////////////////////////////////////////////////////////////////
+int		check_if_dquotes_closed(char *line, int *index)
 {
-	char *token;
-	t_type type;
-	t_tokens *curr_token;
+	int		i;
+	int		backslash;
 
-	///
-	type = e_word;
-	///
-	token = get_token(&line);
-	*tokens_list = create_single_token(token, type);
-	curr_token = *tokens_list;
-
-	while (*line)
+	i = 1;
+	backslash = 0;
+	while (line[i] != '\0' && (line[i] != '"' || backslash == 1))
 	{
-		if (*line == ' ')
-			line++;
-		token = get_token(&line);
-		if (token != NULL)
-		{
-			curr_token->next = create_single_token(token, type);
-			curr_token = curr_token->next;
-		}
+		if (line[i] == '\\' && backslash == 0)
+			backslash = 1;
+		else
+			backslash = 0;
+		i++;
 	}
-
-	print_tokens(*tokens_list);
+	*index += i;
+	if (line[i] == '"')
+		return (1);
+	return (0);
 }
+
+int		check_double_quotes(char *line)
+{
+	int		i;
+	int		closed;
+	int		backslash;
+
+	i = 0;
+	closed = 1;
+	backslash = 0;
+	while (line[i])
+	{
+		if (line[i] == '"' && backslash == 0)
+		{
+			closed = check_if_dquotes_closed(line + i, &i);
+			if (closed == 0)
+				return (-1);
+		}
+		if (line[i] == '\\' && backslash == 0)
+			backslash = 1;
+		else
+			backslash = 0;
+		i++;
+	}
+	return (1);
+}
+
+
+int		check_if_squotes_closed(char *line, int *index)
+{
+	int		i;
+	int		backslash;
+
+	i = 1;
+	backslash = 0;
+	while (line[i] != '\0' && line[i] != '\'')
+		i++;
+	*index += i;
+	if (line[i] == '\'')
+		return (1);
+	return (0);
+}
+
+int		check_single_quotes(char *line)
+{
+	int		i;
+	int		closed;
+	int		backslash;
+
+	i = 0;
+	closed = 1;
+	backslash = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'' && backslash == 0)
+		{
+			closed = check_if_squotes_closed(line + i, &i);
+			if (closed == 0)
+				return (-1);
+		}
+		if (line[i] == '\\' && backslash == 0)
+			backslash = 1;
+		else
+			backslash = 0;
+		i++;
+	}
+	return (1);
+}
+
+int		check_syntax_error(char *line)
+{
+	if (check_double_quotes(line) == -1 || check_single_quotes(line) == -1)
+	{
+		printf("> Error: multiline commands not allowed\n");
+		return (-1);
+	}	
+	return (0);
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv, char **env)
@@ -443,11 +500,18 @@ int main(int argc, char **argv, char **env)
 		get_next_line(0, &line);
 		printf("\ncmd line given : >%s<\n", line);
 
-		line_tokenizing(line, &tokens);
-		// print_tokens(tokens);
+		//if (check_syntax_error(line) == -1)
+			//break ;
+
+		//line_tokenization(line, &tokens);
+		//print_tokens(tokens);
+
+
+		line_tokenization2(line, &mother_node);
+		print_preorder(mother_node);
 
 		//parse_line(&line, &mother_node);
-		print_preorder(mother_node);
+		//////////////////////////////////print_preorder(mother_node);
 	}
 
 	// ////word///
@@ -508,12 +572,14 @@ int main(int argc, char **argv, char **env)
 	// mother_node->bottom->next->next->bottom = create_word("cat");
 	// mother_node->bottom->next->next->bottom->next = create_word("-e");
 
+	// char	*str = strdup("\n");
 	// ///////execute cat command example//////////////
 	// char	**newargv = malloc(sizeof(char*) * 4);	//
 	// newargv[0] = strdup("/bin/cat");				//
-	// newargv[1] = strdup("main.c");				//
-	// newargv[2] = strdup("minishell.h");			//
-	// newargv[3] = 0;								//
+	// newargv[1] = strdup("file");			//
+	// newargv[2] = strdup("file1");			//
+	// newargv[3] = strdup("minishell.h");
+	// newargv[4] = 0;								//
 	// execve("/bin/cat", newargv, env);			//
 	// ////////////////////////////////////////////////
 

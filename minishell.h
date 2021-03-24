@@ -10,6 +10,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <unistd.h>
 # include <limits.h>
 # include "./get_next_line/get_next_line.h"
@@ -18,8 +19,8 @@
 # define BOTTOM 0
 # define NEXT 1
 
-typedef enum {e_pipeline_node, e_simple_cmd_node, e_word_node}   t_tag;
-typedef enum {e_pipe, e_semicolon, e_word}        t_type;
+typedef enum {e_cmdline_node, e_pipeline_node, e_simple_cmd_node, e_word_node}   t_tag;
+typedef enum {e_pipe, e_semicolon, e_simple_word, e_redir}        t_type;
 
 typedef struct                  s_redirection
 {
@@ -56,5 +57,8 @@ typedef struct          s_tokens
 //     struct s_node_list   *next;
 // }               t_node_list;
 
+
+void    line_tokenization(char *line, t_tokens **tokens_list);
+void    line_tokenization2(char *line, t_node **mother_node);
 
 #endif
