@@ -33,50 +33,9 @@ void line_tokenization(char *line, t_tokens **tokens_list)
 	t_type type;
 	t_tokens *curr_token;
 
-	while (*line == ' ')
-		line++;
+	*tokens_list = create_single_token(NULL, e_start);
+	curr_token = *tokens_list;
 
-	token = get_token(&line, &type);
-	if (token)
-	{
-		*tokens_list = create_single_token(token, type);
-		curr_token = *tokens_list;
-	}
-	while (*line)
-	{
-		if (*line == ' ')
-			line++;
-		else								//New else MINNAAA ^_^
-			token = get_token(&line, &type);
-		if (token != NULL)
-		{
-			curr_token->next = create_single_token(token, type);
-			curr_token = curr_token->next;
-		}
-	}
-}
-
-void	line_tokenization2(char *line, t_node **cmdline_node)
-{
-	char	*token;
-	t_type	type;
-	t_node	**curr_cmd_node;
-	t_node	**curr_word_node;
-	t_node	**curr_pipeline;
-	int		first_word_node;
-	int		first_cmd_node;
-
-	first_word_node = 1;
-	first_cmd_node = 1;
-	*cmdline_node = create_single_node();
-	
-	curr_pipeline = get_node(cmdline_node, BOTTOM);
-	fill_pipeline(curr_pipeline);
-
-	//curr_cmd_node = get_node(curr_pipeline, BOTTOM);
-	//fill_cmd_node(curr_cmd_node);
-
-	
 	while (*line)
 	{
 		if (*line == ' ')
@@ -84,20 +43,54 @@ void	line_tokenization2(char *line, t_node **cmdline_node)
 		else
 		{
 			token = get_token(&line, &type);
-			if (type == e_simple_word)
-			{	if (first_word_node)
-					curr_word_node = get_node(curr_cmd_node, BOTTOM);
-				else
-					curr_word_node = get_node(curr_word_node, NEXT);
-				
-				fill_word_node(curr_word_node, token);
-				first_word_node = 0;
-			}
-			else if (type == e_semicolon)
-			{
-				curr_pipeline = get_node(curr_pipeline, NEXT);
-				fill_pipeline(curr_pipeline);
-			}
+			curr_token->next = create_single_token(token, type);
+			curr_token = curr_token->next;
 		}
 	}
 }
+
+// void	line_tokenization2(char *line, t_node **cmdline_node)
+// {
+// 	char	*token;
+// 	t_type	type;
+// 	t_node	**curr_cmd_node;
+// 	t_node	**curr_word_node;
+// 	t_node	**curr_pipeline;
+// 	int		first_word_node;
+// 	int		first_cmd_node;
+
+// 	first_word_node = 1;
+// 	first_cmd_node = 1;
+// 	*cmdline_node = create_single_node();
+	
+// 	curr_pipeline = get_node(cmdline_node, BOTTOM);
+// 	fill_pipeline(curr_pipeline);
+
+// 	//curr_cmd_node = get_node(curr_pipeline, BOTTOM);
+// 	//fill_cmd_node(curr_cmd_node);
+
+	
+// 	while (*line)
+// 	{
+// 		if (*line == ' ')
+// 			line++;
+// 		else
+// 		{
+// 			token = get_token(&line, &type);
+// 			if (type == e_simple_word)
+// 			{	if (first_word_node)
+// 					curr_word_node = get_node(curr_cmd_node, BOTTOM);
+// 				else
+// 					curr_word_node = get_node(curr_word_node, NEXT);
+				
+// 				fill_word_node(curr_word_node, token);
+// 				first_word_node = 0;
+// 			}
+// 			else if (type == e_semicolon)
+// 			{
+// 				curr_pipeline = get_node(curr_pipeline, NEXT);
+// 				fill_pipeline(curr_pipeline);
+// 			}
+// 		}
+// 	}
+// }

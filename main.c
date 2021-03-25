@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/03/24 17:14:39 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/03/25 17:24:45 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void print_inorder(t_node *node)
 
 void fill_pipeline(t_node **curr_pipeline_node)
 {
-	*curr_pipeline_node = create_pipline(NULL);
+	*curr_pipeline_node = create_pipline();
 }
 
 
@@ -317,12 +317,16 @@ void print_tokens(t_tokens *tokens)
 	int		spaces = 50;
 	int		len;
 	int		spaces_time;
+	char	type[6][12] = {"start", "pipe", "semicolon", "word", "redir"};
 	
 	while (tokens)
 	{
-		len = strlen(tokens->data);
-		spaces_time = spaces - len;
-		printf("|%s| %*s type : = %s\n",tokens->data,  spaces_time, " ", tokens->type == 0 ? "pipe" : tokens->type == 1 ? "semicolon" : "word");
+		if (tokens->data)
+		{
+			len = strlen(tokens->data);
+			spaces_time = spaces - len;
+			printf("|%s| %*s type : = %s\n",tokens->data,  spaces_time, " ", type[tokens->type]);
+		}
 		tokens = tokens->next;
 	}
 }
@@ -487,11 +491,12 @@ int		check_syntax_error(char *line)
 
 ///////////////////////////////////////////////////////////////////////////////////
 
+
 int main(int argc, char **argv, char **env)
 {
 	char *line;
 	t_node *mother_node;
-	t_tokens *tokens;
+	t_tokens *tokens_list;
 
 	print_header();
 	while (1337)
@@ -500,15 +505,16 @@ int main(int argc, char **argv, char **env)
 		get_next_line(0, &line);
 		printf("\ncmd line given : >%s<\n", line);
 
-		//if (check_syntax_error(line) == -1)
-			//break ;
 
-		//line_tokenization(line, &tokens);
-		//print_tokens(tokens);
+		line_tokenization(line, &tokens_list);
+		print_tokens(tokens_list);
+		check_tokens_syntax(tokens_list);
+		// if (check_tokens_syntax(tokens_list) == ERROR)
+		// 	break ;
 
 
-		line_tokenization2(line, &mother_node);
-		print_preorder(mother_node);
+		//line_tokenization2(line, &mother_node);
+		//print_preorder(mother_node);
 
 		//parse_line(&line, &mother_node);
 		//////////////////////////////////print_preorder(mother_node);

@@ -40,13 +40,9 @@ char	*get_redirection(char **line, t_type *type)
 char *get_pipe(char **line, t_type *type)
 {
 	char *token;
-	int i;
 
-	i = 0;
-	while ((*line)[i] == '|' && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
+	token = ft_substr(*line, 0, 1);
+	*line = *line + 1;
 	*type = e_pipe;
 	return (token);
 }
@@ -54,13 +50,9 @@ char *get_pipe(char **line, t_type *type)
 char *get_semicolon(char **line, t_type *type)
 {
 	char *token;
-	int i;
 
-	i = 0;
-	while ((*line)[i] == ';' && (*line)[i] != '\0')
-		i++;
-	token = ft_substr(*line, 0, i);
-	*line = *line + i;
+	token = ft_substr(*line, 0, 1);
+	*line = *line + 1;
 	*type = e_semicolon;
 	return (token);
 }

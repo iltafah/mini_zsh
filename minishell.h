@@ -19,8 +19,22 @@
 # define BOTTOM 0
 # define NEXT 1
 
+# define TRUE 1
+# define FALSE 0
+# define ERROR -1
+
+# define CLOSED 0
+# define OPEND 1
+
+# define NONE 0
+# define EXIST 1
+
+# define DOUBLE_QUOTES '"'
+# define SINGLE_QUOTES '\''
+# define BACKSLASH '\\'
+
 typedef enum {e_cmdline_node, e_pipeline_node, e_simple_cmd_node, e_word_node}   t_tag;
-typedef enum {e_pipe, e_semicolon, e_simple_word, e_redir}        t_type;
+typedef enum {e_start, e_pipe, e_semicolon, e_simple_word, e_redir}        t_type;
 
 typedef struct                  s_redirection
 {
@@ -51,6 +65,9 @@ typedef struct          s_tokens
 }                       t_tokens;
 
 
+
+
+
 // typedef struct  s_node_list
 // {
 //     t_node               *elem;
@@ -59,6 +76,7 @@ typedef struct          s_tokens
 
 
 void    line_tokenization(char *line, t_tokens **tokens_list);
-void    line_tokenization2(char *line, t_node **mother_node);
+int     check_tokens_syntax(t_tokens *tokens_list);
+// void    line_tokenization2(char *line, t_node **mother_node);
 
 #endif
