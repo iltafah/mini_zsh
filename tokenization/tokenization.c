@@ -47,6 +47,9 @@ void line_tokenization(char *line, t_tokens **tokens_list)
 			curr_token = curr_token->next;
 		}
 	}
+	/////remove this after read line////
+	curr_token->next = create_single_token("\n", newline);////
+	////////////////////////////////////
 }
 
 // void	line_tokenization2(char *line, t_node **cmdline_node)

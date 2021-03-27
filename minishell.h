@@ -32,9 +32,17 @@
 # define DOUBLE_QUOTES '"'
 # define SINGLE_QUOTES '\''
 # define BACKSLASH '\\'
+# define PIPE '|'
+# define SEMICOLON ';'
 
-typedef enum {e_cmdline_node, e_pipeline_node, e_simple_cmd_node, e_word_node}   t_tag;
-typedef enum {e_start, e_pipe, e_semicolon, e_simple_word, e_redir}        t_type;
+typedef enum e_tag {e_cmdline_node, e_pipeline_node, e_simple_cmd_node, e_word_node}    t_tag;
+typedef enum e_type {e_start, e_pipe, e_semicolon, e_simple_word, e_redir, newline}              t_type;
+
+
+// typedef enum e_special_characters
+// {single_quotes = '\'', double_quotes = '"',
+// backslash = '\\', semicolon = ';', pipe = '|'}
+// t_special_characters;
 
 typedef struct                  s_redirection
 {

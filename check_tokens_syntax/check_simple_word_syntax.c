@@ -41,15 +41,15 @@ void    open_and_close_single_quotes(t_vars *vars)
 //     }
 // }
 
-int     check_simple_word_syntax(char *token)
+void     check_simple_word_syntax(char *token)
 {
     int     i;
     t_vars  vars;
 
     i = 0;
-    vars.backslash = 0;
-    vars.double_quotes = 0;
-    vars.single_quotes = 0;
+    vars.backslash = NONE;
+    vars.double_quotes = NONE;
+    vars.single_quotes = NONE;
     while (token[i] != '\0')
     {
         if (token[i] == DOUBLE_QUOTES)
@@ -65,7 +65,7 @@ int     check_simple_word_syntax(char *token)
     if (vars.double_quotes == OPEND || vars.single_quotes == OPEND
     || vars.backslash == EXIST)
     {
-        return (ERROR);
+        vars.error = EXIST;
+        printf("%s> Error: multiline commands not allowed\n", RED);
     }
-    return (TRUE);
 }
