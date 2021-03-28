@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/03/25 17:24:45 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/03/28 15:48:54 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,17 +110,19 @@ t_node *create_simple_command(char *input_files, char *outputfiles)
 
 void print_preorder(t_node *node)
 {
+	static int	i = 1;
+
 	if (node == NULL)
 	{
 		printf("\n");
 		return;
 	}
 	if (node->tag == e_pipeline_node)
-		printf("%s>>>>>> pipline <<<<<<\n", RED);
+		printf("\n\n%s█████████ [%d]pipline █████████\n", RED, i++);
 	else if (node->tag == e_word_node)
 		printf("%s%s ", YEL, node->u_infos.word);
 	else if (node->tag == e_simple_cmd_node)
-		printf("%s\n\n>>>simple command<<<\n", RED);
+		printf("%s\n\n>>>simple command<<<\n", CYN);
 	print_preorder(node->bottom);
 	print_preorder(node->next);
 }
@@ -307,7 +309,7 @@ void parse_line(char **line, t_node **mother_node)
 		printf("|%s|    \n", token);
 	}
 }
-///////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -317,12 +319,14 @@ void print_tokens(t_tokens *tokens)
 	int		spaces = 50;
 	int		len;
 	int		spaces_time;
-	char	type[6][12] = {"start", "pipe", "semicolon", "word", "redir"};
+	char	type[7][12] = {"start", "pipe", "semicolon", "word", "redir", "newline"};
 	
 	while (tokens)
 	{
 		if (tokens->data)
 		{
+			if (tokens->data[0] == '\n')
+				tokens->data = "\\n";
 			len = strlen(tokens->data);
 			spaces_time = spaces - len;
 			printf("|%s| %*s type : = %s\n",tokens->data,  spaces_time, " ", type[tokens->type]);
@@ -388,114 +392,114 @@ void print_tokens(t_tokens *tokens)
 // 	return (0);
 // }
 
-///////////////////////////////////////////////////////////////////////////////////////
-int		check_if_dquotes_closed(char *line, int *index)
-{
-	int		i;
-	int		backslash;
+////////////////////////////////////////////////////////////////////////////////
+// int		check_if_dquotes_closed(char *line, int *index)
+// {
+// 	int		i;
+// 	int		backslash;
 
-	i = 1;
-	backslash = 0;
-	while (line[i] != '\0' && (line[i] != '"' || backslash == 1))
-	{
-		if (line[i] == '\\' && backslash == 0)
-			backslash = 1;
-		else
-			backslash = 0;
-		i++;
-	}
-	*index += i;
-	if (line[i] == '"')
-		return (1);
-	return (0);
-}
+// 	i = 1;
+// 	backslash = 0;
+// 	while (line[i] != '\0' && (line[i] != '"' || backslash == 1))
+// 	{
+// 		if (line[i] == '\\' && backslash == 0)
+// 			backslash = 1;
+// 		else
+// 			backslash = 0;
+// 		i++;
+// 	}
+// 	*index += i;
+// 	if (line[i] == '"')
+// 		return (1);
+// 	return (0);
+// }
 
-int		check_double_quotes(char *line)
-{
-	int		i;
-	int		closed;
-	int		backslash;
+// int		check_double_quotes(char *line)
+// {
+// 	int		i;
+// 	int		closed;
+// 	int		backslash;
 
-	i = 0;
-	closed = 1;
-	backslash = 0;
-	while (line[i])
-	{
-		if (line[i] == '"' && backslash == 0)
-		{
-			closed = check_if_dquotes_closed(line + i, &i);
-			if (closed == 0)
-				return (-1);
-		}
-		if (line[i] == '\\' && backslash == 0)
-			backslash = 1;
-		else
-			backslash = 0;
-		i++;
-	}
-	return (1);
-}
-
-
-int		check_if_squotes_closed(char *line, int *index)
-{
-	int		i;
-	int		backslash;
-
-	i = 1;
-	backslash = 0;
-	while (line[i] != '\0' && line[i] != '\'')
-		i++;
-	*index += i;
-	if (line[i] == '\'')
-		return (1);
-	return (0);
-}
-
-int		check_single_quotes(char *line)
-{
-	int		i;
-	int		closed;
-	int		backslash;
-
-	i = 0;
-	closed = 1;
-	backslash = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' && backslash == 0)
-		{
-			closed = check_if_squotes_closed(line + i, &i);
-			if (closed == 0)
-				return (-1);
-		}
-		if (line[i] == '\\' && backslash == 0)
-			backslash = 1;
-		else
-			backslash = 0;
-		i++;
-	}
-	return (1);
-}
-
-int		check_syntax_error(char *line)
-{
-	if (check_double_quotes(line) == -1 || check_single_quotes(line) == -1)
-	{
-		printf("> Error: multiline commands not allowed\n");
-		return (-1);
-	}	
-	return (0);
-}
+// 	i = 0;
+// 	closed = 1;
+// 	backslash = 0;
+// 	while (line[i])
+// 	{
+// 		if (line[i] == '"' && backslash == 0)
+// 		{
+// 			closed = check_if_dquotes_closed(line + i, &i);
+// 			if (closed == 0)
+// 				return (-1);
+// 		}
+// 		if (line[i] == '\\' && backslash == 0)
+// 			backslash = 1;
+// 		else
+// 			backslash = 0;
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 
-///////////////////////////////////////////////////////////////////////////////////
+// int		check_if_squotes_closed(char *line, int *index)
+// {
+// 	int		i;
+// 	int		backslash;
+
+// 	i = 1;
+// 	backslash = 0;
+// 	while (line[i] != '\0' && line[i] != '\'')
+// 		i++;
+// 	*index += i;
+// 	if (line[i] == '\'')
+// 		return (1);
+// 	return (0);
+// }
+
+// int		check_single_quotes(char *line)
+// {
+// 	int		i;
+// 	int		closed;
+// 	int		backslash;
+
+// 	i = 0;
+// 	closed = 1;
+// 	backslash = 0;
+// 	while (line[i])
+// 	{
+// 		if (line[i] == '\'' && backslash == 0)
+// 		{
+// 			closed = check_if_squotes_closed(line + i, &i);
+// 			if (closed == 0)
+// 				return (-1);
+// 		}
+// 		if (line[i] == '\\' && backslash == 0)
+// 			backslash = 1;
+// 		else
+// 			backslash = 0;
+// 		i++;
+// 	}
+// 	return (1);
+// }
+
+// int		check_syntax_error(char *line)
+// {
+// 	if (check_double_quotes(line) == -1 || check_single_quotes(line) == -1)
+// 	{
+// 		printf("> Error: multiline commands not allowed\n");
+// 		return (-1);
+// 	}	
+// 	return (0);
+// }
+
+
+////////////////////////////////////////////////////////////////////////////////
 
 
 int main(int argc, char **argv, char **env)
 {
 	char *line;
-	t_node *mother_node;
+	t_node *cmd_line_node;
 	t_tokens *tokens_list;
 
 	print_header();
@@ -508,13 +512,17 @@ int main(int argc, char **argv, char **env)
 
 		line_tokenization(line, &tokens_list);
 		print_tokens(tokens_list);
-		check_tokens_syntax(tokens_list);
-		// if (check_tokens_syntax(tokens_list) == ERROR)
-		// 	break ;
+		if (check_tokens_syntax(tokens_list) == ERROR)
+		{
+			//free_token_list();
+			//free_line();
+			continue ;
+		}
+		create_abstract_syntax_tree(&cmd_line_node, tokens_list);
 
 
 		//line_tokenization2(line, &mother_node);
-		//print_preorder(mother_node);
+		print_preorder(cmd_line_node);
 
 		//parse_line(&line, &mother_node);
 		//////////////////////////////////print_preorder(mother_node);
