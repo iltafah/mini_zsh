@@ -46,6 +46,6 @@ void    check_newline_token_order(t_vars *vars)
 
 void    check_word_token_order(t_vars *vars, char *token)
 {
-    check_simple_word_syntax(token);
+    check_simple_word_syntax(token, vars);
     remember_last_token(vars, e_simple_word);
 }

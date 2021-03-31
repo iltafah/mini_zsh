@@ -65,7 +65,8 @@ char *get_simple_word(char **line, t_type *type)
 
 	i = 0;
 	backslash = 0;
-	while (((*line)[i] != ' ' && (*line)[i] != '|' && (*line)[i] != ';' && (*line)[i] != '\0') ||
+	while (((*line)[i] != ' ' && (*line)[i] != '|' && (*line)[i] != ';' &&
+	(*line)[i] != '\0' && (*line)[i] != '>' && (*line)[i] != '<') ||
 	backslash == 1)
 	{
 		if ((*line)[i] == '"' && backslash == 0)
@@ -89,3 +90,4 @@ char *get_simple_word(char **line, t_type *type)
 ////don't forget to treat this case =>>   echo \\"hello world" this is not an error
 ////and this one too                =>>   echo '\'
 ////and this one too				=>>   echo "`"
+////ft_strchr

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/03/28 15:48:54 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/03/31 14:38:14 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,54 +49,58 @@ void print_header()
 	printf("╰╯╰╯╰┻━━┻╯╱╰━┻━━┻━━━┻╯╱╰┻━━━┻━━━┻━━━╯\n");
 }
 
-t_node *create_single_node()
+t_node *create_single_node(t_tag tag)
 {
 	t_node *node = malloc(sizeof(t_node));
 
+	node->tag = tag;
 	node->bottom = NULL;
 	node->next = NULL;
+	node->u_infos.word = NULL;
+	//node->u_infos.redirections.input_files = NULL;
+	//node->u_infos.redirections.output_files = NULL;
 
 	return (node);
 }
 
-t_node *create_cmdline()
-{
-	t_node	*node = create_single_node();
+// t_node *create_cmdline()
+// {
+// 	t_node	*node = create_single_node();
 
-	node->tag = e_cmdline_node;
+// 	node->tag = e_cmdline_node;
 
-	return (node);
-}
+// 	return (node);
+// }
 
-t_node *create_pipline()
-{
-	t_node *node = create_single_node();
+// t_node *create_pipline()
+// {
+// 	t_node *node = create_single_node();
 
-	node->tag = e_pipeline_node;
+// 	node->tag = e_pipeline_node;
 
-	return (node);
-}
+// 	return (node);
+// }
 
-t_node *create_word(char *cmd_part)
-{
-	t_node *node = create_single_node();
+// t_node *create_word(char *cmd_part)
+// {
+// 	t_node *node = create_single_node();
 
-	node->tag = e_word_node;
-	node->u_infos.word = cmd_part;
+// 	node->tag = e_word_node;
+// 	node->u_infos.word = cmd_part;
 
-	return (node);
-}
+// 	return (node);
+// }
 
-t_node *create_simple_command(char *input_files, char *outputfiles)
-{
-	t_node *node = create_single_node();
+// t_node *create_simple_command(char *input_files, char *outputfiles)
+// {
+// 	t_node *node = create_single_node();
 
-	node->tag = e_simple_cmd_node;
-	node->u_infos.redirections.input_files = input_files;
-	node->u_infos.redirections.output_files = outputfiles;
+// 	node->tag = e_simple_cmd_node;
+// 	node->u_infos.redirections.input_files = input_files;
+// 	node->u_infos.redirections.output_files = outputfiles;
 
-	return (node);
-}
+// 	return (node);
+// }
 
 
 
@@ -108,23 +112,24 @@ t_node *create_simple_command(char *input_files, char *outputfiles)
 // 	return (node_list);
 // }
 
-void print_preorder(t_node *node)
+void print_preorder(t_node *node, int i)
 {
-	static int	i = 1;
 
 	if (node == NULL)
 	{
 		printf("\n");
 		return;
 	}
-	if (node->tag == e_pipeline_node)
+	if (node->tag == e_cmdline_node)
+		printf("\n\n%s   »»»»» Command line «««««\n", GRN);
+	else if (node->tag == e_pipeline_node)
 		printf("\n\n%s█████████ [%d]pipline █████████\n", RED, i++);
 	else if (node->tag == e_word_node)
 		printf("%s%s ", YEL, node->u_infos.word);
 	else if (node->tag == e_simple_cmd_node)
 		printf("%s\n\n>>>simple command<<<\n", CYN);
-	print_preorder(node->bottom);
-	print_preorder(node->next);
+	print_preorder(node->bottom, i);
+	print_preorder(node->next, i);
 }
 
 void print_postorder(t_node *node)
@@ -192,34 +197,34 @@ void print_inorder(t_node *node)
 // 		////////
 // }
 
-void fill_pipeline(t_node **curr_pipeline_node)
-{
-	*curr_pipeline_node = create_pipline();
-}
+// void fill_pipeline(t_node **curr_pipeline_node)
+// {
+// 	*curr_pipeline_node = create_pipline();
+// }
 
 
-void fill_cmd_node(t_node **curr_cmd_node)
-{
-	*curr_cmd_node = create_simple_command(NULL, NULL);
-}
+// void fill_cmd_node(t_node **curr_cmd_node)
+// {
+// 	*curr_cmd_node = create_simple_command(NULL, NULL);
+// }
 
-void fill_word_node(t_node **curr_word_node, char *word)
-{
-	*curr_word_node = create_word(word);
-}
+// void fill_word_node(t_node **curr_word_node, char *word)
+// {
+// 	*curr_word_node = create_word(word);
+// }
 
 
-//////////////////////////////////////////////
-t_node **get_next_node(t_node **curr_node)
-{
-	return (&((*curr_node)->next));
-}
+// //////////////////////////////////////////////
+// t_node **get_next_node(t_node **curr_node)
+// {
+// 	return (&((*curr_node)->next));
+// }
 
-t_node **get_bottom_node(t_node **curr_node)
-{
-	return (&((*curr_node)->bottom));
-}
-//////////////////////////////////////////////
+// t_node **get_bottom_node(t_node **curr_node)
+// {
+// 	return (&((*curr_node)->bottom));
+// }
+// //////////////////////////////////////////////
 
 t_node **get_node(t_node **curr_node, int dir)
 {
@@ -227,6 +232,74 @@ t_node **get_node(t_node **curr_node, int dir)
 		return (&((*curr_node)->bottom));
 	return (&((*curr_node)->next));
 }
+
+// t_node **new_get_node(t_node **curr_node, int dir, t_tag tag)
+// {
+// 	t_node **new_node;
+
+// 	if (dir == BOTTOM)
+// 		new_node = &((*curr_node)->bottom);
+// 	else
+// 		new_node = &((*curr_node)->next);
+// 	if (tag == e_cmdline_node)
+// 		*new_node = create_cmdline();
+// 	else if (tag == e_pipeline_node)
+// 		*new_node = create_pipline();
+// 	else if (tag == e_simple_cmd_node)
+// 		*new_node = create_simple_command(NULL, NULL);
+// 	else if (tag == e_word_node)
+// 		*new_node = create_word(NULL);
+// 	return (new_node);
+// }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// t_node **get_cmd_line(void)
+// {
+// 	t_node *new_cmd_line;
+
+// 	new_cmd_line = create_single_node(e_cmdline_node);
+// 	return (&new_cmd_line);
+// }
+
+t_node **get_word_node(t_node **curr_node, int dir)
+{
+	t_node **new_word_node;
+
+	if (dir == BOTTOM)
+		new_word_node = &((*curr_node)->bottom);
+	else
+		new_word_node = &((*curr_node)->next);
+	*new_word_node = create_single_node(e_word_node);
+	// (*new_word_node)->u_infos.word = word;
+	return (new_word_node);
+}
+
+t_node **get_pipe_seq_node(t_node **curr_node, int dir)
+{
+	t_node **new_pipe_seq_node;
+
+	if (dir == BOTTOM)
+		new_pipe_seq_node = &((*curr_node)->bottom);
+	else
+		new_pipe_seq_node = &((*curr_node)->next);
+	*new_pipe_seq_node = create_single_node(e_pipeline_node);
+	return (new_pipe_seq_node);
+}
+
+t_node **get_simple_cmd_node(t_node **curr_node, int dir)
+{
+	t_node **new_cmd_node;
+
+	if (dir == BOTTOM)
+		new_cmd_node = &((*curr_node)->bottom);
+	else
+		new_cmd_node = &((*curr_node)->next);
+	*new_cmd_node = create_single_node(e_simple_cmd_node);
+	return (new_cmd_node);
+}
+////////////////////////////////////////////////////////////////////////////////
+
 
 char *get_token_dnt_need_this(char **line)
 {
@@ -268,47 +341,47 @@ char *get_token_dnt_need_this(char **line)
 	return (*line);
 }
 
-void parse_line(char **line, t_node **mother_node)
-{
-	t_node **curr_cmd_node;
-	t_node **curr_word_node;
-	char *token;
-	int new_cmd_node;
+// void parse_line(char **line, t_node **mother_node)
+// {
+// 	t_node **curr_cmd_node;
+// 	t_node **curr_word_node;
+// 	char *token;
+// 	int new_cmd_node;
 
-	*mother_node = create_pipline();
-	curr_cmd_node = mother_node;
+// 	*mother_node = create_pipline();
+// 	curr_cmd_node = mother_node;
 
-	curr_cmd_node = get_node(curr_cmd_node, BOTTOM);
-	fill_cmd_node(curr_cmd_node);
+// 	curr_cmd_node = get_node(curr_cmd_node, BOTTOM);
+// 	fill_cmd_node(curr_cmd_node);
 
-	token = get_token_dnt_need_this(line);
-	curr_word_node = get_node(curr_cmd_node, BOTTOM);
-	fill_word_node(curr_word_node, token);
+// 	token = get_token_dnt_need_this(line);
+// 	curr_word_node = get_node(curr_cmd_node, BOTTOM);
+// 	fill_word_node(curr_word_node, token);
 
-	printf("%s\nTokens given from the cmd line : \n\n|%s|    \n", WHT, token);
-	while ((*line)[0] != '\0')
-	{
-		token = get_token_dnt_need_this(line);
-		if (strcmp(token, "|") == 0)
-		{
-			curr_cmd_node = get_node(curr_cmd_node, NEXT);
-			fill_cmd_node(curr_cmd_node);
-			new_cmd_node = 1;
-		}
-		else if (token[0] != '\0')
-		{
-			if (new_cmd_node)
-			{
-				curr_word_node = get_node(curr_cmd_node, BOTTOM);
-				new_cmd_node = 0;
-			}
-			else
-				curr_word_node = get_node(curr_word_node, NEXT);
-			fill_word_node(curr_word_node, token);
-		}
-		printf("|%s|    \n", token);
-	}
-}
+// 	printf("%s\nTokens given from the cmd line : \n\n|%s|    \n", WHT, token);
+// 	while ((*line)[0] != '\0')
+// 	{
+// 		token = get_token_dnt_need_this(line);
+// 		if (strcmp(token, "|") == 0)
+// 		{
+// 			curr_cmd_node = get_node(curr_cmd_node, NEXT);
+// 			fill_cmd_node(curr_cmd_node);
+// 			new_cmd_node = 1;
+// 		}
+// 		else if (token[0] != '\0')
+// 		{
+// 			if (new_cmd_node)
+// 			{
+// 				curr_word_node = get_node(curr_cmd_node, BOTTOM);
+// 				new_cmd_node = 0;
+// 			}
+// 			else
+// 				curr_word_node = get_node(curr_word_node, NEXT);
+// 			fill_word_node(curr_word_node, token);
+// 		}
+// 		printf("|%s|    \n", token);
+// 	}
+// }
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -498,9 +571,9 @@ void print_tokens(t_tokens *tokens)
 
 int main(int argc, char **argv, char **env)
 {
-	char *line;
-	t_node *cmd_line_node;
-	t_tokens *tokens_list;
+	char *line = NULL;
+	t_node *cmd_line_node = NULL;
+	t_tokens *tokens_list = NULL;
 
 	print_header();
 	while (1337)
@@ -516,13 +589,12 @@ int main(int argc, char **argv, char **env)
 		{
 			//free_token_list();
 			//free_line();
-			continue ;
+			break ;
 		}
 		create_abstract_syntax_tree(&cmd_line_node, tokens_list);
-
-
+		
 		//line_tokenization2(line, &mother_node);
-		print_preorder(cmd_line_node);
+		print_preorder(cmd_line_node, 1);
 
 		//parse_line(&line, &mother_node);
 		//////////////////////////////////print_preorder(mother_node);
