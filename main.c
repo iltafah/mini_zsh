@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/03/31 14:38:14 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/01 16:15:58 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ t_node *create_single_node(t_tag tag)
 	node->tag = tag;
 	node->bottom = NULL;
 	node->next = NULL;
-	node->u_infos.word = NULL;
+	if (tag == e_word_node)
+		node->u_infos.word = NULL;
+	else if (tag == e_simple_cmd_node)
+		node->u_infos.redirections = NULL;
 	//node->u_infos.redirections.input_files = NULL;
 	//node->u_infos.redirections.output_files = NULL;
 
@@ -112,6 +115,29 @@ t_node *create_single_node(t_tag tag)
 // 	return (node_list);
 // }
 
+void	print_cmd_redirection(t_node *node)
+{
+		t_redirection *curr_redir_node;
+		char *input_file = NULL;
+		char *output_file = NULL;
+
+		curr_redir_node = node->u_infos.redirections;
+		while (curr_redir_node)
+		{
+			//printf("wtf [%s] wtf\n", curr_redir_node->file);
+			if (strcmp(curr_redir_node->type, ">") == 0
+			|| strcmp(curr_redir_node->type, ">>") == 0)
+				output_file = curr_redir_node->file;
+			else if (strcmp(curr_redir_node->type, "<") == 0)
+				input_file = curr_redir_node->file;
+			curr_redir_node = curr_redir_node->next;
+		}
+		printf("%sredirections:  Input file = [%s%s%s]  , Output file = [%s%s%s]\n", 
+		WHT,
+		YEL , input_file, WHT,
+		YEL , output_file, WHT);
+}
+
 void print_preorder(t_node *node, int i)
 {
 
@@ -123,16 +149,19 @@ void print_preorder(t_node *node, int i)
 	if (node->tag == e_cmdline_node)
 		printf("\n\n%s   »»»»» Command line «««««\n", GRN);
 	else if (node->tag == e_pipeline_node)
-		printf("\n\n%s█████████ [%d]pipline █████████\n", RED, i++);
+		printf("\n\n%s█████████ [%d] pipline █████████\n", RED, i++);
 	else if (node->tag == e_word_node)
 		printf("%s%s ", YEL, node->u_infos.word);
 	else if (node->tag == e_simple_cmd_node)
-		printf("%s\n\n>>>simple command<<<\n", CYN);
+	{
+		printf("%s\n\n>>>simple command<<<    ", CYN);
+		print_cmd_redirection(node);
+	}
 	print_preorder(node->bottom, i);
 	print_preorder(node->next, i);
 }
 
-void print_postorder(t_node *node)
+void print_postorder(t_node *node)       // I will use it to free the ast
 {
 	if (node == NULL)
 		return;
@@ -569,8 +598,8 @@ void print_tokens(t_tokens *tokens)
 ////////////////////////////////////////////////////////////////////////////////
 
 
-int main(int argc, char **argv, char **env)
-{
+ int main(int argc, char **argv, char **env)
+ {
 	char *line = NULL;
 	t_node *cmd_line_node = NULL;
 	t_tokens *tokens_list = NULL;
@@ -658,14 +687,15 @@ int main(int argc, char **argv, char **env)
 	// mother_node->bottom->next->next->bottom = create_word("cat");
 	// mother_node->bottom->next->next->bottom->next = create_word("-e");
 
-	// char	*str = strdup("\n");
+	//char	*str = strdup("\n");
 	// ///////execute cat command example//////////////
 	// char	**newargv = malloc(sizeof(char*) * 4);	//
-	// newargv[0] = strdup("/bin/cat");				//
+	// newargv[0] = strdup("cat");				//
 	// newargv[1] = strdup("file");			//
 	// newargv[2] = strdup("file1");			//
-	// newargv[3] = strdup("minishell.h");
+	// newargv[3] = strdup("file2");
 	// newargv[4] = 0;								//
+	
 	// execve("/bin/cat", newargv, env);			//
 	// ////////////////////////////////////////////////
 

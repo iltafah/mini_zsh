@@ -5,8 +5,8 @@ typedef struct s_vars
     int pipe_seq_node;
     int word_node;
     int simple_command_node;
-    int semicolon_token;
-    int pipe_token;
+    //int semicolon_token;
+    //int pipe_token;
 } t_vars;
 
 typedef struct s_ast_ptrs

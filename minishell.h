@@ -48,8 +48,9 @@ typedef enum e_type {e_start, e_pipe, e_semicolon, e_simple_word, e_redir, newli
 
 typedef struct                  s_redirection
 {
-    char                        *input_files;
-    char                        *output_files;
+    char                        *type;
+    char                        *file;
+    struct s_redirection        *next;
 }                               t_redirection;
 
 
@@ -62,7 +63,7 @@ typedef struct          s_node
     union               infos
     {
         char            *word;
-        t_redirection   redirections;
+        t_redirection   *redirections;
     }                   u_infos;
     
 }                       t_node;
