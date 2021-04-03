@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/02 10:19:26 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/03 18:15:37 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ void print_inorder(t_node *node)
 
 void print_tokens(t_tokens *tokens)
 {
-    printf("MAH TOKENS BRO\n");
     int spaces = 50;
     int len;
     int spaces_time;
@@ -122,13 +121,14 @@ void print_tokens(t_tokens *tokens)
 
     while (tokens)
     {
+		printf("%s",WHT);
         if (tokens->data)
         {
             if (tokens->data[0] == '\n')
                 tokens->data = "\\n";
             len = strlen(tokens->data);
             spaces_time = spaces - len;
-            printf("|%s| %*s type : = %s\n", tokens->data, spaces_time, " ", type[tokens->type]);
+            printf("|%s%s%s| %*s type : = %s%s\n", CYN,tokens->data, WHT, spaces_time, " ", YEL,type[tokens->type]);
         }
         tokens = tokens->next;
     }
@@ -145,7 +145,6 @@ int main(int argc, char **argv, char **env)
     {
         print_current_dir();
         get_next_line(0, &line);
-        printf("\ncmd line given : >%s<\n", line);
 
         line_tokenization(line, &tokens_list);
         print_tokens(tokens_list);
@@ -153,7 +152,8 @@ int main(int argc, char **argv, char **env)
         {
             //free_token_list();
             //free_line();
-            break;
+            //break;
+			continue ;
         }
         create_abstract_syntax_tree(&cmd_line_node, tokens_list);
 
