@@ -18,30 +18,31 @@ void change_nodes_state(t_state *state, t_type token)
         state->pipe_seq_node = EXIST;
 }
 
-void create_abstract_syntax_tree(t_node **cmd_line_node, t_tokens *tokens)
+void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
 {
-    t_tokens *curr_token;
-    t_ast_ptrs ast;
-    t_state state;
+	t_ast_vars	vars;
+    t_tokens	*curr_token;
+    // t_ast_ptrs ast_ptrs;
+    // t_state state;
 
-    initialize_node_vars(&state);
-    initialize_ast_pointers(&ast);
-    *cmd_line_node = create_single_node(e_cmdline_node);
-    ast.cmd_line_node = cmd_line_node;
+    initialize_node_vars(&vars.state);
+    initialize_ast_pointers(&vars.ast_ptrs);
+    *ast = create_single_node(e_cmdline_node);
+    vars.ast_ptrs.cmd_line_node = ast;
     curr_token = tokens;
     while (curr_token)
     {
         if (curr_token->type == e_simple_word)
         {
-            store_word_in_suitable_node(state, &ast, curr_token->data);
-            change_nodes_state(&state, e_simple_word);
+            store_word_in_suitable_node(&vars, curr_token->data);
+            change_nodes_state(&vars.state, e_simple_word);
         }
         else if (curr_token->type == e_pipe)
-            change_nodes_state(&state, e_pipe);
+            change_nodes_state(&vars.state, e_pipe);
         else if (curr_token->type == e_semicolon)
-            change_nodes_state(&state, e_semicolon);
-        else if (curr_token->type == e_redir)
-            store_redirection_data(&ast, &curr_token);
+            change_nodes_state(&vars.state, e_semicolon);
+        //else if (curr_token->type == e_redir)
+        //    store_redirection_data(&ast_ptrs, &curr_token);
         curr_token = curr_token->next;
     }
 }
