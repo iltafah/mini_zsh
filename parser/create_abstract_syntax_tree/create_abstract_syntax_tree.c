@@ -7,7 +7,7 @@ void change_nodes_state(t_state *state, t_type token)
     {
         state->pipe_seq_node = EXIST;
         state->simple_command_node = EXIST;
-        state->word_node = EXIST;
+        state->data_node = EXIST;
     }
     else if (token == e_pipe)
     {

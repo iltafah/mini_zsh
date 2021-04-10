@@ -2,7 +2,7 @@
 
 void	initialize_node_states(t_state *state)
 {
-    state->word_node = NONE;
+    state->data_node = NONE;
     state->pipe_seq_node = NONE;
     state->simple_command_node = NONE;
 }
@@ -12,7 +12,7 @@ void    initialize_ast_pointers(t_ast_ptrs *ast_ptrs)
     ast_ptrs->cmd_line = NULL;
     ast_ptrs->curr_data = NULL;
     ast_ptrs->curr_pipe_seq = NULL;
-    ast_ptrs->curr_simple_cmd = NULL;
+    ast_ptrs->curr_smpl_cmd = NULL;
 }
 
 void	initialize_dynamic_table_vars(t_dynamic_table *dynamic_table)

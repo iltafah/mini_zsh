@@ -1,5 +1,5 @@
 
-# include "../minishell.h"
+# include "../../minishell.h"
 //char *treat_single_quotes(char **line, t_type *type);
 int     treat_quotes(char *line, char sd_quote);
 char    *get_pipe(char **line, t_type *type);

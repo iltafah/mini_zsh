@@ -3,28 +3,24 @@
 void	get_curr_pipe_seq_node(t_state state, t_ast_ptrs *ast)
 {
 	if (state.pipe_seq_node == NONE)
-		ast->curr_pipe_seq =
-			create_pipe_seq_node(ast->cmd_line, BOTTOM);
+		ast->curr_pipe_seq = create_pipe_seq_node(ast->cmd_line, BOTTOM);
 	else if (state.simple_command_node == NONE)
-		ast->curr_pipe_seq =
-			create_pipe_seq_node(ast->curr_pipe_seq, NEXT);
+		ast->curr_pipe_seq = create_pipe_seq_node(ast->curr_pipe_seq, NEXT);
 }
 
 void	get_curr_simple_cmd_node(t_state state, t_ast_ptrs *ast)
 {
 	if (state.simple_command_node == NONE)
-		ast->curr_simple_cmd =
-			create_simple_cmd_node(ast->curr_pipe_seq, BOTTOM);
-	else if (state.word_node == NONE)
-		ast->curr_simple_cmd =
-			create_simple_cmd_node(ast->curr_simple_cmd, NEXT);
+		ast->curr_smpl_cmd = create_smpl_cmd_node(ast->curr_pipe_seq, BOTTOM);
+	else if (state.data_node == NONE)
+		ast->curr_smpl_cmd = create_smpl_cmd_node(ast->curr_smpl_cmd, NEXT);
 }
 
 void	get_curr_data_node(t_state state, t_ast_ptrs *ast)
 {
-	if (state.word_node == NONE)
-		ast->curr_data = create_data_node(ast->curr_simple_cmd, BOTTOM);
-	else if (state.word_node == EXIST)
+	if (state.data_node == NONE)
+		ast->curr_data = create_data_node(ast->curr_smpl_cmd, BOTTOM);
+	else if (state.data_node == EXIST)
 		ast->curr_data = ast->curr_data;
 			//create_word_node(ast->curr_word_node, NEXT);
 }

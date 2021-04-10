@@ -1,4 +1,4 @@
-# include "../minishell.h"
+# include "../../minishell.h"
 
 typedef struct          s_vars
 {

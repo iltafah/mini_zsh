@@ -18,8 +18,8 @@
 #define BOTTOM 0
 #define NEXT 1
 
-#define TRUE 1
 #define FALSE 0
+#define TRUE 1
 
 #define CLOSED 0
 #define OPEND 1
@@ -27,8 +27,8 @@
 #define NONE 0
 #define EXIST 1
 
-#define VALID 1
 #define ERROR -1
+#define VALID 1
 
 #define DOUBLE_QUOTES '"'
 #define SINGLE_QUOTES '\''
@@ -43,6 +43,7 @@ typedef enum e_tag
 	e_simple_cmd_node,
 	e_data_node
 } t_tag;
+
 typedef enum e_type
 {
 	e_start,
@@ -74,8 +75,8 @@ typedef struct s_data
 
 typedef struct s_dir
 {
-	struct s_ast *bottom;
 	struct s_ast *next;
+	struct s_ast *bottom;
 } t_dir;
 
 typedef struct s_ast
@@ -96,8 +97,8 @@ typedef struct s_ast
 
 typedef struct s_tokens
 {
-	t_type type;
-	char *data;
+	char	*data;
+	t_type	type;
 	struct s_tokens *next;
 } t_tokens;
 
@@ -105,11 +106,15 @@ typedef struct s_tokens
 ** ************************************************************************** **
 */
 
-void line_tokenization(char *line, t_tokens **tokens_list);
-int check_tokens_syntax(t_tokens *tokens_list);
-void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
+int		check_tokens_syntax(t_tokens *tokens_list);
+void	line_tokenization(char *line, t_tokens **tokens_list);
+void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
 
 #endif
+
+
+
+
 
 // typedef enum e_special_characters
 // {single_quotes = '\'', double_quotes = '"',

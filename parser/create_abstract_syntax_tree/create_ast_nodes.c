@@ -30,7 +30,7 @@ t_ast **create_pipe_seq_node(t_ast **cmd_line, int dir)
 	return (new_pipe_seq_node);
 }
 
-t_ast **create_simple_cmd_node(t_ast **pipe_line_seq, int dir)
+t_ast **create_smpl_cmd_node(t_ast **pipe_line_seq, int dir)
 {
 	t_ast **new_cmd_node;
 

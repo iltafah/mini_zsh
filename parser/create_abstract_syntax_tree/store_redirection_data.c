@@ -5,8 +5,8 @@ t_redirection   *create_single_redirection_node(char *type, char *file)
     t_redirection *new_redirection_node;
 
     new_redirection_node = malloc(sizeof(t_redirection));
-    new_redirection_node->type = ft_strdup(type);
-    new_redirection_node->file = ft_strdup(file);
+    new_redirection_node->type = type;
+    new_redirection_node->file = file;
     new_redirection_node->next = NULL;
     return (new_redirection_node);
 }
