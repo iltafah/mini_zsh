@@ -11,17 +11,17 @@ t_redirection   *create_single_redirection_node(char *type, char *file)
     return (new_redirection_node);
 }
 
-void            store_redirection_data(t_ast_ptrs *ast, t_tokens **curr_token)
+void            store_redirection_data(t_ast_vars *vars, t_tokens **curr_token)
 {
-    // t_redirection **curr_redir_node;
-    // char *type;
-    // char *file;
+    t_redirection **curr_redir_node;
+    char *type;
+    char *file;
 
-    // curr_redir_node = &(ast->curr_simple_cmd_node[0]->u_infos.redirections);
-    // while (*curr_redir_node != NULL)
-    //     curr_redir_node = &((*curr_redir_node)->next);
-    // type = (*curr_token)->data;
-    // (*curr_token) = (*curr_token)->next;
-    // file = (*curr_token)->data;
-    // *curr_redir_node = create_single_redirection_node(type, file);
+    curr_redir_node = &((*vars->ast_ptrs.curr_data)->node.data.redirections);
+    while (*curr_redir_node != NULL)
+        curr_redir_node = &((*curr_redir_node)->next);
+    type = (*curr_token)->data;
+    (*curr_token) = (*curr_token)->next;
+    file = (*curr_token)->data;
+    *curr_redir_node = create_single_redirection_node(type, file);
 }
