@@ -48,7 +48,7 @@ void line_tokenization(char *line, t_tokens **tokens_list)
 		}
 	}
 	/////remove this after read line////
-	curr_token->next = create_single_token("\n", newline);////
+	curr_token->next = create_single_token(NULL, newline);////
 	////////////////////////////////////
 }
 

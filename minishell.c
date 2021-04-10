@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/10 17:06:05 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/10 17:35:52 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -401,7 +401,9 @@ int main(int argc, char **argv, char **env)
 		print_tokens(tokens_list);
 		if (check_tokens_syntax(tokens_list) == ERROR)
 		{
-			//free_token_list();
+			free_tokens_list(&tokens_list);
+			if (tokens_list == NULL)
+				printf("success\n");
 			//free_line();
 			//break;
 			continue;
