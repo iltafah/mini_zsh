@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/12 11:08:32 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/12 12:03:36 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,6 +386,7 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL;
 	t_ast *ast = NULL;
 	t_tokens *tokens_list = NULL;
+	int		xd = 0;
 
 	print_header();
 	while (1337)
@@ -403,6 +404,8 @@ int main(int argc, char **argv, char **env)
 		}
 		create_abstract_syntax_tree(&ast, tokens_list);
 		print_preorder(ast, 1);
+		if (strcmp(line, "exit") == 0)
+			xd = 1;
 		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////
@@ -410,6 +413,8 @@ int main(int argc, char **argv, char **env)
 		free_abstract_syntax_tree(ast);//
 		free(line);					   //
 		/////////////////////////////////
+		if (xd == 1)
+			exit(0);
 	}
 	return (0);
 }

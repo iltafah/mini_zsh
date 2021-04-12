@@ -37,8 +37,6 @@ void	free_abstract_syntax_tree(t_ast *ast)
     	free_abstract_syntax_tree(ast->node.dir.next);
 	}
 	else
-	{
 		free_data_node_content(&ast->node.data);
-		free(ast);
-	}
+	free(ast);
 }
