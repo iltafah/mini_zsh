@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/10 17:35:52 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/12 11:08:32 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,10 +260,6 @@
 //     print_inorder(node->next);
 // }
 
-
-
-
-
 /*
 ** ************************************************************************** **
 							printing functions
@@ -402,14 +398,18 @@ int main(int argc, char **argv, char **env)
 		if (check_tokens_syntax(tokens_list) == ERROR)
 		{
 			free_tokens_list(&tokens_list);
-			if (tokens_list == NULL)
-				printf("success\n");
-			//free_line();
-			//break;
+			free(line);
 			continue;
 		}
 		create_abstract_syntax_tree(&ast, tokens_list);
 		print_preorder(ast, 1);
+		/////////////////////////////////
+		/**		  freeing time		**///
+		/////////////////////////////////
+		free_tokens_list(&tokens_list);//
+		free_abstract_syntax_tree(ast);//
+		free(line);					   //
+		/////////////////////////////////
 	}
 	return (0);
 }

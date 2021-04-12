@@ -10,12 +10,8 @@ void	free_tokens_list(t_tokens **tokens_list)
 	{
 		next_token = curr_token->next;
 		if (curr_token->data != NULL)
-		{
 			free(curr_token->data);
-			curr_token->data = NULL;
-		}
 		free(curr_token);
-		curr_token = NULL;
 		curr_token = next_token;
 	}
 	*tokens_list = NULL;
