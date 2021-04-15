@@ -104,6 +104,19 @@ typedef struct s_tokens
 
 /*
 ** ************************************************************************** **
+							env linked list struct								
+** ************************************************************************** **
+*/
+
+typedef struct		s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env 	*next;
+}					t_env;
+
+/*
+** ************************************************************************** **
 */
 
 int		check_tokens_syntax(t_tokens *tokens_list);

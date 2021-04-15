@@ -28,3 +28,11 @@ void	dynamic_table_join(t_dynamic_table *dynamic_table, char *word)
 	dynamic_table->ptr = &new_table;
 	dynamic_table->used_size += 1;
 }
+
+void	store_word_in_suitable_node(t_ast_vars *vars, char *word)
+{
+	get_suitable_nodes(vars->state, &vars->ast_ptrs);
+	vars->dynamic_table.ptr = &((*vars->ast_ptrs.curr_data)->node.data.args);
+	dynamic_table_join(&vars->dynamic_table, word);
+	(*vars->ast_ptrs.curr_data)->node.data.args = *vars->dynamic_table.ptr;
+}

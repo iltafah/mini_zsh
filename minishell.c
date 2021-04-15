@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/12 17:00:08 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/15 13:43:44 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,8 +327,9 @@ void print_preorder(t_ast *node, int i)
 
 		print_cmd_redirection(node);
 		i = 0;
-		while (node->node.data.args[i])
-			printf("%s%s \n", YEL, node->node.data.args[i++]);
+		if (node->node.data.args != NULL)
+			while (node->node.data.args[i])
+				printf("%s%s \n", YEL, node->node.data.args[i++]);
 		printf("\n");
 		return;
 	}
@@ -493,7 +494,7 @@ int main(int argc, char **argv, char **env)
 		}
 		create_abstract_syntax_tree(&ast, tokens_list);
 		print_preorder(ast, 1);
-		execute_test(ast);
+		//execute_test(ast);
 		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////

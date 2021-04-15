@@ -39,5 +39,5 @@ t_ast  	**create_smpl_cmd_node(t_ast **curr_node, int dir);
 void	initialize_ast_vars(t_ast_vars *ast);
 void	initialize_node_states(t_state *state);
 void    store_word_in_suitable_node(t_ast_vars	*vars, char *word);
-void	dynamic_table_join(t_dynamic_table *dynamic_table, char *word);
-void    store_redirection_data(t_ast_vars *vars, t_tokens **curr_token);
+void    store_redir_in_suitable_node(t_ast_vars *vars, t_tokens **token);
+void	get_suitable_nodes(t_state state, t_ast_ptrs *ast_ptrs);

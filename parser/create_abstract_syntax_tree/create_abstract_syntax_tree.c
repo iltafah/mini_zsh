@@ -3,7 +3,7 @@
 void change_nodes_state(t_state *state, t_type token)
 {
     initialize_node_states(state);
-    if (token == e_simple_word)
+    if (token == e_simple_word || token == e_redir)
     {
         state->pipe_seq_node = EXIST;
         state->simple_command_node = EXIST;
@@ -39,7 +39,10 @@ void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
         else if (curr_token->type == e_semicolon)
             change_nodes_state(&vars.state, e_semicolon);
         else if (curr_token->type == e_redir)
-            store_redirection_data(&vars, &curr_token);
+		{
+            store_redir_in_suitable_node(&vars, &curr_token);
+			change_nodes_state(&vars.state, e_redir);
+		}
         curr_token = curr_token->next;
     }
 }

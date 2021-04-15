@@ -25,12 +25,9 @@ void	get_suitable_data_node(t_state state, t_ast_ptrs *ast)
 			//create_word_node(ast->curr_word_node, NEXT);
 }
 
-void	store_word_in_suitable_node(t_ast_vars *vars, char *word)
+void	get_suitable_nodes(t_state state, t_ast_ptrs *ast_ptrs)
 {
-	get_suitable_pipe_seq_node(vars->state, &vars->ast_ptrs);
-	get_suitable_simple_cmd_node(vars->state, &vars->ast_ptrs);
-	get_suitable_data_node(vars->state, &vars->ast_ptrs);
-	vars->dynamic_table.ptr = &((*vars->ast_ptrs.curr_data)->node.data.args);
-	dynamic_table_join(&vars->dynamic_table, word);
-	(*vars->ast_ptrs.curr_data)->node.data.args = *vars->dynamic_table.ptr;
+	get_suitable_pipe_seq_node(state, ast_ptrs);
+	get_suitable_simple_cmd_node(state, ast_ptrs);
+	get_suitable_data_node(state, ast_ptrs);
 }
