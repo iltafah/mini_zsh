@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/15 13:43:44 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/16 14:48:55 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,8 +477,10 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL;
 	t_tokens *tokens_list = NULL;
 	t_ast *ast = NULL;
+	t_env_vec env_vec;
 
 	print_header();
+	create_env_vector(&env_vec, env);
 	while (1337)
 	{
 		print_current_dir();
@@ -505,21 +507,6 @@ int main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-
-/*
-** ************************************************************************** **
-*/
-// data fiha (char **args  && t_redirection *redirections)
-// data = get_the_first_cmd();
-// then the executer will execute the first cmd using data
-// free data and free it also from ast
-// then let the cmd_line_node->pipe_seq_node point to the next cmd if it exist
-// but what will happend if it doesn't exist ??!! Hmmmm
-// if (cmd_line->pipe_seq_node->bottom == NULL) => then simply there is no pipe |
-// if (cmd->line->pipe_seq_node->NEXT == NULL) => then simply there is no semicolon ;
-// but if (cmd_line->pipe_seq_node->bottom != NULL) => then there is a pipe xd
-// how silly me, but if there is a pipe what will you do
-// of course get the next focking simple cmd
 
 /*
 ** ************************************************************************** **

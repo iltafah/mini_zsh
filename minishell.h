@@ -104,16 +104,22 @@ typedef struct s_tokens
 
 /*
 ** ************************************************************************** **
-							env linked list struct								
+								env vector								
 ** ************************************************************************** **
 */
 
-typedef struct		s_env
+typedef struct		s_env_var
 {
 	char			*name;
 	char			*value;
-	struct s_env 	*next;
-}					t_env;
+}					t_env_var;
+
+typedef struct		s_env_vec
+{
+	t_env_var		*table;
+	int				size;
+	int				used_size;
+}					t_env_vec;
 
 /*
 ** ************************************************************************** **
@@ -124,6 +130,8 @@ void	line_tokenization(char *line, t_tokens **tokens_list);
 void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
 void	free_tokens_list(t_tokens **tokens_list);
 void	free_abstract_syntax_tree(t_ast *ast);
+
+void	create_env_vector(t_env_vec *env_vec, char **env);
 #endif
 
 
