@@ -35,7 +35,6 @@ void line_tokenization(char *line, t_tokens **tokens_list)
 
 	*tokens_list = create_single_token(NULL, e_start);
 	curr_token = *tokens_list;
-
 	while (*line)
 	{
 		if (*line == ' ')

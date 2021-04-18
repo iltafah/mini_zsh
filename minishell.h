@@ -130,6 +130,7 @@ void	line_tokenization(char *line, t_tokens **tokens_list);
 void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
 void	free_tokens_list(t_tokens **tokens_list);
 void	free_abstract_syntax_tree(t_ast *ast);
+void	free_env_table(t_env_vec *env_vec);
 
 void	create_env_vector(t_env_vec *env_vec, char **env);
 #endif

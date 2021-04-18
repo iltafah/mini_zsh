@@ -7,7 +7,7 @@ void	initialize_env_vector(t_env_vec *env_vec)
 	env_vec->used_size = 0;
 }
 
-void	realloc_dynamic_table(t_env_vec *env_vec)
+void	realloc_env_dynamic_table(t_env_vec *env_vec)
 {
 	int			i;
 	t_env_var	*new_table;
@@ -39,7 +39,7 @@ void	extract_name_and_value_from_env(t_env_vec *env_vec, char *env_str)
 void	add_element_to_dynamic_table(t_env_vec *env_vec, char *env_str)
 {
 	if (env_vec->used_size == env_vec->size)
-		realloc_dynamic_table(env_vec);
+		realloc_env_dynamic_table(env_vec);
 	extract_name_and_value_from_env(env_vec, env_str);
 	env_vec->used_size += 1;
 }

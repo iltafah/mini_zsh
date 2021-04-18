@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/16 14:48:55 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/16 15:10:08 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,6 +471,19 @@ void	execute_test(t_ast *ast)
 ** ************************************************************************** **
 */
 
+void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line, t_env_vec *env_vec)
+{
+	/////////////////////////////////
+	/**		  freeing time		**///
+	/////////////////////////////////
+	free_tokens_list(tokens_list);//
+	free_abstract_syntax_tree(ast);//
+	free(line);					   //
+	free_env_table(env_vec);
+	/////////////////////////////////
+	exit(0);
+}
+
 
 int main(int argc, char **argv, char **env)
 {
@@ -497,6 +510,10 @@ int main(int argc, char **argv, char **env)
 		create_abstract_syntax_tree(&ast, tokens_list);
 		print_preorder(ast, 1);
 		//execute_test(ast);
+		/////////////////////////////////
+		/**				exit		**///
+		if (strcmp(line, "exit") == 0)
+			temp_exit(&tokens_list, ast, line, &env_vec);
 		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////

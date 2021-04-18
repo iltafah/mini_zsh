@@ -5,7 +5,7 @@ void		expand_args(char ***args_table)
 	
 }
 
-void		expand_curr_cmd(t_ast *curr_simple_cmd)
+void		expand_curr_cmd(t_ast *curr_simple_cmd, t_env_vec *env_vec)
 {
 	t_ast	*data;
 

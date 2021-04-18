@@ -17,7 +17,7 @@ void	store_redir_in_suitable_node(t_ast_vars *vars, t_tokens **curr_token)
 	char *type;
 	char *file;
 
-	if (vars->ast_ptrs.curr_data == NULL)
+	if (vars->state.data_node == NONE)
 		get_suitable_nodes(vars->state, &vars->ast_ptrs);
 	curr_redir_node = &((*vars->ast_ptrs.curr_data)->node.data.redirections);
 	while (*curr_redir_node != NULL)
