@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "./get_next_line/get_next_line.h"
+#include "./vectors/vectors.h"
 
 #define BOTTOM 0
 #define NEXT 1
@@ -54,9 +55,10 @@ typedef enum e_type
 	newline
 } t_type;
 
+
 /*
 ** ************************************************************************** **
-					abstruct syntax tree struct
+							redirection linked list
 ** ************************************************************************** **
 */
 
@@ -66,6 +68,12 @@ typedef struct s_redirection
 	char *file;
 	struct s_redirection *next;
 } t_redirection;
+
+/*
+** ************************************************************************** **
+						abstruct syntax tree struct
+** ************************************************************************** **
+*/
 
 typedef struct s_data
 {
@@ -97,8 +105,8 @@ typedef struct s_ast
 
 typedef struct s_tokens
 {
-	char	*data;
-	t_type	type;
+	char *data;
+	t_type type;
 	struct s_tokens *next;
 } t_tokens;
 
@@ -108,36 +116,32 @@ typedef struct s_tokens
 ** ************************************************************************** **
 */
 
-typedef struct		s_env_var
+typedef struct s_env_var
 {
-	char			*name;
-	char			*value;
-}					t_env_var;
+	char *name;
+	char *value;
+} t_env_var;
 
-typedef struct		s_env_vec
+typedef struct s_env_vec
 {
-	t_env_var		*table;
-	int				size;
-	int				used_size;
-}					t_env_vec;
+	t_env_var *table;
+	int size;
+	int used_size;
+} t_env_vec;
 
 /*
 ** ************************************************************************** **
 */
 
-int		check_tokens_syntax(t_tokens *tokens_list);
-void	line_tokenization(char *line, t_tokens **tokens_list);
-void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
-void	free_tokens_list(t_tokens **tokens_list);
-void	free_abstract_syntax_tree(t_ast *ast);
-void	free_env_table(t_env_vec *env_vec);
+int check_tokens_syntax(t_tokens *tokens_list);
+void line_tokenization(char *line, t_tokens **tokens_list);
+void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
+void free_tokens_list(t_tokens **tokens_list);
+void free_abstract_syntax_tree(t_ast *ast);
+void free_env_table(t_env_vec *env_vec);
 
-void	create_env_vector(t_env_vec *env_vec, char **env);
+void create_env_vector(t_env_vec *env_vec, char **env);
 #endif
-
-
-
-
 
 // typedef enum e_special_characters
 // {single_quotes = '\'', double_quotes = '"',
