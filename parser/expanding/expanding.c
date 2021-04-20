@@ -10,6 +10,6 @@
 // 	t_ast	*data;
 
 // 	data = curr_simple_cmd->node.dir.bottom;
-// 	expand_args_table(&data->node.data.args);
+// 	expand_args_table(&data->node.data.args_vec);
 // 	//expand_redirection_list();
 // }
