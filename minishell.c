@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/20 14:14:17 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/20 14:55:57 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,9 +327,9 @@ void print_preorder(t_ast *node, int i)
 
 		print_cmd_redirection(node);
 		i = 0;
-		if (node->node.data.args != NULL)
-			while (node->node.data.args[i])
-				printf("%s%s \n", YEL, node->node.data.args[i++]);
+		if (node->node.data.args_vec.elements[i] != NULL)
+			while (node->node.data.args_vec.elements[i])
+				printf("%s%s \n", YEL, node->node.data.args_vec.elements[i++]);
 		printf("\n");
 		return;
 	}
@@ -432,7 +432,7 @@ void	print_args(t_ast *data_node)
 	i = 0;
 	len = 0;
 	max_len = 0;
-	args = data_node->node.data.args;
+	args = data_node->node.data.args_vec.elements;
 	printf("%s[\n%s", PRP,WHT);
 	while (args[i])
 	{
@@ -484,69 +484,61 @@ void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line, t_env_vec *env_ve
 	exit(0);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-/*									vec										  */
-////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv, char **env)
 {
-	// char *line = NULL;
-	// t_tokens *tokens_list = NULL;
-	// t_ast *ast = NULL;
-	// t_env_vec env_vec;
+	char *line = NULL;
+	t_tokens *tokens_list = NULL;
+	t_ast *ast = NULL;
+	t_env_vec env_vec;
 
-	// print_header();
-	// create_env_vector(&env_vec, env);
-	// while (1337)
-	// {
-	// 	print_current_dir();
-	// 	get_next_line(0, &line);
+	print_header();
+	create_env_vector(&env_vec, env);
+	while (1337)
+	{
+		print_current_dir();
+		get_next_line(0, &line);
 
-	// 	line_tokenization(line, &tokens_list);
-	// 	print_tokens(tokens_list);
-	// 	if (check_tokens_syntax(tokens_list) == ERROR)
-	// 	{
-	// 		free_tokens_list(&tokens_list);
-	// 		free(line);
-	// 		continue;
-	// 	}
-	// 	create_abstract_syntax_tree(&ast, tokens_list);
-	// 	print_preorder(ast, 1);
-	// 	//execute_test(ast);
-	// 	/////////////////////////////////
-	// 	/**				exit		**///
-	// 	if (strcmp(line, "exit") == 0)
-	// 		temp_exit(&tokens_list, ast, line, &env_vec);
-	// 	/////////////////////////////////
-	// 	/**		  freeing time		**///
-	// 	/////////////////////////////////
-	// 	free_tokens_list(&tokens_list);//
-	// 	free_abstract_syntax_tree(ast);//
-	// 	free(line);					   //
-	// 	/////////////////////////////////
-	// }
-	t_vec	vec;
-	
-	initialize_vec_content(&vec);
-
-	vec.add_new_element(&vec, "hello world");
-	vec.add_new_element(&vec, "bye bye world");
-	vec.add_new_element(&vec, "well well well");
-	vec.add_new_element(&vec, "nice it works");
-	vec.add_new_element(&vec, "ahahaha I like this");
-
-	for (int i = 0; vec.elements[i]; i++)
-		printf("[%s]\n", vec.elements[i]);
+		line_tokenization(line, &tokens_list);
+		print_tokens(tokens_list);
+		if (check_tokens_syntax(tokens_list) == ERROR)
+		{
+			free_tokens_list(&tokens_list);
+			free(line);
+			continue;
+		}
+		create_abstract_syntax_tree(&ast, tokens_list);
+		print_preorder(ast, 1);
+		//execute_test(ast);
+		/////////////////////////////////
+		/**				exit		**///
+		if (strcmp(line, "exit") == 0)
+			temp_exit(&tokens_list, ast, line, &env_vec);
+		/////////////////////////////////
+		/**		  freeing time		**///
+		/////////////////////////////////
+		free_tokens_list(&tokens_list);//
+		free_abstract_syntax_tree(ast);//
+		free(line);					   //
+		/////////////////////////////////
+	}
 	
 	return (0);
 }
+
+
+	// t_vec	vec;
+	
+	// initialize_vec_content(&vec);
+
+	// vec.add_new_element(&vec, "hello world");
+	// vec.add_new_element(&vec, "bye bye world");
+	// vec.add_new_element(&vec, "well well well");
+	// vec.add_new_element(&vec, "nice it works");
+	// vec.add_new_element(&vec, "ahahaha I like this");
+
+	// for (int i = 0; vec.elements[i]; i++)
+	// 	printf("[%s]\n", vec.elements[i]);
 
 /*
 ** ************************************************************************** **

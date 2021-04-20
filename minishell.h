@@ -77,8 +77,9 @@ typedef struct s_redirection
 
 typedef struct s_data
 {
-	char **args;
-	t_redirection *redirections;
+	//char **args;
+	t_vec			args_vec;
+	t_redirection	*redirections;
 } t_data;
 
 typedef struct s_dir

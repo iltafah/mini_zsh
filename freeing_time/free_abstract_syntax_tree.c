@@ -15,15 +15,15 @@ void	free_redirection_list(t_redirection **redirection_list)
 	*redirection_list = NULL;
 }
 
-void	free_args_table(char ***args)
+void	free_args_vec(t_vec *args_vec)
 {
-	free(*args);
-	*args = NULL;
+	free(args_vec->elements);
+	args_vec->elements = NULL;
 }
 
 void	free_data_node_content(t_data *node_data)
 {
-	free_args_table(&node_data->args);
+	free_args_vec(&node_data->args_vec);
 	free_redirection_list(&node_data->redirections);
 }
 

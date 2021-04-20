@@ -15,16 +15,16 @@ void    initialize_ast_pointers(t_ast_ptrs *ast_ptrs)
     ast_ptrs->curr_smpl_cmd = NULL;
 }
 
-void	initialize_dynamic_table_vars(t_dynamic_table *dynamic_table)
-{
-	dynamic_table->size = 0;
-	dynamic_table->ptr = NULL;
-	dynamic_table->used_size = 0;
-}
+// void	initialize_dynamic_table_vars(t_dynamic_table *dynamic_table)
+// {
+// 	dynamic_table->size = 0;
+// 	dynamic_table->ptr = NULL;
+// 	dynamic_table->used_size = 0;
+// }
 
 void	initialize_ast_vars(t_ast_vars *vars)
 {
 	initialize_node_states(&vars->state);
 	initialize_ast_pointers(&vars->ast_ptrs);
-	initialize_dynamic_table_vars(&vars->dynamic_table);
+	// initialize_dynamic_table_vars(&vars->dynamic_table);
 }

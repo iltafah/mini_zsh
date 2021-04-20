@@ -7,7 +7,8 @@ t_ast *create_single_node(t_tag tag)
 	node->tag = tag;
 	if (tag == e_data_node)
 	{
-		node->node.data.args = NULL;
+		// node->node.data.args = NULL;
+		initialize_vec_content(&node->node.data.args_vec);
 		node->node.data.redirections = NULL;
 	}
 	else

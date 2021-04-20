@@ -15,19 +15,19 @@ typedef struct		s_ast_ptrs
     t_ast			**curr_smpl_cmd;
 }					t_ast_ptrs;
 
-typedef	struct		s_dynamic_table
-{
-	int				size;
-	char			***ptr;
-	int				used_size;
-}					t_dynamic_table;
+// typedef	struct		s_dynamic_table
+// {
+// 	int				size;
+// 	char			***ptr;
+// 	int				used_size;
+// }					t_dynamic_table;
 
 
 typedef struct		s_ast_vars
 {
 	t_state			state;
 	t_ast_ptrs		ast_ptrs;
-	t_dynamic_table	dynamic_table;
+	// t_dynamic_table	dynamic_table;
 }					t_ast_vars;
 
 
