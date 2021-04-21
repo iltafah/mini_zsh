@@ -44,29 +44,28 @@
 // 	env_vec->used_size += 1;
 // }
 
-void	extract_name_and_value_from_env(t_env_table *env_table, char *env_str)
+void extract_data_from_env(t_vec *name_vec, t_vec *value_vec, char *env_str)
 {
-	int		len;
-	char	*name;
-	char	*value;
+	int len;
+	char *name;
+	char *value;
 
 	len = 0;
 	while (env_str[len] != '=')
 		len++;
 	name = ft_substr(env_str, 0, len);
 	value = ft_strdup(env_str + len + 1);
-	env_table->name.add_new_element(&env_table->name, name);
-	env_table->value.add_new_element(&env_table->value, value);
+	name_vec->add_new_element(name_vec, name);
+	value_vec->add_new_element(value_vec, value);
 }
 
-
-void	create_env_vector(t_env_table *env_table, char **env)
+void create_env_vector(t_env_table *env_table, char **env)
 {
-	int		i;
+	int i;
 
 	i = -1;
 	initialize_vec_content(&env_table->name);
 	initialize_vec_content(&env_table->value);
 	while (env[++i])
-		extract_name_and_value_from_env(env_table, env[i]);
+		extract_data_from_env(&env_table->name, &env_table->value, env[i]);
 }
