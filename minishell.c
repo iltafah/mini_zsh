@@ -255,7 +255,7 @@ int main(int argc, char **argv, char **env)
 	t_env_table env_table;
 
 	print_header();
-	create_env_vector(&env_table, env);
+	create_env_table(&env_table, env);
 	while (1337)
 	{
 		print_current_dir();
@@ -284,6 +284,7 @@ int main(int argc, char **argv, char **env)
 		free(line);					   //
 		/////////////////////////////////
 	}
+
 	
 	return (0);
 }
@@ -304,6 +305,9 @@ int main(int argc, char **argv, char **env)
 	// vec.add_new_element(&vec, "nice it works");
 	// vec.add_new_element(&vec, "ahahaha I like this");
 
+	// vec.add_new_element_at_index(&vec, "I have been inserted", 3);
+	// vec.delete_element_at_index(&vec, 3);
+	// vec.delete_element_at_index(&vec, 2);
 	// for (int i = 0; vec.elements[i]; i++)
 	// 	printf("[%s]\n", vec.elements[i]);
 

@@ -1,5 +1,5 @@
 #include "./vectors.h"
-
+#include <stdio.h>
 void initialize_vec_content(t_vec *vec)
 {
 	vec->size = 2;
@@ -32,7 +32,7 @@ void	add_new_element(t_vec *vec, char *element)
 		vec->size *= 2;
 		realloc_vector(vec);
 	}
-	vec->elements[vec->used_size] = ft_strdup(element);
+	vec->elements[vec->used_size] = element;
 	vec->elements[vec->used_size + 1] = NULL;
 	vec->used_size += 1;
 }
@@ -46,14 +46,21 @@ void replace_element_at_index(t_vec *vec, char *element, int index)
 
 void add_new_element_at_index(t_vec *vec, char *element, int index)
 {
-	char	*old_element;
-	
+	char	*last_element;
+	int		last_index;
+	int		i;
+
 	if (index < 0 || index > vec->size)
 		return ;
 	add_new_element(vec, element);
-	old_element = vec->elements[index];
-	replace_element_at_index(vec, element, index);
-	replace_element_at_index(vec, old_element, vec->used_size);
+	last_index = vec->used_size - 1;
+	last_element = vec->elements[last_index];
+	while (last_index > index)
+	{
+		vec->elements[last_index] = vec->elements[last_index - 1];
+		last_index--;
+	}
+	vec->elements[index] = last_element;
 }
 
 void	delete_element_at_index(t_vec *vec, int index)

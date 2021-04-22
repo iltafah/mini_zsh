@@ -35,11 +35,13 @@
 
 void store_word_in_suitable_node(t_ast_vars *vars, char *word)
 {
+	char	*element;
 	t_vec	*args_vec;
 
+	element = ft_strdup(word);
 	get_suitable_nodes(vars->state, &vars->ast_ptrs);
 	args_vec = &((*vars->ast_ptrs.curr_data)->node.data.args_vec);
-	args_vec->add_new_element(args_vec, word);
+	args_vec->add_new_element(args_vec, element);
 	// vars->dynamic_table.ptr = &((*vars->ast_ptrs.curr_data)->node.data.args);
 	// if ((*vars->dynamic_table.ptr) == NULL)
 		// initialize_args_vector(&vars->dynamic_table);

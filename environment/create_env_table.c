@@ -59,7 +59,7 @@ void extract_data_from_env(t_vec *name_vec, t_vec *value_vec, char *env_str)
 	value_vec->add_new_element(value_vec, value);
 }
 
-void create_env_vector(t_env_table *env_table, char **env)
+void create_env_table(t_env_table *env_table, char **env)
 {
 	int i;
 

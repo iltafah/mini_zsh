@@ -36,6 +36,7 @@
 #define BACKSLASH '\\'
 #define PIPE '|'
 #define SEMICOLON ';'
+#define DOLLAR '$'
 
 typedef enum e_tag
 {
@@ -140,7 +141,7 @@ void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
 void free_tokens_list(t_tokens **tokens_list);
 void free_abstract_syntax_tree(t_ast *ast);
 
- void create_env_vector(t_env_table *env_table, char **env);
+ void create_env_table(t_env_table *env_table, char **env);
 #endif
 
 // typedef enum e_special_characters
