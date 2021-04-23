@@ -1,6 +1,6 @@
 #include "./expanding.h"
 
-void		expand_args_vec(t_vec *args_vec, t_env_table env_table)
+void		expand_args_vec(t_str_vec *args_vec, t_env_table env_table)
 {
 	int			i;
 	i = 0;

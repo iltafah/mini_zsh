@@ -44,7 +44,7 @@
 // 	env_vec->used_size += 1;
 // }
 
-void extract_data_from_env(t_vec *name_vec, t_vec *value_vec, char *env_str)
+void extract_data_from_env(t_str_vec *name_vec, t_str_vec *value_vec, char *env_str)
 {
 	int len;
 	char *name;

@@ -15,7 +15,7 @@ void	free_redirection_list(t_redirection **redirection_list)
 	*redirection_list = NULL;
 }
 
-void	free_args_vec(t_vec *args_vec)
+void	free_args_vec(t_str_vec *args_vec)
 {
 	free(args_vec->elements);
 	args_vec->elements = NULL;

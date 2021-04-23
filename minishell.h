@@ -79,7 +79,7 @@ typedef struct s_redirection
 typedef struct s_data
 {
 	//char **args;
-	t_vec			args_vec;
+	t_str_vec			args_vec;
 	t_redirection	*redirections;
 } t_data;
 
@@ -120,8 +120,8 @@ typedef struct s_tokens
 
 typedef struct s_env_table
 {
-	t_vec name;
-	t_vec value;
+	t_str_vec name;
+	t_str_vec value;
 } t_env_table;
 
 // typedef struct s_env_vec

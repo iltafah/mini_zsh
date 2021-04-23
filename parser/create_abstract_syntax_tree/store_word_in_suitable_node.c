@@ -36,7 +36,7 @@
 void store_word_in_suitable_node(t_ast_vars *vars, char *word)
 {
 	char	*element;
-	t_vec	*args_vec;
+	t_str_vec	*args_vec;
 
 	element = ft_strdup(word);
 	get_suitable_nodes(vars->state, &vars->ast_ptrs);

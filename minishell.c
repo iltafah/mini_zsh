@@ -319,7 +319,7 @@ int main(int argc, char **argv, char **env)
 
 	// printf("{%s}\n", str.elements);
 
-	// t_vec	vec;
+	// t_str_vec	vec;
 	
 	// initialize_vec_content(&vec);
 

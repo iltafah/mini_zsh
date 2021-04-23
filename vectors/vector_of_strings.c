@@ -1,6 +1,7 @@
 #include "./vectors.h"
 #include <stdio.h>
-void initialize_vec_content(t_vec *vec)
+
+void initialize_vec_content(t_str_vec *vec)
 {
 	vec->size = 2;
 	vec->used_size = 0;
@@ -12,7 +13,7 @@ void initialize_vec_content(t_vec *vec)
 	vec->free = vector_free;
 }
 
-void realloc_vector(t_vec *vec)
+void realloc_vector(t_str_vec *vec)
 {
 	int i;
 	char **new_table;
@@ -25,7 +26,7 @@ void realloc_vector(t_vec *vec)
 	vec->elements = new_table;
 }
 
-void	add_new_element(t_vec *vec, char *element)
+void	add_new_element(t_str_vec *vec, char *element)
 {
 	if (vec->used_size == vec->size)
 	{
@@ -37,14 +38,14 @@ void	add_new_element(t_vec *vec, char *element)
 	vec->used_size += 1;
 }
 
-void replace_element_at_index(t_vec *vec, char *element, int index)
+void replace_element_at_index(t_str_vec *vec, char *element, int index)
 {
 	if (index < 0 || index > vec->size)
 		return ;
 	vec->elements[index] = element;
 }
 
-void add_new_element_at_index(t_vec *vec, char *element, int index)
+void add_new_element_at_index(t_str_vec *vec, char *element, int index)
 {
 	char	*last_element;
 	int		last_index;
@@ -63,7 +64,7 @@ void add_new_element_at_index(t_vec *vec, char *element, int index)
 	vec->elements[index] = last_element;
 }
 
-void	delete_element_at_index(t_vec *vec, int index)
+void	delete_element_at_index(t_str_vec *vec, int index)
 {
 	if (index < 0 || index > vec->size)
 		return ;
@@ -81,7 +82,7 @@ void	delete_element_at_index(t_vec *vec, int index)
 	}
 }
 
-void	vector_free(t_vec *vec)
+void	vector_free(t_str_vec *vec)
 {
 	int		i;
 
