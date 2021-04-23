@@ -51,14 +51,7 @@ void     check_simple_word_syntax(char *token, t_vars *vars)
 	initialize_quotes_vars(&quotes);
     while (token[i] != '\0')
     {
-        if (token[i] == DOUBLE_QUOTES)
-            open_and_close_double_quotes(&quotes);
-        else if (token[i] == SINGLE_QUOTES)
-            open_and_close_single_quotes(&quotes);
-        if (token[i] == BACKSLASH && quotes.backslash == NONE)
-            quotes.backslash = EXIST;
-        else
-            quotes.backslash = NONE;
+        open_and_close_quotes(token[i], &quotes);
         i++;
     }
     if (quotes.double_quotes == OPEND || quotes.single_quotes == OPEND

@@ -36,6 +36,7 @@ struct s_char_vec
 	int		used_size;
 	void	(*add_new_element)(t_char_vec *, char);
 	void	(*add_new_element_at_index)(t_char_vec *, char , int);
+	void	(*add_set_of_elements_at_index)(t_char_vec *, char *, int);
 	void	(*replace_element_at_index)(t_char_vec *, char , int);
 	void	(*delete_element_at_index)(t_char_vec *, int);
 	void	(*free)(t_char_vec *);	
@@ -57,6 +58,7 @@ void	initialize_vec_of_char(t_char_vec *vec);
 void	add_new_char(t_char_vec *vec, char c);
 void	delete_char_at_index(t_char_vec *vec, int index);
 void	add_new_char_at_index(t_char_vec *vec, char c, int index);
+void    add_set_of_chars_at_index(t_char_vec *vec, char *str, int index);
 void	replace_char_at_index(t_char_vec *vec, char c, int index);
 void	char_vector_free(t_char_vec *vec);
 

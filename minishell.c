@@ -76,8 +76,8 @@ void print_preorder(t_ast *node, int i)
 	else if (node->tag == e_data_node)
 	{
 		int i;
-
 		print_cmd_redirection(node);
+		
 		i = 0;
 		if (node->node.data.args_vec.elements[i] != NULL)
 			while (node->node.data.args_vec.elements[i])
@@ -114,6 +114,8 @@ t_ast *get_curr_pipeline_seq_node(t_ast *ast)
 			curr_pipeline_seq = curr_pipeline_seq->node.dir.next;
 		first++;
 	}
+	if (curr_pipeline_seq == NULL)
+		first = 1;
 	return (curr_pipeline_seq);
 }
 
@@ -158,7 +160,9 @@ void	print_args(t_ast *data_node)
 	printf("---------------------------------------------------------------\n\n");
 }
 
-void	execute_test(t_ast *ast)
+void		expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table);
+
+void	execute_test(t_ast *ast, t_env_table env_table)
 {
 	t_ast *curr_pipeline_seq;
 	t_ast *curr_simple_cmd;
@@ -171,6 +175,7 @@ void	execute_test(t_ast *ast)
 		printf("%s ╔███████████████████████ Pipeline ███████████████████████╗\n\n",RED);
 		while (curr_simple_cmd)
 		{
+			expand_curr_cmd(curr_simple_cmd, env_table);
 			curr_data_node = curr_simple_cmd->node.dir.bottom;
 			print_cmd_redirection(curr_data_node);
 			print_args(curr_data_node);
@@ -270,13 +275,15 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		create_abstract_syntax_tree(&ast, tokens_list);
-		print_preorder(ast, 1);
-		//execute_test(ast);
 		/////////////////////////////////
 		/**				exit		**///
 		if (strcmp(line, "exit") == 0)
 			temp_exit(&tokens_list, ast, line, &env_table);
 		/////////////////////////////////
+
+		//print_preorder(ast, 1);
+		execute_test(ast, env_table);
+
 		/**		  freeing time		**///
 		/////////////////////////////////
 		free_tokens_list(&tokens_list);//
@@ -284,7 +291,6 @@ int main(int argc, char **argv, char **env)
 		free(line);					   //
 		/////////////////////////////////
 	}
-
 	
 	return (0);
 }
@@ -294,6 +300,24 @@ int main(int argc, char **argv, char **env)
 
 
 
+	// t_char_vec str;
+
+	// initialize_vec_of_char(&str);
+	// str.add_new_element(&str, 'h');
+	// str.add_new_element(&str, 'e');
+	// str.add_new_element(&str, 'l');
+	// str.add_new_element(&str, 'l');
+	// str.add_new_element(&str, 'o');
+	// str.add_new_element(&str, 'w');
+	// str.add_new_element(&str, 'o');
+	// str.add_new_element(&str, 'r');
+	// str.add_new_element(&str, 'l');
+	// str.add_new_element(&str, 'd');
+
+	// str.add_new_element_at_index(&str, ' ', 5);
+	// str.add_set_of_elements_at_index(&str, "bye bye", 0);
+
+	// printf("{%s}\n", str.elements);
 
 	// t_vec	vec;
 	
