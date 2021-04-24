@@ -1,3 +1,5 @@
+#ifndef CHECK_TOKENS_SYNTAX_H
+# define CHECK_TOKENS_SYNTAX_H
 # include "../../minishell.h"
 
 typedef struct          s_vars
@@ -18,3 +20,5 @@ void                    check_semicolon_token_order(t_vars *vars);
 void                    check_redirection_token_order(t_vars *vars);
 void                    check_newline_token_order(t_vars *vars);
 void                    check_word_token_order(t_vars *vars, char *token);
+
+#endif
