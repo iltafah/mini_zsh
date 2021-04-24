@@ -261,6 +261,9 @@ int main(int argc, char **argv, char **env)
 
 	print_header();
 	create_env_table(&env_table, env);
+	// char **env_array = convert_env_table_to_array(env_table);
+	// for (int i = 0; env_array[i]; i++)
+	// 	printf("[%s]\n", env_array[i]);
 	while (1337)
 	{
 		print_current_dir();

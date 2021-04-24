@@ -44,17 +44,17 @@
 // 	env_vec->used_size += 1;
 // }
 
-void extract_data_from_env(t_str_vec *name_vec, t_str_vec *value_vec, char *env_str)
+void extract_data_from_env(t_str_vec *name_vec, t_str_vec *value_vec, char *env)
 {
 	int len;
 	char *name;
 	char *value;
 
 	len = 0;
-	while (env_str[len] != '=')
+	while (env[len] != '=')
 		len++;
-	name = ft_substr(env_str, 0, len);
-	value = ft_strdup(env_str + len + 1);
+	name = ft_substr(env, 0, len);
+	value = ft_strdup(env + len + 1);
 	name_vec->add_new_element(name_vec, name);
 	value_vec->add_new_element(value_vec, value);
 }

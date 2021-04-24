@@ -13,8 +13,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
+
 #include "./get_next_line/get_next_line.h"
 #include "./vectors/vectors.h"
+#include "./environment/environment.h"
 
 #define BOTTOM 0
 #define NEXT 1
@@ -112,17 +114,7 @@ typedef struct s_tokens
 	struct s_tokens *next;
 } t_tokens;
 
-/*
-** ************************************************************************** **
-									env table								
-** ************************************************************************** **
-*/
 
-typedef struct s_env_table
-{
-	t_str_vec	name;
-	t_str_vec	value;
-} t_env_table;
 
 // typedef struct s_env_vec
 // {
@@ -141,7 +133,6 @@ void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
 void free_tokens_list(t_tokens **tokens_list);
 void free_abstract_syntax_tree(t_ast *ast);
 
-void create_env_table(t_env_table *env_table, char **env);
 #endif
 
 // typedef enum e_special_characters
