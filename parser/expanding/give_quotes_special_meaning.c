@@ -18,8 +18,10 @@ void		replace_backslash(char *c, t_quotes quotes)
 	if (quotes.backslash == EXIST)
 	{
 		if (quotes.double_quotes == OPEND)
+		{
 			if (*(c + 1) == '"' || *(c + 1) == '\\' || *(c + 1) == '$' || *(c + 1) == '`')
 				*c = SPECIAL_BACKSLASH;
+		}
 		else if (quotes.single_quotes == CLOSED)
 			*c = SPECIAL_BACKSLASH;
 	}

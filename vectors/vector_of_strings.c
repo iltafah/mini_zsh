@@ -51,7 +51,7 @@ void add_new_element_at_index(t_str_vec *vec, char *element, int index)
 	int		last_index;
 	int		i;
 
-	if (index < 0 || index > vec->size)
+	if (index < 0 || index > vec->size || element == NULL)
 		return ;
 	add_new_element(vec, element);
 	last_index = vec->used_size - 1;
@@ -89,5 +89,5 @@ void	vector_free(t_str_vec *vec)
 	i = 0;
 	while (i <= vec->used_size)
 		free(vec->elements[i++]);
-	free(vec);
+	free(vec->elements);
 }

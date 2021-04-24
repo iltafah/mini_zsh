@@ -13,13 +13,13 @@ void    initialize_vec_of_char(t_char_vec *vec)
 	vec->free = char_vector_free;
 }
 
-void    realloc_char_vector(t_char_vec *vec)
+void    realloc_char_vector(t_char_vec *vec, int new_size)
 {
 	int     i;
 	char    *new_string;
 
 	i = -1;
-	new_string = malloc(sizeof(char) * (vec->size + 1));
+	new_string = malloc(sizeof(char) * (new_size + 1));
 	while (++i < vec->used_size)
 		new_string[i] = vec->elements[i];
 	free(vec->elements);
@@ -31,7 +31,7 @@ void	add_new_char(t_char_vec *vec, char c)
 	if (vec->used_size == vec->size)
 	{
 		vec->size *= 2;
-		realloc_char_vector(vec);
+		realloc_char_vector(vec, vec->size);
 	}
 	vec->elements[vec->used_size] = c;
 	vec->elements[vec->used_size + 1] = '\0';
@@ -52,7 +52,7 @@ void	delete_char_at_index(t_char_vec *vec, int index)
 	if (vec->size > 0 && vec->used_size < (vec->size / 4))
 	{
 		vec->size /= 2;
-		realloc_char_vector(vec);
+		realloc_char_vector(vec, vec->size);
 	}
 }
 
@@ -79,6 +79,8 @@ void    add_set_of_chars_at_index(t_char_vec *vec, char *str, int index)
 {
     int     i;
 
+	if (index < 0 || index > vec->used_size || str == NULL)
+		return ;
     i = 0;
     while (str[i] != '\0')
     {
@@ -96,5 +98,6 @@ void    replace_char_at_index(t_char_vec *vec, char c, int index)
 
 void	char_vector_free(t_char_vec *vec)
 {
-	free(vec);
+	free(vec->elements);
+	vec->elements = NULL;
 }

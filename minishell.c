@@ -283,7 +283,8 @@ int main(int argc, char **argv, char **env)
 
 		//print_preorder(ast, 1);
 		execute_test(ast, env_table);
-
+	
+		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////
 		free_tokens_list(&tokens_list);//

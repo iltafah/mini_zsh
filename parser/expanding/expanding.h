@@ -8,6 +8,8 @@
 # define SPECIAL_DOUBLE_QUOTES -2
 # define SPECIAL_BACKSLASH -3
 
-void		give_quotes_special_meaning(char *str);
+void	give_quotes_special_meaning(char *str);
+void    expand_dollar_vars(char **str_addr, t_env_table env_table);
+
 
 #endif
