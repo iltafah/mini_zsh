@@ -1,4 +1,7 @@
-#include "../../minishell.h"
+#ifndef CREATE_ABSTRACT_SYNTAX_TREE_C
+# define CREATE_ABSTRACT_SYNTAX_TREE_C
+
+# include "../../minishell.h"
 
 typedef struct		s_node_state
 {
@@ -41,3 +44,5 @@ void	initialize_node_states(t_state *state);
 void    store_word_in_suitable_node(t_ast_vars	*vars, char *word);
 void    store_redir_in_suitable_node(t_ast_vars *vars, t_tokens **token);
 void	get_suitable_nodes(t_state state, t_ast_ptrs *ast_ptrs);
+
+#endif
