@@ -52,6 +52,7 @@ void     check_simple_word_syntax(char *token, t_vars *vars)
     while (token[i] != '\0')
     {
         open_and_close_quotes(token[i], &quotes);
+        does_backslash_exist(token[i], &quotes);
         i++;
     }
     if (quotes.double_quotes == OPEND || quotes.single_quotes == OPEND

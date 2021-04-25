@@ -13,18 +13,28 @@ int		is_digit(char c)
 char	*get_dollar_name(char *str, int *index_addr)
 {
 	int		i;
+	int		len;
+	int		start;
 	char	*name;
 
-	i = 0;
+	len = 0;
+	start = *index_addr + 1;
+	i = start;
 	if (is_digit(str[i]))
+	{
 		i++;
+		len++;
+	}
 	else
 	{
 		while (str[i] != '\0' && is_alpha(str[i]))
+		{
 			i++;
+			len++;
+		}
 	}
-	*index_addr += (i + 1);
-	name = ft_substr(str, 0, i);
+	*index_addr = i;
+	name = ft_substr(str, start, len);
 	return (name);
 }
 
@@ -50,29 +60,41 @@ char	*get_dollar_value(char *name, t_env_table env_table)
 	return (value);
 }
 
-void	expand_dollar_vars(char **str_addr, t_env_table env_table)
+void	expand_curr_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 {
-	int			i;
 	char		*name;
 	char		*value;
-	char		*old_str;
+
+	name = get_dollar_name(str, i);
+	value = get_dollar_value(name, env);
+	vec->add_set_of_elements_at_index(vec, value, vec->used_size);
+	free(name);
+}
+
+void	expand_dollar_vars(char **arg_str, t_env_table env_table)
+{
+	int			i;
 	t_char_vec	vec;
+	t_quotes	quotes;
 
 	i = 0;
-	old_str = *str_addr;
 	initialize_vec_of_char(&vec);
-	while (old_str[i] != '\0')
+	initialize_quotes_vars(&quotes);
+	while ((*arg_str)[i] != '\0')
 	{
-		if (old_str[i] == DOLLAR)
+		if ((*arg_str)[i] == SPECIAL_SINGLE_QUOTES)
+			open_and_close_single_quotes(&quotes);
+		else if ((*arg_str)[i] == DOLLAR)
 		{
-			name = get_dollar_name(old_str + i + 1, &i);
-			value = get_dollar_value(name, env_table);
-			vec.add_set_of_elements_at_index(&vec, value, vec.used_size);
-			free(name);
+			if (quotes.backslash == NONE && quotes.single_quotes == CLOSED)
+			{
+				expand_curr_var(*arg_str, &i, &vec, env_table);
+				continue ;
+			}	
 		}
-		else
-			vec.add_new_element(&vec, old_str[i++]);
+		does_backslash_exist((*arg_str)[i], &quotes);
+		vec.add_new_element(&vec, (*arg_str)[i++]);
 	}
-	free(*str_addr);
-	*str_addr = vec.elements;
+	free(*arg_str);
+	*arg_str = vec.elements;
 }
