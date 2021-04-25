@@ -1,7 +1,8 @@
 #ifndef ENVIRONMENT_H
 # define ENVIRONMENT_H
-# include "../minishell.h"
-
+# include "stdlib.h"
+# include "../vectors/vectors.h"
+# include "../get_next_line/get_next_line.h"
 /*
 ** ************************************************************************** **
 									env table								

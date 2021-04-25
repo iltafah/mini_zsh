@@ -40,6 +40,8 @@
 # define SEMICOLON ';'
 # define DOLLAR '$'
 
+typedef t_env_table xd;
+
 typedef enum e_tag
 {
 	e_cmdline_node,
@@ -127,11 +129,12 @@ typedef struct s_tokens
 ** ************************************************************************** **
 */
 
-int check_tokens_syntax(t_tokens *tokens_list);
-void line_tokenization(char *line, t_tokens **tokens_list);
-void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
-void free_tokens_list(t_tokens **tokens_list);
-void free_abstract_syntax_tree(t_ast *ast);
+void	expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table);
+int		check_tokens_syntax(t_tokens *tokens_list);
+void	line_tokenization(char *line, t_tokens **tokens_list);
+void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
+void	free_tokens_list(t_tokens **tokens_list);
+void	free_abstract_syntax_tree(t_ast *ast);
 
 #endif
 
