@@ -2,6 +2,7 @@
 # define USEFULL_FUNCTIONS_H
 
 # include "../../minishell.h"
+
 typedef struct          s_quotes
 {
     int                 backslash;
@@ -11,16 +12,15 @@ typedef struct          s_quotes
     int                 curr_state;
 }                       t_quotes;
 
-// #define OPEND 1
-// #define CLOSED 0
-
-// #define NONE 0
-// #define EXIST 1
+# define SPECIAL_SINGLE_QUOTES -1
+# define SPECIAL_DOUBLE_QUOTES -2
+# define SPECIAL_BACKSLASH -3
 
 void	initialize_quotes_vars(t_quotes *quotes);
 void    open_and_close_double_quotes(t_quotes *quotes);
 void    open_and_close_single_quotes(t_quotes *quotes);
 void    open_and_close_quotes(char c, t_quotes *quotes);
+void    does_backslash_exist(char c, t_quotes *quotes);
 void	change_quotes_state(t_quotes *quotes);
 
 #endif

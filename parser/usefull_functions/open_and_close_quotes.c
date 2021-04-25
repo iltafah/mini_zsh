@@ -35,7 +35,11 @@ void    open_and_close_quotes(char c, t_quotes *quotes)
 		open_and_close_single_quotes(quotes);
 	else if (c == DOUBLE_QUOTES)
 		open_and_close_double_quotes(quotes);
-	if (c == BACKSLASH && quotes->backslash == NONE)
+}
+
+void    does_backslash_exist(char c, t_quotes *quotes)
+{
+	if ((c == BACKSLASH || c == SPECIAL_BACKSLASH) && quotes->backslash == NONE)
 		quotes->backslash = EXIST;
 	else
 		quotes->backslash = NONE;

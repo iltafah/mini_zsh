@@ -45,7 +45,8 @@ void		give_quotes_special_meaning(char *str)
 			else if (str[i] == DOUBLE_QUOTES)
 				replace_double_quotes(&str[i], quotes);
 		}
-		if (str[i] == BACKSLASH)
+		does_backslash_exist(str[i], &quotes);
+		if (quotes.backslash == EXIST)
 			replace_backslash(&str[i], quotes);
 		i++;
 	}
