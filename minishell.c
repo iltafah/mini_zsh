@@ -62,7 +62,7 @@ void print_tokens(t_tokens *tokens)
 	}
 }
 
-void print_preorder(t_ast *node, int i)
+void print_preorder(t_ast *node, int i, t_env_table env_table)
 {
 	if (node == NULL)
 	{
@@ -88,9 +88,10 @@ void print_preorder(t_ast *node, int i)
 	else if (node->tag == e_simple_cmd_node)
 	{
 		printf("%s\n\n>>>simple command<<<    ", CYN);
+		expand_curr_cmd(node, env_table);
 	}
-	print_preorder(node->node.dir.bottom, i);
-	print_preorder(node->node.dir.next, i);
+	print_preorder(node->node.dir.bottom, i, env_table);
+	print_preorder(node->node.dir.next, i, env_table);
 }
 
 
@@ -159,8 +160,6 @@ void	print_args(t_ast *data_node)
 	printf("%s]\n", PRP);
 	printf("---------------------------------------------------------------\n\n");
 }
-
-void		expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table);
 
 void	execute_test(t_ast *ast, t_env_table env_table)
 {
@@ -284,8 +283,8 @@ int main(int argc, char **argv, char **env)
 			temp_exit(&tokens_list, ast, line, &env_table);
 		/////////////////////////////////
 
-		//print_preorder(ast, 1);
-		execute_test(ast, env_table);
+		print_preorder(ast, 1, env_table);
+		//execute_test(ast, env_table);
 	
 		/////////////////////////////////
 		/**		  freeing time		**///

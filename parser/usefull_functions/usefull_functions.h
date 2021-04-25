@@ -1,7 +1,7 @@
 #ifndef USEFULL_FUNCTIONS_H
 # define USEFULL_FUNCTIONS_H
 
-# include "../../minishell.h"
+# include "../parser.h"
 
 typedef struct          s_quotes
 {
