@@ -1,8 +1,7 @@
 #ifndef EXPANDING_H
 # define EXPANDING_H
 
-# include "../../minishell.h"
-# include "../usefull_functions/usefull_functions.h"
+# include "../parser.h"
 
 void	give_quotes_special_meaning(char *str);
 void    expand_dollar_vars(char **str_addr, t_env_table env_table);

@@ -1,6 +1,7 @@
 #ifndef CHECK_TOKENS_SYNTAX_H
 # define CHECK_TOKENS_SYNTAX_H
-# include "../../minishell.h"
+
+# include "../parser.h"
 
 typedef struct          s_vars
 {
