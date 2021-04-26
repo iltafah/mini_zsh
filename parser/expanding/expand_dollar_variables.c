@@ -1,11 +1,11 @@
 #include "expanding.h"
 
-int		is_alpha(char c)
+int	is_alpha(char c)
 {
-	return (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z');
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
 
-int		is_digit(char c)
+int	is_digit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -45,17 +45,20 @@ char	*get_dollar_value(char *name, t_env_table env_table)
 	t_str_vec	*name_vec;
 	t_str_vec	*value_vec;
 
-	if (name == NULL)
-		return NULL;
-	i = 0;
-	value = NULL;
-	name_vec = &env_table.name;
-	value_vec = &env_table.value;
-	while (name_vec->elements[i])
+	if (name[0] == '\0')
+		value = ft_strdup("$");
+	else
 	{
-		if (strcmp(name, name_vec->elements[i]) == 0)
-			value = value_vec->elements[i];
-		i++;
+		i = 0;
+		value = NULL;
+		name_vec = &env_table.name;
+		value_vec = &env_table.value;
+		while (name_vec->elements[i])
+		{
+			if (strcmp(name, name_vec->elements[i]) == 0)
+				value = value_vec->elements[i];
+			i++;
+		}
 	}
 	return (value);
 }
@@ -69,6 +72,13 @@ void	expand_curr_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 	value = get_dollar_value(name, env);
 	vec->add_set_of_elements_at_index(vec, value, vec->used_size);
 	free(name);
+}
+
+void	add_char_to_vec_if(t_char_vec *vec, char c)
+{
+	if (c != SPECIAL_DOUBLE_QUOTES && c != SPECIAL_SINGLE_QUOTES
+		&& c != SPECIAL_BACKSLASH)
+		vec->add_new_element(vec, c);
 }
 
 void	expand_dollar_vars(char **arg_str, t_env_table env_table)
@@ -90,10 +100,11 @@ void	expand_dollar_vars(char **arg_str, t_env_table env_table)
 			{
 				expand_curr_var(*arg_str, &i, &vec, env_table);
 				continue ;
-			}	
+			}
 		}
 		does_backslash_exist((*arg_str)[i], &quotes);
-		vec.add_new_element(&vec, (*arg_str)[i++]);
+		add_char_to_vec_if(&vec, (*arg_str)[i]);
+		i++;
 	}
 	free(*arg_str);
 	*arg_str = vec.elements;

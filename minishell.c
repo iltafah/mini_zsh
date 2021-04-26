@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/20 17:07:35 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/04/26 17:22:42 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,12 @@ int main(int argc, char **argv, char **env)
 	return (0);
 }
 
+
+// Tests to fix
+
+/*[1] echo hello > "" */
+/*[2] echo hello > $ */
+/*[3] "echo $jfhjdf=kdjskdgs" */
 
 
 
