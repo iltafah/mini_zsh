@@ -303,8 +303,9 @@ int main(int argc, char **argv, char **env)
 
 /*[1] echo hello > "" */
 /*[2] echo hello > $ */
-/*[3] "echo $jfhjdf=kdjskdgs" */
 
+/*[3] "echo $jfhjdf=kdjskdgs" */
+/*[4] echo $ilias_1337_man$  */     //underscor?? dollar at the end??
 
 
 

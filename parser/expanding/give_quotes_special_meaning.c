@@ -2,15 +2,15 @@
 
 void		replace_double_quotes(char *c, t_quotes quotes)
 {
-		if (quotes.double_quotes == OPEND
-		|| quotes.double_quotes == CLOSED)
-			*c = SPECIAL_DOUBLE_QUOTES;
+	if (quotes.double_quotes == OPEND
+	|| quotes.double_quotes == CLOSED)
+		*c = SPECIAL_DOUBLE_QUOTES;
 }
 
 void		replace_single_quotes(char *c, t_quotes quotes)
 {
-		if (quotes.single_quotes == OPEND || quotes.single_quotes == CLOSED)
-			*c = SPECIAL_SINGLE_QUOTES;
+	if (quotes.single_quotes == OPEND || quotes.single_quotes == CLOSED)
+		*c = SPECIAL_SINGLE_QUOTES;
 }
 
 void		replace_backslash(char *c, t_quotes quotes)

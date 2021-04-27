@@ -2,13 +2,13 @@ NAME = minishell
 
 FLAGS = #-Wall -Wextra -Werror
 
-SRC = ./minishell.c \
-./environment/convert_env_table_to_array.c \
+SRC = ./environment/convert_env_table_to_array.c \
 ./environment/create_env_table.c \
 ./freeing_time/free_abstract_syntax_tree.c \
 ./freeing_time/free_tokens_list.c \
 ./get_next_line/get_next_line.c \
 ./get_next_line/get_next_line_utils.c \
+./minishell.c \
 ./parser/check_tokens_syntax/check_simple_word_syntax.c \
 ./parser/check_tokens_syntax/check_tokens_order.c \
 ./parser/check_tokens_syntax/check_tokens_syntax.c \
@@ -21,6 +21,7 @@ SRC = ./minishell.c \
 ./parser/expanding/expand_dollar_variables.c \
 ./parser/expanding/expanding.c \
 ./parser/expanding/give_quotes_special_meaning.c \
+./parser/expanding/remove_special_quotes.c \
 ./parser/expanding/split_element_to_args.c \
 ./parser/tokenization/cases_treating.c \
 ./parser/tokenization/tokenization.c \

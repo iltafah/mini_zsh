@@ -27,7 +27,8 @@ char	*get_dollar_name(char *str, int *index_addr)
 	}
 	else
 	{
-		while (str[i] != '\0' && is_alpha(str[i]))
+		while (str[i] != '\0' &&
+			(is_alpha(str[i]) || is_digit(str[i]) || str[i] == '_'))
 		{
 			i++;
 			len++;
@@ -74,13 +75,6 @@ void	expand_curr_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 	free(name);
 }
 
-void	add_char_to_vec_if(t_char_vec *vec, char c)
-{
-	if (c != SPECIAL_DOUBLE_QUOTES && c != SPECIAL_SINGLE_QUOTES
-		&& c != SPECIAL_BACKSLASH)
-		vec->add_new_element(vec, c);
-}
-
 void	expand_dollar_vars(char **arg_str, t_env_table env_table)
 {
 	int			i;
@@ -103,7 +97,7 @@ void	expand_dollar_vars(char **arg_str, t_env_table env_table)
 			}
 		}
 		does_backslash_exist((*arg_str)[i], &quotes);
-		add_char_to_vec_if(&vec, (*arg_str)[i]);
+		vec.add_new_element(&vec, (*arg_str)[i]);
 		i++;
 	}
 	free(*arg_str);

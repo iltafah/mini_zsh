@@ -9,19 +9,19 @@ void	get_splitted_arg_and_insert_it(char **arg, t_str_vec *args_vec, int i)
 	{
 		if (**arg == SPECIAL_DOUBLE_QUOTES)
 		{
-			(*arg)++;
-			while (**arg != SPECIAL_DOUBLE_QUOTES && **arg != '\0')
+			while (TRUE)
 			{
-				if (**arg != SPECIAL_BACKSLASH)
-					splitted_arg.add_new_element(&splitted_arg, **arg);	
+				splitted_arg.add_new_element(&splitted_arg, **arg);
 				(*arg)++;
+				if (**arg == SPECIAL_DOUBLE_QUOTES)
+					break ;
 			}
 		}
-		else if (**arg != SPECIAL_SINGLE_QUOTES && **arg != SPECIAL_BACKSLASH)
-			splitted_arg.add_new_element(&splitted_arg, **arg);
+		splitted_arg.add_new_element(&splitted_arg, **arg);
 		(*arg)++;
 	}
 	args_vec->add_new_element_at_index(args_vec, splitted_arg.elements, i);
+	remove_special_quotes(&args_vec->elements[i]);
 }
 
 void	split_element_to_args(t_str_vec *vec, int *index)

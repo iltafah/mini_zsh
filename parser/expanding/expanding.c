@@ -22,6 +22,7 @@ void	expand_redirection_list(t_redirection *rdir_list, t_env_table env_table)
 	{
 		give_quotes_special_meaning(curr_redir_node->file);
 		expand_dollar_vars(&curr_redir_node->file, env_table);
+		remove_special_quotes(&curr_redir_node->file);
 		curr_redir_node = curr_redir_node->next;
 	}
 }
@@ -34,7 +35,3 @@ void	expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table)
 	expand_args_vec(&data->node.data.args_vec, env_table);
 	expand_redirection_list(data->node.data.redirections, env_table);
 }
-
-
-
-//[cat]  ["hello   world"] [$vscode]  [$vscode]
