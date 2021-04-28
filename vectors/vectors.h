@@ -87,6 +87,7 @@ void	replace_char_at_index(t_char_vec *vec, char c, int index);
 void	char_vector_free(t_char_vec *vec);
 
 
+void	initialize_vec_of_char_vec(t_vec_vec_char *vec);
 void	add_new_char_vec(t_vec_vec_char *vec, t_char_vec element);
 void	char_vec_vector_free(t_vec_vec_char *vec);
 
