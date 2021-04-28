@@ -1,5 +1,4 @@
 #include "./vectors.h"
-#include <stdio.h>
 
 void initialize_vec_content(t_str_vec *vec)
 {

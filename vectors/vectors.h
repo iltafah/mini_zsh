@@ -43,10 +43,33 @@ struct s_char_vec
 };
 
 /*
+
+** ************************************************************************** **
+							vector of char vectors
+** ************************************************************************** **
+*/
+
+typedef struct s_vec_vec_char t_vec_vec_char;
+
+struct s_vec_vec_char
+{
+	t_char_vec	*elements;
+	int			size;
+	int			used_size;
+	void		(*add_new_element)(t_vec_vec_char *, t_char_vec);
+	void		(*add_new_element_at_index)(t_vec_vec_char *, t_char_vec , int);
+	void		(*replace_element_at_index)(t_vec_vec_char *, t_char_vec , int);
+	void		(*delete_element_at_index)(t_vec_vec_char *, int);
+	void		(*free)(t_vec_vec_char *);
+};
+
+
+/*
 ** ************************************************************************** **
 */
 
 char	*ft_strdup(const char *s1);
+
 void	initialize_vec_content(t_str_vec *vec);
 void	add_new_element(t_str_vec *vec, char *element);
 void	add_new_element_at_index(t_str_vec *vec, char *element, int index);
@@ -62,5 +85,9 @@ void	add_new_char_at_index(t_char_vec *vec, char c, int index);
 void    add_set_of_chars_at_index(t_char_vec *vec, char *str, int index);
 void	replace_char_at_index(t_char_vec *vec, char c, int index);
 void	char_vector_free(t_char_vec *vec);
+
+
+void	add_new_char_vec(t_vec_vec_char *vec, t_char_vec element);
+void	char_vec_vector_free(t_vec_vec_char *vec);
 
 #endif
