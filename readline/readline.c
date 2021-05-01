@@ -79,7 +79,7 @@ void	add_empty_char_vec_to_history_vec()
 	t_char_vec	char_vec;
 
 	initialize_vec_of_char(&char_vec);
-	history.add_new_element(&history, char_vec);
+	readline_vars.history.add_new_element(&readline_vars.history, char_vec);
 }
 
 char	**convert_history_vec_to_array()
@@ -89,9 +89,9 @@ char	**convert_history_vec_to_array()
 	t_char_vec	*line;
 
 	i = 0;
-	line = history.elements;
-	array = malloc(sizeof(char*) * history.used_size + 1);
-	while (i < history.used_size)
+	line = readline_vars.history.elements;
+	array = malloc(sizeof(char*) * readline_vars.history.used_size + 1);
+	while (i < readline_vars.history.used_size)
 	{
 		array[i] = strdup(line[i].elements);
 		i++;
@@ -140,7 +140,7 @@ void	clear_after_cursor(int cursor_pos)
 	ft_putstr(clear_line);
 }
 
-void     edit_line(t_readline *vars, char **line)
+void     edit_line(char **line)
 {
 	char			*buff;
 	char			**old_history;
@@ -152,8 +152,8 @@ void     edit_line(t_readline *vars, char **line)
 
 	old_history = convert_history_vec_to_array();
 	add_empty_char_vec_to_history_vec();
-	history_line = history.elements;
-	l_i = history.used_size - 1;
+	history_line = readline_vars.history.elements;
+	l_i = readline_vars.history.used_size - 1;
 	c_i = 0;
 
 	curr_dir_len = print_current_dir();
@@ -174,7 +174,7 @@ void     edit_line(t_readline *vars, char **line)
 		}
 		else if (buff[0] == 27)
 		{
-			if (strcmp(buff, vars->keys.up_arrow) == 0)
+			if (strcmp(buff, readline_vars.keys.up_arrow) == 0)
 			{
 				if (l_i > 0)
 				{	
@@ -185,9 +185,9 @@ void     edit_line(t_readline *vars, char **line)
 					cursor_pos = curr_dir_len + c_i;
 				}
 			}
-			else if (strcmp(buff, vars->keys.down_arrow) == 0)
+			else if (strcmp(buff, readline_vars.keys.down_arrow) == 0)
 			{
-				if (l_i < history.used_size - 1)
+				if (l_i < readline_vars.history.used_size - 1)
 				{
 					l_i++;
 					clear_after_cursor(curr_dir_len);
@@ -199,7 +199,7 @@ void     edit_line(t_readline *vars, char **line)
 					cursor_pos = curr_dir_len + c_i;
 				}
 			}
-			else if (strcmp(buff, vars->keys.left_arrow) == 0)
+			else if (strcmp(buff, readline_vars.keys.left_arrow) == 0)
 			{
 				if (c_i > 0)
 				{
@@ -209,7 +209,7 @@ void     edit_line(t_readline *vars, char **line)
 					cursor_pos--;
 				}
 			}
-			else if (strcmp(buff, vars->keys.right_arrow) == 0)
+			else if (strcmp(buff, readline_vars.keys.right_arrow) == 0)
 			{
 				if (c_i <= history_line[l_i].last_index && history_line[l_i].last_index != 0)
 				{
@@ -222,7 +222,7 @@ void     edit_line(t_readline *vars, char **line)
 		}
 		else
 		{
-			if (buff[0] == vars->keys.enter)
+			if (buff[0] == readline_vars.keys.enter)
 			{
 				*line = strdup(history_line[l_i].elements);
 				if (history_line[l_i].used_size > 0)
@@ -230,24 +230,24 @@ void     edit_line(t_readline *vars, char **line)
 					t_char_vec	new_vec;
 					initialize_vec_of_char(&new_vec);
 					new_vec.add_set_of_elements_at_index(&new_vec, history_line[l_i].elements, 0);
-					history.delete_element_at_index(&history, history.used_size - 1);
-					history.add_new_element(&history, new_vec);
+					readline_vars.history.delete_element_at_index(&readline_vars.history, readline_vars.history.used_size - 1);
+					readline_vars.history.add_new_element(&readline_vars.history, new_vec);
 
 					if (old_history[l_i] != NULL)
 					{
 						t_char_vec	old_line;
 						initialize_vec_of_char(&old_line);
 						old_line.add_set_of_elements_at_index(&old_line, old_history[l_i], 0);
-						history.delete_element_at_index(&history, l_i);
-						history.add_new_element_at_index(&history, old_line, l_i);
+						readline_vars.history.delete_element_at_index(&readline_vars.history, l_i);
+						readline_vars.history.add_new_element_at_index(&readline_vars.history, old_line, l_i);
 					}
 				}
 				else
-					history.delete_element_at_index(&history, history.used_size - 1);
+					readline_vars.history.delete_element_at_index(&readline_vars.history, readline_vars.history.used_size - 1);
 				ft_putstr("\n");
 				break ;
 			}
-			else if (buff[0] == vars->keys.backspace)
+			else if (buff[0] == readline_vars.keys.backspace)
 			{
 				if (c_i > 0)
 				{
@@ -280,65 +280,19 @@ void     edit_line(t_readline *vars, char **line)
 
 void	readline(char **line)
 {
-	static t_readline		vars;
 	struct termios	original_termios_state;
 	static int		first_time = 1;
-	// static t_vec_vec_char	history;
 	char			*term_type = getenv("TERM");
 
-	tgetent(NULL, term_type);
-	// char	*clear_line = tgetstr("dl", NULL);
-	// char	*cm_cap = tgetstr("cm", NULL);
 	if (first_time)
 	{
-		initialize_vec_of_char_vec(&history);
-		assign_keys(&vars.keys);
+		initialize_vec_of_char_vec(&readline_vars.history);
+		assign_keys(&readline_vars.keys);
 	}
+	tgetent(NULL, term_type);
 	tcgetattr(STDIN_FILENO, &original_termios_state);
 	enable_raw_mode();
-	// history_store(&history, keys, clear_line, cm_cap);
-	edit_line(&vars, line);
+	edit_line(line);
 	disable_raw_mode(&original_termios_state);
-	// *line = strdup(history.elements[history.used_size - 1].elements);
 	first_time = 0;
 }
-
-// int		main()
-// {
-
-// 	char	*line;
-// 	readline(&line);
-// 	printf("%s\n", line);
-// 	// readline(&history);
-// 	// readline(&history);
-// 	return (0);
-// }
-	
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-	// t_char_vec		line;
-	// t_char_vec		*tmp;
-
-	// initialize_vec_of_char(&line);
-	// line.add_set_of_elements_at_index(&line, "hello world told ya", 0);
-	// printf("line = [%s] [%p]\n", line.elements, line.elements);
-	// history.add_new_element(history, line);
-	// printf("history[0] = [%s] [%p]\n", history.elements[0].elements, history.elements[0].elements);
-	// // l_i = history.used_size - 1;
-	// // history.elements[0].add_set_of_elements_at_index(&history.elements[0], " wow it is a new str", history.elements[0].used_size);
-	// line.add_new_element(&line, 'a');
-	// printf("new history[0] = [%s]  [%p]\n", history.elements[0].elements, history.elements[0].elements);
-	// printf("new line = [%s] [%p]\n", line.elements, line.elements);
-	

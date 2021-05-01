@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/04/26 17:22:42 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/05/01 14:37:32 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,8 +253,8 @@ int main(int argc, char **argv, char **env)
 			temp_exit(&tokens_list, ast, line, &env_table);
 		/////////////////////////////////
 
-		print_preorder(ast, 1, env_table);
-		// execute_test(ast, env_table);
+		// print_preorder(ast, 1, env_table);
+		execute_test(ast, env_table);
 		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////

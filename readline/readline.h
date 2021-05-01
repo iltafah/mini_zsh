@@ -20,12 +20,21 @@ typedef struct	s_keys
 	char	backspace;
 }				t_keys;
 
-t_vec_vec_char	history;
+
+// typedef struct	s_capability
+// {
+
+// }				t_capability;
+
 
 typedef struct		s_readline
 {
+	t_vec_vec_char	history;
 	t_keys			keys;
+	// t_capability	capability
 }					t_readline;
+
+t_readline			readline_vars;
 
 void	readline(char **line);
 
