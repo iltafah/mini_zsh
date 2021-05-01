@@ -84,6 +84,7 @@ void	expand_dollar_vars(char **arg_str, t_env_table env_table)
 	i = 0;
 	initialize_vec_of_char(&vec);
 	initialize_quotes_vars(&quotes);
+
 	while ((*arg_str)[i] != '\0')
 	{
 		if ((*arg_str)[i] == SPECIAL_SINGLE_QUOTES)

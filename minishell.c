@@ -214,32 +214,6 @@ void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line, t_env_table *env_
 ** ************************************************************************** **
 */
 
-void print_current_dir()
-{
-	char *curr_dir;
-	int keep_index;
-	int len;
-	int i;
-
-	i = 0;
-	len = 0;
-	keep_index = 0;
-	curr_dir = getcwd(NULL, 0);
-	while (curr_dir[i] != '\0')
-	{
-		if (curr_dir[i] == '/')
-			keep_index = i + 1;
-		i++;
-	}
-	len = i - keep_index;
-	write(1, GRN, ft_strlen(GRN));
-	write(1, "➜    ", 5);
-	write(1, curr_dir + keep_index, len);
-	write(1, " ", 1);
-	free(curr_dir);
-	write(1, WHT, ft_strlen(WHT));
-}
-
 void print_header()
 {
 	printf(CYN);
@@ -260,14 +234,10 @@ int main(int argc, char **argv, char **env)
 
 	print_header();
 	create_env_table(&env_table, env);
-	// char **env_array = convert_env_table_to_array(env_table);
-	// for (int i = 0; env_array[i]; i++)
-	// 	printf("[%s]\n", env_array[i]);
 	while (1337)
 	{
-		print_current_dir();
-		get_next_line(0, &line);
-
+		// get_next_line(0, &line);
+		readline(&line);
 		line_tokenization(line, &tokens_list);
 		print_tokens(tokens_list);
 		if (check_tokens_syntax(tokens_list) == ERROR)
@@ -284,8 +254,7 @@ int main(int argc, char **argv, char **env)
 		/////////////////////////////////
 
 		print_preorder(ast, 1, env_table);
-		//execute_test(ast, env_table);
-	
+		// execute_test(ast, env_table);
 		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////
@@ -301,6 +270,7 @@ int main(int argc, char **argv, char **env)
 
 // Tests to fix
 
+/*[1337] echo $"PWD" */
 /*[1] echo hello > "" */
 /*[2] echo hello > $ */
 

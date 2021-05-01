@@ -1,9 +1,11 @@
 #include "./vectors.h"
+#include <stdio.h>
 
 void    initialize_vec_of_char(t_char_vec *vec)
 {
 	vec->size = 2;
 	vec->used_size = 0;
+	vec->last_index = 0;
 	vec->elements = malloc(sizeof(char) * (vec->size) + 1);
 	vec->elements[0] = '\0';
 	vec->add_new_element = add_new_char;
@@ -23,6 +25,7 @@ void    realloc_char_vector(t_char_vec *vec, int new_size)
 	new_string = malloc(sizeof(char) * (new_size + 1));
 	while (++i < vec->used_size)
 		new_string[i] = vec->elements[i];
+	new_string[i] = '\0';
 	free(vec->elements);
 	vec->elements = new_string;
 }
@@ -37,11 +40,12 @@ void	add_new_char(t_char_vec *vec, char c)
 	vec->elements[vec->used_size] = c;
 	vec->elements[vec->used_size + 1] = '\0';
 	vec->used_size += 1;
+	vec->last_index = vec->used_size - 1;
 }
 
 void	delete_char_at_index(t_char_vec *vec, int index)
 {
-	if (index < 0 || index > vec->size)
+	if (index < 0 || index > vec->used_size)
 		return ;
 	vec->elements[index] = '\0';
 	while (index <= vec->used_size)
@@ -50,6 +54,7 @@ void	delete_char_at_index(t_char_vec *vec, int index)
 		index++;
 	}
 	vec->used_size -= 1;
+	vec->last_index = vec->used_size - 1;
 	if (vec->size > 0 && vec->used_size < (vec->size / 4))
 	{
 		vec->size /= 2;
