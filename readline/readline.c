@@ -180,7 +180,7 @@ void     edit_line(char **line, t_trie_node *key_seq_trie)
 				cursor_pos++;
 			}
 		}
-		else if (c == 10)
+		else if (key == enter)
 		{
 			*line = strdup(history_line[l_i].elements);
 			if (history_line[l_i].used_size > 0)
@@ -204,7 +204,7 @@ void     edit_line(char **line, t_trie_node *key_seq_trie)
 			ft_putstr("\n");
 			break ;
 		}
-		else if (c == 127)
+		else if (key == backspace)
 		{
 			if (c_i > 0)
 			{
@@ -218,7 +218,7 @@ void     edit_line(char **line, t_trie_node *key_seq_trie)
 				// printf("{%s}\n", line[l_i].elements);
 			}
 		}
-		else if (ft_isprint(c))
+		else if (key == printable)
 		{
 			history_line[l_i].add_new_element_at_index(&history_line[l_i], c, c_i);
 			clear_after_cursor(cursor_pos);

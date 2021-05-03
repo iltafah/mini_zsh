@@ -60,20 +60,31 @@ int	get_key(t_trie_node *trie_root, char c)
 	return (key);
 }
 
+void	insert_printable_characters(t_trie_node *trie_root)
+{
+	static char	printable_char[] = "\0";
+	int			curr_printable_char = 32;
+	int			last_printable_char = 127;
+
+	while (curr_printable_char < last_printable_char)
+	{
+		printable_char[0] = curr_printable_char;
+		insert_key(trie_root, printable_char, printable);
+		curr_printable_char++;
+	}
+}
+
 t_trie_node	*initialize_key_seq_trie()
 {
 	t_trie_node *trie_root;
-// int	key = none;
 	trie_root = get_trie_node();
+	
+	insert_printable_characters(trie_root);
 	insert_key(trie_root, "\e[A", up_arrow);
 	insert_key(trie_root, "\e[B", down_arrow);
 	insert_key(trie_root, "\e[C", right_arrow);
 	insert_key(trie_root, "\e[D", left_arrow);
-	// key = get_key(trie_root, 27);
-	// printf("key = %d\n", key);
-	// key = get_key(trie_root, '[');
-	// printf("key = %d\n", key);
-	// key = get_key(trie_root, 'A');
-	// printf("key = %d\n", key);
+	insert_key(trie_root, "\177", backspace);
+	insert_key(trie_root, "\n", enter);
 	return (trie_root);
 }

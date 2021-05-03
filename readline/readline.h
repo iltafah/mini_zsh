@@ -11,7 +11,8 @@
 # define PRP "\e[1;95m"
 # define WHT "\e[1;97m"
 
-typedef enum e_key {none, waiting, up_arrow, down_arrow, left_arrow, right_arrow} t_key;
+typedef enum e_key {none, waiting, up_arrow, down_arrow, left_arrow,
+right_arrow, enter, backspace, printable} t_key;
 
 typedef struct	s_trie_node
 {
