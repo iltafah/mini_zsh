@@ -27,6 +27,7 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./parser/tokenization/tokenization.c \
 ./parser/usefull_functions/open_and_close_quotes.c \
 ./readline/readline.c \
+./readline/create_key_seq_trie.c \
 ./vectors/vector_of_chars.c \
 ./vectors/vector_of_char_vectors.c \
 ./vectors/vector_of_strings.c
