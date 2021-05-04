@@ -1,7 +1,7 @@
 #include "./vectors.h"
 #include <stdio.h>
 
-void initialize_vec_of_char_vec(t_vec_vec_char *vec)
+void initialize_vec_of_char_vec(t_vchar_vec *vec)
 {
 	vec->size = 2;
 	vec->used_size = 0;
@@ -14,7 +14,7 @@ void initialize_vec_of_char_vec(t_vec_vec_char *vec)
 	vec->free = char_vec_vector_free;
 }
 
-void realloc_vector_of_char_vec(t_vec_vec_char *vec)
+void realloc_vector_of_char_vec(t_vchar_vec *vec)
 {
 	int			i;
 	t_char_vec	*new_table;
@@ -27,7 +27,7 @@ void realloc_vector_of_char_vec(t_vec_vec_char *vec)
 	vec->elements = new_table;
 }
 
-void	add_new_char_vec(t_vec_vec_char *vec, t_char_vec element)
+void	add_new_char_vec(t_vchar_vec *vec, t_char_vec element)
 {
 	if (vec->used_size == vec->size)
 	{
@@ -38,14 +38,14 @@ void	add_new_char_vec(t_vec_vec_char *vec, t_char_vec element)
 	vec->used_size += 1;
 }
 
-// void replace_char_vec_at_index(t_vec_vec_char *vec, t_char_vec element, int index)
+// void replace_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index)
 // {
 // 	if (index < 0 || index > vec->size)
 // 		return ;
 // 	vec->elements[index] = element;
 // }
 
-void	add_new_char_vec_at_index(t_vec_vec_char *vec, t_char_vec element, int index)
+void	add_new_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index)
 {
 	t_char_vec	last_element;
 	int			last_index;
@@ -64,7 +64,7 @@ void	add_new_char_vec_at_index(t_vec_vec_char *vec, t_char_vec element, int inde
 	vec->elements[index] = last_element;
 }
 
-void	delete_char_vec_at_index(t_vec_vec_char *vec, int index)
+void	delete_char_vec_at_index(t_vchar_vec *vec, int index)
 {
 	if (index < 0 || index > vec->size)
 		return ;
@@ -82,7 +82,26 @@ void	delete_char_vec_at_index(t_vec_vec_char *vec, int index)
 	}
 }
 
-void	char_vec_vector_free(t_vec_vec_char *vec)
+void	delete_last_char_vec(t_vchar_vec *vec)
+{
+	int		last_index;
+
+	last_index = 0;
+	if ((vec->used_size - 1) > 0)
+		last_index = vec->used_size - 1;
+	if (vec->used_size > 0)
+	{
+		free(vec->elements[last_index].elements);
+		vec->used_size -= 1;
+		if (vec->size > 0 && vec->used_size < (vec->size / 4))
+		{
+			vec->size /= 2;
+			realloc_vector_of_char_vec(vec);
+		}
+	}
+}
+
+void	char_vec_vector_free(t_vchar_vec *vec)
 {
 	int		i;
 

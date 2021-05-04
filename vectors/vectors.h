@@ -50,18 +50,18 @@ struct s_char_vec
 ** ************************************************************************** **
 */
 
-typedef struct s_vec_vec_char t_vec_vec_char;
+typedef struct s_vec_vec_char t_vchar_vec;
 
 struct s_vec_vec_char
 {
 	t_char_vec	*elements;
 	int			size;
 	int			used_size;
-	void		(*add_new_element)(t_vec_vec_char *, t_char_vec);
-	void		(*add_new_element_at_index)(t_vec_vec_char *, t_char_vec , int);
-	// void		(*replace_element_at_index)(t_vec_vec_char *, t_char_vec , int);
-	void		(*delete_element_at_index)(t_vec_vec_char *, int);
-	void		(*free)(t_vec_vec_char *);
+	void		(*add_new_element)(t_vchar_vec *, t_char_vec);
+	void		(*add_new_element_at_index)(t_vchar_vec *, t_char_vec , int);
+	// void		(*replace_element_at_index)(t_vchar_vec *, t_char_vec , int);
+	void		(*delete_element_at_index)(t_vchar_vec *, int);
+	void		(*free)(t_vchar_vec *);
 };
 
 
@@ -88,10 +88,10 @@ void	replace_char_at_index(t_char_vec *vec, char c, int index);
 void	char_vector_free(t_char_vec *vec);
 
 
-void	initialize_vec_of_char_vec(t_vec_vec_char *vec);
-void	add_new_char_vec(t_vec_vec_char *vec, t_char_vec element);
-void	add_new_char_vec_at_index(t_vec_vec_char *vec, t_char_vec element, int index);
-void	char_vec_vector_free(t_vec_vec_char *vec);
-void	delete_char_vec_at_index(t_vec_vec_char *vec, int index);
+void	initialize_vec_of_char_vec(t_vchar_vec *vec);
+void	add_new_char_vec(t_vchar_vec *vec, t_char_vec element);
+void	add_new_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index);
+void	char_vec_vector_free(t_vchar_vec *vec);
+void	delete_char_vec_at_index(t_vchar_vec *vec, int index);
 
 #endif

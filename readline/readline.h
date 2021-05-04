@@ -14,6 +14,8 @@
 typedef enum e_key {none, waiting, up_arrow, down_arrow, left_arrow,
 right_arrow, enter, backspace, printable} t_key;
 
+enum e_bool {false, true};
+
 typedef struct	s_trie_node
 {
 	t_key key;
@@ -26,11 +28,19 @@ typedef struct	s_trie_node
 
 // }				t_capability;
 
+typedef struct termios t_termios;
+
 
 typedef struct		s_readline
 {
-	t_vec_vec_char	history;
 	t_trie_node		*key_seq_trie;
+	t_vchar_vec		history_vec;
+	char			**old_history;
+	char			*line;
+	int				curr_dirc_len;
+	int				cursor_pos;
+	int				l_i;
+	int				c_i;
 	// t_capability	capability
 }					t_readline;
 
