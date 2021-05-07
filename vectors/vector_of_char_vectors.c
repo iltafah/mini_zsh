@@ -5,6 +5,7 @@ void initialize_vec_of_char_vec(t_vchar_vec *vec)
 {
 	vec->size = 2;
 	vec->used_size = 0;
+	vec->last_index = 0;
 	vec->elements = malloc(sizeof(t_char_vec) * (vec->size));
 	vec->add_new_element = add_new_char_vec;
 	vec->delete_element_at_index = delete_char_vec_at_index;
@@ -36,6 +37,7 @@ void	add_new_char_vec(t_vchar_vec *vec, t_char_vec element)
 	}
 	vec->elements[vec->used_size] = element;
 	vec->used_size += 1;
+	vec->last_index = vec->used_size - 1;
 }
 
 // void replace_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index)
@@ -45,7 +47,7 @@ void	add_new_char_vec(t_vchar_vec *vec, t_char_vec element)
 // 	vec->elements[index] = element;
 // }
 
-void	add_new_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index)
+void	add_new_char_vec_at_index(t_vchar_vec *vec, t_char_vec elem, int index)
 {
 	t_char_vec	last_element;
 	int			last_index;
@@ -53,7 +55,7 @@ void	add_new_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index)
 
 	if (index < 0 || index > vec->size)
 		return ;
-	add_new_char_vec(vec, element);
+	add_new_char_vec(vec, elem);
 	last_index = vec->used_size - 1;
 	last_element = vec->elements[last_index];
 	while (last_index > index)
@@ -75,6 +77,10 @@ void	delete_char_vec_at_index(t_vchar_vec *vec, int index)
 		index++;
 	}
 	vec->used_size -= 1;
+	if (vec->used_size > 0)
+		vec->last_index = vec->used_size - 1;
+	else
+		vec->last_index = 0;
 	if (vec->size > 0 && vec->used_size < (vec->size / 4))
 	{
 		vec->size /= 2;
@@ -93,6 +99,10 @@ void	delete_last_char_vec(t_vchar_vec *vec)
 	{
 		free(vec->elements[last_index].elements);
 		vec->used_size -= 1;
+		if (vec->used_size > 0)
+			vec->last_index = vec->used_size;
+		else
+			vec->last_index = 0;
 		if (vec->size > 0 && vec->used_size < (vec->size / 4))
 		{
 			vec->size /= 2;

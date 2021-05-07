@@ -9,6 +9,7 @@ void    initialize_vec_of_char(t_char_vec *vec)
 	vec->elements = malloc(sizeof(char) * (vec->size) + 1);
 	vec->elements[0] = '\0';
 	vec->add_new_element = add_new_char;
+	vec->add_set_of_elements = add_set_of_chars;
 	vec->add_new_element_at_index = add_new_char_at_index;
     vec->add_set_of_elements_at_index = add_set_of_chars_at_index;
 	vec->replace_element_at_index = replace_char_at_index;
@@ -91,6 +92,20 @@ void    add_set_of_chars_at_index(t_char_vec *vec, char *str, int index)
     while (str[i] != '\0')
     {
         add_new_char_at_index(vec, str[i], index++);
+        i++;
+    }
+}
+
+void    add_set_of_chars(t_char_vec *vec, char *str)
+{
+    int     i;
+
+	if (str == NULL)
+		return ;
+	i = 0;
+    while (str[i] != '\0')
+    {
+        add_new_char(vec, str[i]);
         i++;
     }
 }

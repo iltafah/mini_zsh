@@ -1,6 +1,8 @@
 #ifndef READLINE_H
 # define READLINE_H
 
+# include <sys/ioctl.h>
+# include <signal.h>
 # include "stdio.h"
 # include "../vectors/vectors.h"
 
@@ -23,28 +25,37 @@ typedef struct	s_trie_node
 }				t_trie_node;
 
 
-// typedef struct	s_capability
-// {
-
-// }				t_capability;
+typedef struct	s_capability
+{
+	char		*mv_cursor_start_of_next_line;
+	char		*mv_cursor_up_vertically;
+	char		*mv_cursor_left;
+	char		*mv_cursor_right;
+	char		*clear_lines_below;
+}				t_capability;
 
 typedef struct termios t_termios;
 
 
-typedef struct		s_readline
+typedef struct		s_gvars
 {
 	t_trie_node		*key_seq_trie;
 	t_vchar_vec		history_vec;
 	char			**old_history;
 	char			*line;
 	int				curr_dirc_len;
-	int				cursor_pos;
+	int				curs_colm_pos;
+	int				curs_colm_old_pos;
+	int				curs_row_pos;
+	int				curs_row_old_pos;
+	int				printed_lines;
+	int				width_of_screen;
 	int				l_i;
 	int				c_i;
-	// t_capability	capability
-}					t_readline;
+	t_capability	capability;
+}					t_gvars;
 
-t_readline			readline_vars;
+t_gvars			g_vars;
 
 void	readline(char **line);
 t_trie_node	*initialize_key_seq_trie(void);
