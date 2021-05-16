@@ -17,6 +17,8 @@ typedef enum e_key {none, waiting, up_arrow, down_arrow, left_arrow,
 right_arrow, enter, backspace, printable} t_key;
 
 enum e_bool {false, true};
+enum e_restore {dont_restore, restore};
+
 
 typedef struct	s_trie_node
 {
@@ -27,7 +29,7 @@ typedef struct	s_trie_node
 
 typedef struct	s_capability
 {
-	char		*mv_cursor_start_of_next_line;
+	char		*mv_cursor_down_vertically;
 	char		*mv_cursor_up_vertically;
 	char		*mv_cursor_left;
 	char		*mv_cursor_right;

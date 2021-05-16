@@ -232,7 +232,7 @@ int main(int argc, char **argv, char **env)
 	t_ast *ast = NULL;
 	t_env_table env_table;
 
-	print_header();
+	// print_header();
 	create_env_table(&env_table, env);
 	while (1337)
 	{

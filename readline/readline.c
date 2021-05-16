@@ -25,9 +25,12 @@ int		ft_isprint(int c)
 	return (c >= 32 && c < 127);
 }
 
-void	ft_putchar(char c)
+int		ft_putchar(int c)
 {
-	write(1, &c, 1);
+	int		len;
+
+	len = write(1, &c, 1);
+	return (len);
 }
 
 void	ft_putstr(char *str)
@@ -93,33 +96,49 @@ int		print_current_dir()
 void	move_cursor_to_colum(int col)
 {
 	char	*ch_cap = tgetstr("ch", NULL);
-	ft_putstr(tgoto(ch_cap, 0, col));
+	tputs(tgoto(ch_cap, 0, col), 1, ft_putchar);
 }
 
 void	move_cursor_up_vetically(t_capability capability)
 {
-	ft_putstr(capability.mv_cursor_up_vertically);
+	tputs(capability.mv_cursor_up_vertically, 1, ft_putchar);
 }
 
 void	move_cursor_start_of_next_line(t_capability capability)
 {
-	ft_putstr(capability.mv_cursor_start_of_next_line);
+	move_cursor_to_colum(0);
+	tputs(capability.mv_cursor_down_vertically, 1, ft_putchar);
 }
 
 void	move_cursor_end_of_prec_line(t_gvars *vars)
 {
-	ft_putstr(vars->capability.mv_cursor_up_vertically);
-	move_cursor_to_colum(vars->width_of_screen);
+	tputs(vars->capability.mv_cursor_up_vertically, 1, ft_putchar);
+	move_cursor_to_colum(vars->width_of_screen - 1);
+	vars->curs_colm_pos = vars->width_of_screen - 1;
 }
 
-void	move_cursor_right(t_capability capability)
+void	move_cursor_up_vertically(t_gvars *vars)
 {
-	ft_putstr(capability.mv_cursor_right);
+	tputs(vars->capability.mv_cursor_up_vertically, 1, ft_putchar);
+	vars->curs_row_pos--;
 }
 
-void	move_cursor_left(t_capability capability)
+void	move_cursor_down_vertically(t_gvars *vars)
 {
-	ft_putstr(capability.mv_cursor_left);
+	tputs(vars->capability.mv_cursor_down_vertically, 1, ft_putchar);
+	vars->curs_row_pos++;
+}
+
+void	move_cursor_right(t_gvars *vars)
+{
+	tputs(vars->capability.mv_cursor_right, 1, ft_putchar);
+	vars->curs_colm_pos++;
+}
+
+void	move_cursor_left(t_gvars *vars)
+{
+	tputs(vars->capability.mv_cursor_left, 1, ft_putchar);
+	vars->curs_colm_pos--;
 }
 
 int		get_screen_width(t_gvars *vars)
@@ -130,16 +149,43 @@ int		get_screen_width(t_gvars *vars)
 	return (w.ws_col);
 }
 
+
 void	clear_curr_line_after_cursor(int curs_colm_pos)
 {
 	move_cursor_to_colum(curs_colm_pos);
 	char	*clear_after_cursor = tgetstr("ce", NULL);
-	ft_putstr(clear_after_cursor);
+	tputs(clear_after_cursor, 1, ft_putchar);
 }
 
-void	clear_lines_after_and_below_cursor(t_capability capability)
+void	clear_curr_line(t_gvars *vars)
 {
-	ft_putstr(capability.clear_lines_below);
+	vars->curs_colm_pos = 0;
+	move_cursor_to_colum(vars->curs_colm_pos);
+	char	*clear_after_cursor = tgetstr("ce", NULL);
+	tputs(clear_after_cursor, 1, ft_putchar);
+}
+
+void	clear_lines_below_cursor(t_capability capability)
+{
+	move_cursor_to_colum(0);
+	tputs(capability.clear_lines_below, 1, ft_putchar);
+}
+
+// void	clear_lines_after_and_below_cursor(t_gvars *vars)
+// {
+// 	clear_curr_line_after_cursor(vars->curs_colm_pos);
+// 	if (vars->curs_row_pos < vars->printed_lines)
+// 	{
+// 		move_cursor_start_of_next_line(vars->capability);
+// 		clear_lines_below_cursor(vars->capability);
+// 	}
+// }
+
+void	update_cursor_data(t_gvars *vars)
+{
+	vars->curs_colm_pos = (vars->curr_dirc_len + vars->c_i) % vars->width_of_screen;
+	vars->curs_row_pos = (vars->curr_dirc_len + vars->c_i) / vars->width_of_screen;
+	vars->printed_lines = (vars->curr_dirc_len + vars->history_vec.elements[vars->l_i].last_index) / vars->width_of_screen + 1;
 }
 
 void	restore_cursor_pos(t_gvars *g_vars)
@@ -153,54 +199,80 @@ void	restore_cursor_pos(t_gvars *g_vars)
 	g_vars->curs_colm_pos = g_vars->curs_colm_old_pos;
 }
 
-void	print_after_cursor(t_gvars *g_vars, char *str)
+void	save_curr_cursor_pos(t_gvars *g_vars)
 {
-	int		i;
-	int		*curs_colm_pos;
-	int		*printed_lines;
-	// int		printed_lines_after_cursor;
-
-	i = 0;
-	curs_colm_pos = &g_vars->curs_colm_pos;
-	g_vars->curs_colm_old_pos = *curs_colm_pos;
+	// update_cursor_data(g_vars);
+	g_vars->curs_colm_old_pos = g_vars->curs_colm_pos;
 	g_vars->curs_row_old_pos = g_vars->curs_row_pos;
-	printed_lines = &g_vars->printed_lines;
-	// printed_lines_after_cursor = 0;
-	while (str[i])
-	{
-		ft_putchar(str[i++]);
-		(*curs_colm_pos)++;
-		if (*curs_colm_pos == g_vars->width_of_screen)
-		{
-			move_cursor_start_of_next_line(g_vars->capability);
-			*curs_colm_pos = 0;
-		    clear_curr_line_after_cursor(*curs_colm_pos);
-			(*printed_lines)++;
-			g_vars->curs_row_pos += 1;
-			// printed_lines_after_cursor++;
-		}
-	}
 }
 
 void	clear_printed_lines(t_gvars *g_vars)
 {
-	move_cursor_to_colum(0);
 	while (g_vars->curs_row_pos > 0)
 	{
 		move_cursor_up_vetically(g_vars->capability);
 		g_vars->curs_row_pos--;
 	}
-	clear_lines_after_and_below_cursor(g_vars->capability);
+	clear_lines_below_cursor(g_vars->capability);
 	g_vars->curs_colm_pos = print_current_dir();
-	g_vars->curs_colm_old_pos = g_vars->curs_colm_pos;
-	g_vars->curs_row_old_pos = g_vars->curs_row_pos; 
-	// while (g_vars->curs_row_pos-- > 0)
+	fprintf(fd, "curs_colm dirc = %d\n", g_vars->curs_colm_pos);
+	fflush(fd);
+	// while (g_vars->curs_row_pos < g_vars->printed_lines - 1)
+	// 	move_cursor_down_vertically(g_vars);
+	// while (g_vars->curs_row_pos > 0)
 	// {
-	// 	clear_curr_line_after_cursor(0);
-	// 	move_cursor_up_vetically(g_vars->capability);
+	// 	clear_curr_line(g_vars);
+	// 	move_cursor_up_vertically(g_vars);
 	// }
 	// g_vars->curs_colm_pos = g_vars->curr_dirc_len;
-	// clear_curr_line_after_cursor(g_vars->curs_colm_pos);
+	// clear_curr_line_after_cursor(g_vars->curr_dirc_len);
+}
+
+void	clear_lines_after_cursor(t_gvars *vars)
+{
+	char	*clear_after_cursor = tgetstr("ce", NULL);
+	
+	save_curr_cursor_pos(vars);
+	while (vars->curs_row_pos < vars->printed_lines - 1)
+	{
+		tputs(clear_after_cursor, 1, ft_putchar);
+		move_cursor_start_of_next_line(vars->capability);
+		vars->curs_row_pos++;
+	}
+	restore_cursor_pos(vars);
+}
+
+void	print_after_cursor(t_gvars *vars, char *str, int option)
+{
+	int		i;
+
+		// fprintf(fd, "%d ?= %d\n", vars->curs_colm_pos, vars->curr_dirc_len);
+		// fflush(fd);
+	i = 0;
+	save_curr_cursor_pos(vars);
+	clear_curr_line_after_cursor(vars->curs_colm_pos);
+	while (str[i])
+	{
+		ft_putchar(str[i++]);
+		vars->curs_colm_pos++;
+		if (vars->curs_colm_pos == vars->width_of_screen)
+		{
+			ft_putchar(' ');
+			move_cursor_left(vars);
+			vars->curs_colm_pos = 0;
+			vars->curs_row_pos++;
+			clear_curr_line_after_cursor(vars->curs_colm_pos);
+		}
+		// if (vars->curs_colm_pos == vars->width_of_screen)
+		// {
+			// move_cursor_start_of_next_line(vars->capability);
+			// vars->curs_colm_pos = 0;
+			// vars->curs_row_pos += 1;
+		    // clear_curr_line_after_cursor(vars->curs_colm_pos);
+		// }
+	}
+	if (option == restore)
+		restore_cursor_pos(vars);
 }
 
 void	show_old_history(t_gvars *g_vars)
@@ -219,13 +291,13 @@ void	show_old_history(t_gvars *g_vars)
 	if (*l_i > 0)
 	{	
 		(*l_i)--;
-		// clear_curr_line_after_cursor(curr_dirc_len);
 		clear_printed_lines(g_vars);
-		// ft_putstr(history_line[*l_i].elements);
-		print_after_cursor(g_vars, history_line[*l_i].elements);
+		print_after_cursor(g_vars, history_line[*l_i].elements, dont_restore);
 		*c_i = history_line[*l_i].last_index + 1;
-		// *curs_colm_pos = curr_dirc_len + *c_i;
+		update_cursor_data(g_vars);
 	}
+		// fprintf(fd, ">>%d ?= %d<<\n", g_vars->curs_colm_pos, g_vars->curr_dirc_len);
+		// sleep (2);
 }
 
 void	show_new_history(t_gvars *g_vars, t_vchar_vec *history_vec)
@@ -244,15 +316,13 @@ void	show_new_history(t_gvars *g_vars, t_vchar_vec *history_vec)
 	if (*l_i < history_vec->used_size - 1)
 	{
 		(*l_i)++;
-		// clear_curr_line_after_cursor(curr_dirc_len);
 		clear_printed_lines(g_vars);
-		print_after_cursor(g_vars, history_line[*l_i].elements);
-		// ft_putstr(history_line[*l_i].elements);
+		print_after_cursor(g_vars, history_line[*l_i].elements, dont_restore);
 		if (history_line[*l_i].last_index != 0)
 			*c_i = history_line[*l_i].last_index + 1;
 		else
 			*c_i = history_line[*l_i].last_index;
-		// *curs_colm_pos = curr_dirc_len + *c_i;
+		update_cursor_data(g_vars);
 	}
 }
 
@@ -269,18 +339,15 @@ void	move_left(t_gvars *g_vars)
 		if (*curs_colm_pos == 0)
 		{
 			move_cursor_end_of_prec_line(g_vars);
-			(*curs_colm_pos) = g_vars->width_of_screen - 1;
-			g_vars->curs_row_pos--;
+			// (*curs_colm_pos) = g_vars->width_of_screen - 1;
+			// g_vars->curs_row_pos--;
 		}
 		else
 		{
-			// char	*le_cap = tgetstr("le", NULL);
-			// ft_putstr(le_cap);
-			move_cursor_left(g_vars->capability);
-			(*curs_colm_pos)--;
+			move_cursor_left(g_vars);
+			// (*curs_colm_pos)--;
 		}
-		fprintf(fd, "cursor pos : [%d]\n", *curs_colm_pos);
-		fflush(fd);
+		update_cursor_data(g_vars);
 	}
 }
 
@@ -301,24 +368,26 @@ void	move_right(t_gvars *g_vars, t_vchar_vec *history_vec)
 		if (*curs_colm_pos == g_vars->width_of_screen - 1)
 		{
 			move_cursor_start_of_next_line(g_vars->capability);
-			(*curs_colm_pos) = 0;
-			g_vars->curs_row_pos++;
+			// (*curs_colm_pos) = 0;
+			// g_vars->curs_row_pos++;
 		}
 		else
 		{
 			// char	*nd_cap = tgetstr("nd", NULL);
 			// ft_putstr(nd_cap);
-			move_cursor_right(g_vars->capability);
-			(*curs_colm_pos)++;
+			move_cursor_right(g_vars);
+			// (*curs_colm_pos)++;
 		}
-		fprintf(fd, "cursor pos : [%d]\n", *curs_colm_pos);
-		fflush(fd);
+		// fprintf(fd, "cursor pos : [%d]\n", *curs_colm_pos);
+		// fflush(fd);
+		update_cursor_data(g_vars);
 	}
 }
 
 
 void	print_curr_char(char c, t_gvars *g_vars, t_vchar_vec *hstry_vec)
 {
+
 	t_char_vec	*history_line;
 	int *curs_colm_pos;
 	int	*l_i;
@@ -329,24 +398,24 @@ void	print_curr_char(char c, t_gvars *g_vars, t_vchar_vec *hstry_vec)
 	l_i = &g_vars->l_i;
 	c_i = &g_vars->c_i;
 	history_line[*l_i].add_new_element_at_index(&history_line[*l_i], c, *c_i);
-	clear_curr_line_after_cursor(*curs_colm_pos);
-	print_after_cursor(g_vars, history_line[*l_i].elements + *c_i);
-	restore_cursor_pos(g_vars);
-	fprintf(fd, "curs pos : [%d]  [%d]\n", *curs_colm_pos, g_vars->curs_row_pos);
-	fflush(fd);
-	(*c_i)++;
-	(*curs_colm_pos)++;
-	move_cursor_right(g_vars->capability);
-	if (*curs_colm_pos == g_vars->width_of_screen)
+	
+
+	ft_putchar(history_line[*l_i].elements[*c_i]);
+	g_vars->curs_colm_pos++;
+	if (g_vars->curs_colm_pos == g_vars->width_of_screen)
 	{
-		fprintf(fd, "end of cursor pos : [%d]\n", *curs_colm_pos);
-		fflush(fd);
-		move_cursor_start_of_next_line(g_vars->capability);
-		(*curs_colm_pos) = 0;
+		ft_putchar(' ');
+		move_cursor_left(g_vars);
 		g_vars->curs_row_pos++;
+		g_vars->curs_colm_pos = 0;
 	}
-	// else
-		// move_cursor_to_colum(*curs_colm_pos);
+	(*c_i)++;
+	update_cursor_data(g_vars);
+	// tputs(tgetstr("im", NULL), 1, ft_putchar);
+	// tputs(tgetstr("ic", NULL), 1, ft_putchar);
+	// ft_putchar(history_line[*l_i].elements[*c_i]);
+	// tputs(tgetstr("ip", NULL), 1, ft_putchar);
+	// tputs(tgetstr("ei", NULL), 1, ft_putchar);
 }
 
 void	erase_and_remove_char(t_gvars *g_vars, t_vchar_vec *history_vec)
@@ -362,20 +431,14 @@ void	erase_and_remove_char(t_gvars *g_vars, t_vchar_vec *history_vec)
 	c_i = &g_vars->c_i;
 	if (*c_i > 0)
 	{
-		if (*curs_colm_pos == 0)
-		{	
-			*curs_colm_pos = g_vars->width_of_screen - 1;
-			move_cursor_end_of_prec_line(g_vars);
-			g_vars->curs_row_pos--;
-		}
-		else
-			(*curs_colm_pos)--;
 		(*c_i)--;
 		history_line[*l_i].delete_element_at_index(&history_line[*l_i], *c_i);
-		clear_curr_line_after_cursor(*curs_colm_pos);
-		print_after_cursor(g_vars, history_line[*l_i].elements + *c_i);
-		restore_cursor_pos(g_vars);
-		// move_cursor_to_colum(*curs_colm_pos);
+		if (*curs_colm_pos == 0)
+			move_cursor_end_of_prec_line(g_vars);
+		else
+			move_cursor_left(g_vars);
+		print_after_cursor(g_vars, history_line[*l_i].elements + *c_i, restore);
+		update_cursor_data(g_vars);
 	}
 }
 
@@ -462,22 +525,16 @@ void	start_key_action(t_gvars *g_vars, int key, char c)
 void	detect_screen_resizing(t_gvars *vars)
 {
 	int		new_screen_width_size;
-	
+
 	new_screen_width_size = get_screen_width(vars);
-	// if (vars->curs_colm_pos == new_screen_width_size)
-	// {
-		// vars->curs_colm_pos = 0;
-	// }
-	if (vars->curr_dirc_len + vars->c_i >= new_screen_width_size)
-		vars->curs_colm_pos = (vars->curr_dirc_len + vars->c_i) - new_screen_width_size;
-	else
-		vars->curs_colm_pos = (vars->curr_dirc_len + vars->c_i);
 	vars->width_of_screen = new_screen_width_size;
-	// clear_printed_lines(vars);
-		fprintf(fd, "curs col after clean : [%d]\n", vars->curs_colm_pos);
-		fflush(fd);
-	// print_after_cursor(vars, vars->history_vec.elements[vars->l_i].elements);
-	// restore_cursor_pos(vars);
+
+
+	update_cursor_data(vars);
+	fprintf(fd, "new width [%d]\n", new_screen_width_size);
+	fprintf(fd, "curs colm pos [%d]\n", vars->curs_colm_pos);
+	fprintf(fd, "curs row pos [%d]\n", vars->curs_row_pos);
+	fflush(fd);
 }
 
 void	sigwinch_handler(int signo)
@@ -496,8 +553,6 @@ void	read_from_stdin(t_gvars *vars)
 	key = none;
 	while (read(STDIN_FILENO, &c, 1))
 	{
-		fprintf(fd, "width : [%d]\n", vars->width_of_screen);
-		fflush(fd);
 		key = get_key(vars->key_seq_trie, c);
 		if (key == waiting)
 			continue ;
@@ -553,19 +608,40 @@ void	initialize_termios_struct(t_termios *original_termios_state)
 void	initialize_capabilities(t_capability *capability)
 {
 	capability->mv_cursor_up_vertically = tgetstr("up", NULL);
-	capability->mv_cursor_start_of_next_line = tgetstr("do", NULL);
+	capability->mv_cursor_down_vertically = tgetstr("do", NULL);
 	capability->mv_cursor_left = tgetstr("le", NULL);
 	capability->mv_cursor_right = tgetstr("nd", NULL);
 	capability->clear_lines_below = tgetstr("cd", NULL);
-	// capability->width_of_screen = tgetnum("co");
 }
 
+
+void	disable_auto_wrapping()
+{
+	// char	*terminal_device_file;
+	// int		tty_fd;
+
+	// terminal_device_file = NULL;
+	// if (isatty(STDIN_FILENO))
+	// 	terminal_device_file = ttyname(STDIN_FILENO);
+	// else if (isatty(STDOUT_FILENO))
+	// 	terminal_device_file = ttyname(STDOUT_FILENO);
+	// else if (isatty(STDERR_FILENO))
+	// 	terminal_device_file = ttyname(STDERR_FILENO);
+	// if (terminal_device_file != NULL)
+	// {
+	// 	tty_fd = open(terminal_device_file, O_WRONLY);
+	// 	// write(tty_fd, "\e[?7l\n", strlen("\e[?7l\n"));
+	// 	printf("\033[?7l");
+	// }
+	// printf("%d\n",tgetflag("am"));
+}
 
 void	readline(char **line)
 {
 	static int			is_initialized = false;
 	static t_termios	original_termios_state;
-
+	
+	
 	if (is_initialized == false)
 	{
 		initialize_termios_struct(&original_termios_state);
@@ -580,12 +656,14 @@ void	readline(char **line)
 		g_vars.curs_row_old_pos = 0;
 		g_vars.curr_dirc_len = 0;
 		g_vars.printed_lines = 0;
-		g_vars.width_of_screen = 0;
+		g_vars.width_of_screen = get_screen_width(&g_vars);
 		g_vars.line = NULL;
 		is_initialized = true;
 		fd = fopen("./debug.txt", "w+");
 	}
+	// ft_putstr(tgetstr("RA", NULL));
 	enable_raw_mode();
+	// disable_auto_wrapping();
 	process_input(line, &g_vars);
 	disable_raw_mode(original_termios_state);
 }

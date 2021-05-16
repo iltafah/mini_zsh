@@ -41,7 +41,8 @@ void	add_new_char(t_char_vec *vec, char c)
 	vec->elements[vec->used_size] = c;
 	vec->elements[vec->used_size + 1] = '\0';
 	vec->used_size += 1;
-	vec->last_index = vec->used_size - 1;
+	if (vec->used_size > 0)
+		vec->last_index = vec->used_size - 1;
 }
 
 void	delete_char_at_index(t_char_vec *vec, int index)
@@ -55,7 +56,8 @@ void	delete_char_at_index(t_char_vec *vec, int index)
 		index++;
 	}
 	vec->used_size -= 1;
-	vec->last_index = vec->used_size - 1;
+	if (vec->used_size > 0)
+		vec->last_index = vec->used_size - 1;
 	if (vec->size > 0 && vec->used_size < (vec->size / 4))
 	{
 		vec->size /= 2;
