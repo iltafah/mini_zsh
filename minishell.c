@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/05/01 14:37:32 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/05/17 10:44:22 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ int main(int argc, char **argv, char **env)
 	while (1337)
 	{
 		// get_next_line(0, &line);
-		readline(&line);
+		read_line(&line);
 		line_tokenization(line, &tokens_list);
 		print_tokens(tokens_list);
 		if (check_tokens_syntax(tokens_list) == ERROR)

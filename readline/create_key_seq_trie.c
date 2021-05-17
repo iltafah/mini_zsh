@@ -27,7 +27,6 @@ void	insert_key(t_trie_node *trie_root, char *key_seq, int key_type)
 		node_index = (int)key_seq[i];
 		if (curr_node->children[node_index] == NULL)
 		{
-			// printf("%d\n", node_index);
 			curr_node->children[node_index] = get_trie_node();
 		}
 		curr_node = curr_node->children[node_index];
@@ -46,11 +45,9 @@ int	get_key(t_trie_node *trie_root, char c)
 	{
 		curr_node = trie_root;
 	}
-	// printf(">%d<\n", (int)c);
 	curr_node = curr_node->children[(int)c];
 	if (curr_node != NULL)
 	{
-		// printf("wow\n");
 		key = curr_node->key;
 		if (key == none)
 			key = waiting;

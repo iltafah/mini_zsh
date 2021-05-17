@@ -36,11 +36,9 @@ typedef struct	s_capability
 	char		*clear_lines_below;
 }				t_capability;
 
-typedef struct termios t_termios;
-
-
-typedef struct		s_gvars
+typedef struct		s_rdline
 {
+	t_capability	capability;
 	t_trie_node		*key_seq_trie;
 	t_vchar_vec		history_vec;
 	char			**old_history;
@@ -54,12 +52,20 @@ typedef struct		s_gvars
 	int				width_of_screen;
 	int				l_i;
 	int				c_i;
-	t_capability	capability;
+}					t_rdline;
+
+
+typedef struct termios t_termios;
+
+
+typedef struct		s_gvars
+{
+	t_rdline		rdl_vars;
 }					t_gvars;
 
 t_gvars			g_vars;
 
-void	readline(char **line);
+void	read_line(char **line);
 t_trie_node	*initialize_key_seq_trie(void);
 int	get_key(t_trie_node *trie_root, char c);
 
