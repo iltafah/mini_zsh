@@ -7,11 +7,11 @@
 # include <unistd.h>
 # include <limits.h>
 
-# include "./get_next_line/get_next_line.h"
 # include "./vectors/vectors.h"
 # include "./environment/environment.h"
 # include "./parser/parser.h"
 # include "./readline/readline.h"
+# include "./libft/libft.h"
 
 
 void	expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table);

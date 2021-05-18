@@ -34,7 +34,7 @@
 # include "../vectors/vectors.h"
 # include "../environment/environment.h"
 # include "./usefull_functions/usefull_functions.h"
-
+# include "../libft/libft.h"
 
 typedef enum e_tag
 {

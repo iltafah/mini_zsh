@@ -63,6 +63,7 @@ struct s_vec_vec_char
 	void		(*add_new_element_at_index)(t_vchar_vec *, t_char_vec , int);
 	// void		(*replace_element_at_index)(t_vchar_vec *, t_char_vec , int);
 	void		(*delete_element_at_index)(t_vchar_vec *, int);
+	void		(*delete_last_element)(t_vchar_vec *);
 	void		(*free)(t_vchar_vec *);
 };
 
@@ -96,5 +97,6 @@ void	add_new_char_vec(t_vchar_vec *vec, t_char_vec element);
 void	add_new_char_vec_at_index(t_vchar_vec *vec, t_char_vec element, int index);
 void	char_vec_vector_free(t_vchar_vec *vec);
 void	delete_char_vec_at_index(t_vchar_vec *vec, int index);
+void	delete_last_char_vec(t_vchar_vec *vec);
 
 #endif

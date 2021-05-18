@@ -5,6 +5,7 @@
 # include <signal.h>
 # include "stdio.h"
 # include "../vectors/vectors.h"
+# include "../libft/libft.h"
 
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
@@ -33,6 +34,7 @@ typedef struct	s_capability
 	char		*mv_cursor_up_vertically;
 	char		*mv_cursor_left;
 	char		*mv_cursor_right;
+	char		*clear_line_after_cursor;
 	char		*clear_lines_below;
 }				t_capability;
 
@@ -43,7 +45,8 @@ typedef struct		s_rdline
 	t_vchar_vec		history_vec;
 	char			**old_history;
 	char			*line;
-	int				curr_dirc_len;
+	char			*prompt;
+	int				prompt_len;
 	int				curs_colm_pos;
 	int				curs_colm_old_pos;
 	int				curs_row_pos;

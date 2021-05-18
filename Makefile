@@ -1,4 +1,5 @@
 NAME = minishell
+LIB = libft
 
 FLAGS = #-Wall -Wextra -Werror
 
@@ -6,8 +7,6 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./environment/create_env_table.c \
 ./freeing_time/free_abstract_syntax_tree.c \
 ./freeing_time/free_tokens_list.c \
-./get_next_line/get_next_line.c \
-./get_next_line/get_next_line_utils.c \
 ./minishell.c \
 ./parser/check_tokens_syntax/check_simple_word_syntax.c \
 ./parser/check_tokens_syntax/check_tokens_order.c \
@@ -34,18 +33,21 @@ SRC = ./environment/convert_env_table_to_array.c \
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
-
+all: $(NAME) 
+	
 $(NAME): $(OBJ)
-	gcc -o $@ $^ -ltermcap
+	make -sC ./libft
+	gcc -o $@ $^ -ltermcap ./libft/libft.a
 
 %.o : %.c
 	gcc $(FLAGS) -o $@ -c $^
 
 clean :
 		rm -f $(OBJ)
+		make clean -sC ./libft
 
 fclean : clean
 		rm -f $(NAME)
+		make fclean -sC ./libft
 
 re : fclean all
