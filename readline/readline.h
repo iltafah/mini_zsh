@@ -2,10 +2,15 @@
 # define READLINE_H
 
 # include <sys/ioctl.h>
+# include <termcap.h>
+# include <termios.h>
 # include <signal.h>
-# include "stdio.h"
-# include "../vectors/vectors.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
 # include "../libft/libft.h"
+# include "../vectors/vectors.h"
+# include "../freeing_time/freeing_time.h"
 
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
@@ -14,31 +19,40 @@
 # define PRP "\e[1;95m"
 # define WHT "\e[1;97m"
 
-typedef enum e_key {none, waiting, up_arrow, down_arrow, left_arrow,
-right_arrow, enter, backspace, printable} t_key;
+typedef enum e_key
+{
+	none,
+	waiting,
+	up_arrow,
+	down_arrow,
+	left_arrow,
+	right_arrow,
+	enter,
+	backspace,
+	printable
+}	t_key;
 
 enum e_bool {false, true};
 enum e_restore {dont_restore, restore};
 
-
-typedef struct	s_trie_node
+typedef struct s_trie_node
 {
-	t_key key;
-	struct s_trie_node **children;	
+	struct s_trie_node	**children;
+	t_key				key;
 }				t_trie_node;
 
-
-typedef struct	s_capability
+typedef struct s_capability
 {
 	char		*mv_cursor_down_vertically;
 	char		*mv_cursor_up_vertically;
 	char		*mv_cursor_left;
 	char		*mv_cursor_right;
+	char		*mv_cursor_to_colm;
 	char		*clear_line_after_cursor;
 	char		*clear_lines_below;
 }				t_capability;
 
-typedef struct		s_rdline
+typedef struct s_rdline
 {
 	t_capability	capability;
 	t_trie_node		*key_seq_trie;
@@ -57,19 +71,52 @@ typedef struct		s_rdline
 	int				c_i;
 }					t_rdline;
 
-
-typedef struct termios t_termios;
-
-
-typedef struct		s_gvars
+typedef struct s_gvars
 {
 	t_rdline		rdl_vars;
-}					t_gvars;
+}				t_gvars;
 
-t_gvars			g_vars;
+// #define termios s_termios;
+// typedef struct s_termios t_termios;
 
-void	read_line(char **line);
+t_gvars					g_vars;
+
+int			put_char(int c);
+int			get_screen_width(void);
+char		*get_prompt_name(void);
+char		*get_curr_dir_name(void);
+void		read_line(char **line);
+int			ft_strlen_utf8(char *str);
+void		sigwinch_handler(int sig_num);
+void		move_left(t_rdline *rdl_vars);
+void		move_right(t_rdline *rdl_vars);
 t_trie_node	*initialize_key_seq_trie(void);
-int	get_key(t_trie_node *trie_root, char c);
+void		print_prompt(t_rdline *rdl_vars);
+void		show_old_history(t_rdline *rdl_vars);
+void		show_new_history(t_rdline *rdl_vars);
+void		move_cursor_left(t_rdline *rdl_vars);
+void		move_cursor_right(t_rdline *rdl_vars);
+void		update_cursor_data(t_rdline *rdl_vars);
+void		restore_cursor_pos(t_rdline *rdl_vars);
+int			get_key(t_trie_node *trie_root, char c);
+void		initialize_rdl_vars(t_rdline *rdl_vars);
+void		save_curr_cursor_pos(t_rdline *rdl_vars);
+void		print_curr_char(t_rdline *rdl_vars, char c);
+void		clear_lines_below_cursor(t_rdline *rdl_vars);
+void		move_cursor_up_vertically(t_rdline *rdl_vars);
+void		process_input(char **line, t_rdline *rdl_vars);
+void		erase_and_remove_curr_char(t_rdline *rdl_vars);
+void		insert_curr_line_to_history(t_rdline *rdl_vars);
+void		move_cursor_down_vertically(t_rdline *rdl_vars);
+void		clear_curr_line_after_cursor(t_rdline *rdl_vars);
+void		move_cursor_end_of_prec_line(t_rdline *rdl_vars);
+void		move_cursor_to_colum(t_rdline *rdl_vars, int col);
+void		initialize_capabilities(t_capability *capability);
+void		move_cursor_start_of_next_line(t_rdline *rdl_vars);
+void		clear_printed_lines(t_rdline *rdl_vars, int option);
+char		**convert_history_vec_to_array(t_vchar_vec *history_vec);
+void		add_empty_char_vec_to_history_vec(t_vchar_vec *history_vec);
+void		initialize_termios_struct(struct termios *original_termios_state);
+void		print_after_cursor(t_rdline *rdl_vars, char *str, int option);
 
 #endif

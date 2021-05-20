@@ -1,9 +1,9 @@
 #include "./readline.h"
 
-t_trie_node *get_trie_node(void)
+t_trie_node	*get_trie_node(void)
 {
-	t_trie_node *new_node;
-	int		index;
+	t_trie_node	*new_node;
+	int			index;
 
 	index = 0;
 	new_node = malloc(sizeof(t_trie_node));
@@ -16,9 +16,9 @@ t_trie_node *get_trie_node(void)
 
 void	insert_key(t_trie_node *trie_root, char *key_seq, int key_type)
 {
-	int	i;
-	int	node_index;
-	t_trie_node *curr_node;
+	t_trie_node	*curr_node;
+	int			node_index;
+	int			i;
 
 	i = 0;
 	curr_node = trie_root;
@@ -37,8 +37,8 @@ void	insert_key(t_trie_node *trie_root, char *key_seq, int key_type)
 
 int	get_key(t_trie_node *trie_root, char c)
 {
-	int	key;
-	static t_trie_node *curr_node = NULL;
+	static t_trie_node	*curr_node = NULL;
+	int					key;
 
 	key = none;
 	if (curr_node == NULL)
@@ -60,8 +60,8 @@ int	get_key(t_trie_node *trie_root, char c)
 void	insert_printable_characters(t_trie_node *trie_root)
 {
 	static char	printable_char[] = "\0";
-	int			curr_printable_char = 32;
-	int			last_printable_char = 127;
+	static int	curr_printable_char = 32;
+	static int	last_printable_char = 127;
 
 	while (curr_printable_char < last_printable_char)
 	{
@@ -71,11 +71,11 @@ void	insert_printable_characters(t_trie_node *trie_root)
 	}
 }
 
-t_trie_node	*initialize_key_seq_trie()
+t_trie_node	*initialize_key_seq_trie(void)
 {
-	t_trie_node *trie_root;
+	t_trie_node	*trie_root;
+
 	trie_root = get_trie_node();
-	
 	insert_printable_characters(trie_root);
 	insert_key(trie_root, "\e[A", up_arrow);
 	insert_key(trie_root, "\e[B", down_arrow);

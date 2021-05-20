@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/05/17 10:44:22 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/05/20 19:20:52 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,7 @@ int main(int argc, char **argv, char **env)
 // Tests to fix
 
 /*[1337] echo $"PWD" */
+/*[42] $fairjfgaiejr\ "ls" */
 /*[1] echo hello > "" */
 /*[2] echo hello > $ */
 
