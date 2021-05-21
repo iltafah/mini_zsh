@@ -29,6 +29,8 @@ typedef enum e_key
 	right_arrow,
 	enter,
 	backspace,
+	home,
+	end,
 	printable
 }	t_key;
 
@@ -80,7 +82,6 @@ typedef struct s_gvars
 // typedef struct s_termios t_termios;
 
 t_gvars					g_vars;
-
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
@@ -98,11 +99,13 @@ void		move_cursor_left(t_rdline *rdl_vars);
 void		move_cursor_right(t_rdline *rdl_vars);
 void		update_cursor_data(t_rdline *rdl_vars);
 void		restore_cursor_pos(t_rdline *rdl_vars);
+void		move_to_end_of_line(t_rdline *rdl_vars);
 int			get_key(t_trie_node *trie_root, char c);
 void		initialize_rdl_vars(t_rdline *rdl_vars);
 void		save_curr_cursor_pos(t_rdline *rdl_vars);
 void		print_curr_char(t_rdline *rdl_vars, char c);
 void		clear_lines_below_cursor(t_rdline *rdl_vars);
+void		move_to_beginning_of_line(t_rdline *rdl_vars);
 void		move_cursor_up_vertically(t_rdline *rdl_vars);
 void		process_input(char **line, t_rdline *rdl_vars);
 void		erase_and_remove_curr_char(t_rdline *rdl_vars);

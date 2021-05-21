@@ -42,6 +42,8 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./readline/move_cursor_to/move_cursor_up_down_vertically.c \
 ./readline/move_cursor_to/move_left.c \
 ./readline/move_cursor_to/move_right.c \
+./readline/move_cursor_to/move_to_beginning_of_line.c \
+./readline/move_cursor_to/move_to_end_of_line.c \
 ./readline/printing_funcs/print_after_cursor.c \
 ./readline/printing_funcs/print_curr_char.c \
 ./readline/printing_funcs/print_prompt.c \
@@ -73,10 +75,9 @@ $(NAME): $(OBJ)
 
 clean :
 		rm -f $(OBJ)
-		make clean -sC ./libft
+		make fclean -sC ./libft
 
 fclean : clean
 		rm -f $(NAME)
-		make fclean -sC ./libft
 
 re : fclean all

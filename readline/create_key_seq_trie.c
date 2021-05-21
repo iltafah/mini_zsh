@@ -82,6 +82,8 @@ t_trie_node	*initialize_key_seq_trie(void)
 	insert_key(trie_root, "\e[C", right_arrow);
 	insert_key(trie_root, "\e[D", left_arrow);
 	insert_key(trie_root, "\177", backspace);
+	insert_key(trie_root, "\e[H", home);
+	insert_key(trie_root, "\e[F", end);
 	insert_key(trie_root, "\n", enter);
 	return (trie_root);
 }

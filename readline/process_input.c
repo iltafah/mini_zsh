@@ -35,6 +35,10 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 		move_right(rdl_vars);
 	else if (key == backspace)
 		erase_and_remove_curr_char(rdl_vars);
+	else if (key == home)
+		move_to_beginning_of_line(rdl_vars);
+	else if (key == end)
+		move_to_end_of_line(rdl_vars);
 	else if (key == printable)
 		print_curr_char(rdl_vars, c);
 	else if (key == enter)
