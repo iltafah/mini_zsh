@@ -2,7 +2,7 @@
 
 char	*get_prompt_name(void)
 {
-	static char	arrow[] = "➜  ";
+	static char	arrow[] = "༺  ";
 	static char	spaces[] = " ";
 	char		*curr_dir;
 	char		*tmp_ptr;

@@ -7,11 +7,11 @@ void	print_prompt(t_rdline *rdl_vars)
 
 	i = 0;
 	prompt = rdl_vars->prompt;
-	write(1, GRN, ft_strlen(GRN));
+	ft_putstr_fd(GRN, rdl_vars->tty_fd);
 	while (prompt[i] != ' ')
 		put_char(prompt[i++]);
-	write(1, CYN, ft_strlen(CYN));
+	ft_putstr_fd(CYN, rdl_vars->tty_fd);
 	while (prompt[i] != '\0')
 		put_char(prompt[i++]);
-	write(1, WHT, ft_strlen(WHT));
+	ft_putstr_fd(WHT, rdl_vars->tty_fd);
 }

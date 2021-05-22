@@ -44,6 +44,11 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./readline/move_cursor_to/move_right.c \
 ./readline/move_cursor_to/move_to_beginning_of_line.c \
 ./readline/move_cursor_to/move_to_end_of_line.c \
+./readline/move_cursor_to/move_to_next_word.c \
+./readline/move_cursor_to/move_to_prec_word.c \
+./readline/move_cursor_to/move_up_down_vertically.c \
+./readline/move_cursor_to/move_cursor_to_row.c \
+./readline/move_cursor_to/move_cursor_to_colum_and_row.c \
 ./readline/printing_funcs/print_after_cursor.c \
 ./readline/printing_funcs/print_curr_char.c \
 ./readline/printing_funcs/print_prompt.c \

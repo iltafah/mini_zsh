@@ -84,6 +84,16 @@ t_trie_node	*initialize_key_seq_trie(void)
 	insert_key(trie_root, "\177", backspace);
 	insert_key(trie_root, "\e[H", home);
 	insert_key(trie_root, "\e[F", end);
+	insert_key(trie_root, "\e\e[A", alt_up_arrow);
+	insert_key(trie_root, "\e[1;3A", alt_up_arrow);
+	insert_key(trie_root, "\e\e[B", alt_down_arrow);
+	insert_key(trie_root, "\e[1;3B", alt_down_arrow);
+	insert_key(trie_root, "\e\e[C", alt_right_arrow);
+	insert_key(trie_root, "\e[f", alt_right_arrow);
+	insert_key(trie_root, "\e\e[D", alt_left_arrow);
+	insert_key(trie_root, "\e[b", alt_left_arrow);
+	insert_key(trie_root, "\e[1;2C", shift_right_arrow);
+	insert_key(trie_root, "\e[1;2D", shift_left_arrow);
 	insert_key(trie_root, "\n", enter);
 	return (trie_root);
 }

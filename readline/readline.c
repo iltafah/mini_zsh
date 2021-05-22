@@ -4,14 +4,14 @@ void	enable_raw_mode(void)
 {
 	struct termios	raw;
 
-	tcgetattr(STDIN_FILENO, &raw);
+	tcgetattr(g_vars.rdl_vars.tty_fd, &raw);
 	raw.c_lflag &= ~(ECHO | ICANON);
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
+	tcsetattr(g_vars.rdl_vars.tty_fd, TCSAFLUSH, &raw);
 }
 
 void	disable_raw_mode(struct termios old_termios_state)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &old_termios_state);
+	tcsetattr(g_vars.rdl_vars.tty_fd, TCSAFLUSH, &old_termios_state);
 }
 
 void	read_line(char **line)
@@ -23,8 +23,9 @@ void	read_line(char **line)
 	rdl_vars = &g_vars.rdl_vars;
 	if (is_initialized == false)
 	{
-		initialize_termios_struct(&original_termios_state);
 		initialize_rdl_vars(rdl_vars);
+		initialize_termios_struct(&original_termios_state);
+		initialize_capabilities(&rdl_vars->capability);
 		is_initialized = true;
 	}
 	enable_raw_mode();

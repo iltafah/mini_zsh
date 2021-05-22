@@ -5,9 +5,10 @@
 # include <termcap.h>
 # include <termios.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
 # include "../vectors/vectors.h"
 # include "../freeing_time/freeing_time.h"
@@ -31,6 +32,12 @@ typedef enum e_key
 	backspace,
 	home,
 	end,
+	alt_up_arrow,
+	alt_down_arrow,
+	alt_right_arrow,
+	alt_left_arrow,
+	shift_right_arrow,
+	shift_left_arrow,
 	printable
 }	t_key;
 
@@ -62,6 +69,7 @@ typedef struct s_rdline
 	char			**old_history;
 	char			*line;
 	char			*prompt;
+	int				tty_fd;
 	int				prompt_len;
 	int				curs_colm_pos;
 	int				curs_colm_old_pos;
@@ -71,6 +79,10 @@ typedef struct s_rdline
 	int				width_of_screen;
 	int				l_i;
 	int				c_i;
+	int				reverse_video_mode;
+	int				highlight_colm_pos;
+	int				highlight_row_pos;
+	int				curr_highlighted_char_index;
 }					t_rdline;
 
 typedef struct s_gvars
@@ -81,12 +93,12 @@ typedef struct s_gvars
 // #define termios s_termios;
 // typedef struct s_termios t_termios;
 
-t_gvars					g_vars;
+t_gvars		g_vars;
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
-char		*get_curr_dir_name(void);
 void		read_line(char **line);
+char		*get_curr_dir_name(void);
 int			ft_strlen_utf8(char *str);
 void		sigwinch_handler(int sig_num);
 void		move_left(t_rdline *rdl_vars);
@@ -96,12 +108,16 @@ void		print_prompt(t_rdline *rdl_vars);
 void		show_old_history(t_rdline *rdl_vars);
 void		show_new_history(t_rdline *rdl_vars);
 void		move_cursor_left(t_rdline *rdl_vars);
+void		move_to_next_word(t_rdline *rdl_vars);
 void		move_cursor_right(t_rdline *rdl_vars);
+void		move_to_prec_word(t_rdline *rdl_vars);
+void		move_up_vertically(t_rdline *rdl_vars);
 void		update_cursor_data(t_rdline *rdl_vars);
 void		restore_cursor_pos(t_rdline *rdl_vars);
 void		move_to_end_of_line(t_rdline *rdl_vars);
 int			get_key(t_trie_node *trie_root, char c);
 void		initialize_rdl_vars(t_rdline *rdl_vars);
+void		move_down_vertically(t_rdline *rdl_vars);
 void		save_curr_cursor_pos(t_rdline *rdl_vars);
 void		print_curr_char(t_rdline *rdl_vars, char c);
 void		clear_lines_below_cursor(t_rdline *rdl_vars);
@@ -109,6 +125,7 @@ void		move_to_beginning_of_line(t_rdline *rdl_vars);
 void		move_cursor_up_vertically(t_rdline *rdl_vars);
 void		process_input(char **line, t_rdline *rdl_vars);
 void		erase_and_remove_curr_char(t_rdline *rdl_vars);
+void		move_cursor_to_row(t_rdline *rdl_vars, int row);
 void		insert_curr_line_to_history(t_rdline *rdl_vars);
 void		move_cursor_down_vertically(t_rdline *rdl_vars);
 void		clear_curr_line_after_cursor(t_rdline *rdl_vars);
@@ -119,7 +136,8 @@ void		move_cursor_start_of_next_line(t_rdline *rdl_vars);
 void		clear_printed_lines(t_rdline *rdl_vars, int option);
 char		**convert_history_vec_to_array(t_vchar_vec *history_vec);
 void		add_empty_char_vec_to_history_vec(t_vchar_vec *history_vec);
-void		initialize_termios_struct(struct termios *original_termios_state);
 void		print_after_cursor(t_rdline *rdl_vars, char *str, int option);
+void		initialize_termios_struct(struct termios *original_termios_state);
+void		move_cursor_to_colum_and_row(t_rdline *rdl_vars, int col, int row);
 
 #endif
