@@ -2,10 +2,10 @@
 
 void	show_old_history(t_rdline *rdl_vars)
 {
-	t_char_vec	*history_line;
-	t_vchar_vec	*history_vec;
-	int			*l_i;
-	int			*c_i;
+	t_char_vec		*history_line;
+	t_vchar_vec		*history_vec;
+	int	*l_i;
+	int	*c_i;
 
 	l_i = &rdl_vars->l_i;
 	c_i = &rdl_vars->c_i;
@@ -23,10 +23,10 @@ void	show_old_history(t_rdline *rdl_vars)
 
 void	show_new_history(t_rdline *rdl_vars)
 {
-	t_char_vec	*history_line;
-	t_vchar_vec	*history_vec;
-	int			*l_i;
-	int			*c_i;
+	t_char_vec		*history_line;
+	t_vchar_vec		*history_vec;
+	int	*l_i;
+	int	*c_i;
 
 	l_i = &rdl_vars->l_i;
 	c_i = &rdl_vars->c_i;

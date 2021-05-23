@@ -80,9 +80,9 @@ typedef struct s_rdline
 	int				l_i;
 	int				c_i;
 	int				reverse_video_mode;
-	int				highlight_colm_pos;
-	int				highlight_row_pos;
-	int				curr_highlighted_char_index;
+	int				hilitd_colm;
+	int				hilitd_row;
+	int				curr_hilitd_char_index;
 }					t_rdline;
 
 typedef struct s_gvars
@@ -94,16 +94,21 @@ typedef struct s_gvars
 // typedef struct s_termios t_termios;
 
 t_gvars		g_vars;
+void		turn_on_reverse_video_mode(t_rdline *rdl_vars);
+void		turn_off_reverse_video_mode(t_rdline *rdl_vars, int key);
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
 void		read_line(char **line);
+void		rdl_print_char(t_rdline *rdl_vars, char c, char *color);
 char		*get_curr_dir_name(void);
 int			ft_strlen_utf8(char *str);
 void		sigwinch_handler(int sig_num);
 void		move_left(t_rdline *rdl_vars);
 void		move_right(t_rdline *rdl_vars);
 t_trie_node	*initialize_key_seq_trie(void);
+void		left_highlight(t_rdline *rdl_v);
+void		right_highlight(t_rdline *rdl_v);
 void		print_prompt(t_rdline *rdl_vars);
 void		show_old_history(t_rdline *rdl_vars);
 void		show_new_history(t_rdline *rdl_vars);

@@ -2,11 +2,11 @@
 
 void	move_right(t_rdline *rdl_vars)
 {
-	t_char_vec	*history_line;
-	t_vchar_vec	*history_vec;
-	int			*curs_colm_pos;
-	int			*l_i;
-	int			*c_i;
+	t_char_vec		*history_line;
+	t_vchar_vec		*history_vec;
+	int	*curs_colm_pos;
+	int	*l_i;
+	int	*c_i;
 
 	history_vec = &rdl_vars->history_vec;
 	history_line = history_vec->elements;

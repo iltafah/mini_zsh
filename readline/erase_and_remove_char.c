@@ -2,11 +2,11 @@
 
 void	erase_and_remove_curr_char(t_rdline *rdl_vars)
 {
-	t_vchar_vec	*history_vec;
-	t_char_vec	*hstry_line;
-	int			*curs_colm_pos;
-	int			*l_i;
-	int			*c_i;
+	t_vchar_vec		*history_vec;
+	t_char_vec		*hstry_line;
+	int	*curs_colm_pos;
+	int	*l_i;
+	int	*c_i;
 
 	c_i = &rdl_vars->c_i;
 	l_i = &rdl_vars->l_i;

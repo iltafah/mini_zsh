@@ -5,7 +5,8 @@ void	print_after_cursor(t_rdline *rdl_vars, char *str, int option)
 	int		i;
 
 	i = 0;
-	save_curr_cursor_pos(rdl_vars);
+	if (option == restore)
+		save_curr_cursor_pos(rdl_vars);
 	clear_curr_line_after_cursor(rdl_vars);
 	while (str[i])
 	{

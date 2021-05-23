@@ -2,7 +2,7 @@
 
 void	skip_chars_to_the_right(t_rdline *rdl_vars, char *str)
 {
-	int				*c_i;
+	int	*c_i;
 
 	c_i = &rdl_vars->c_i;
 	while (str[*c_i] != ' ' && str[*c_i] != '\0')
@@ -17,7 +17,7 @@ void	skip_chars_to_the_right(t_rdline *rdl_vars, char *str)
 
 void	skip_spaces_to_the_right(t_rdline *rdl_vars, char *str)
 {
-	int				*c_i;
+	int	*c_i;
 
 	c_i = &rdl_vars->c_i;
 	while (str[*c_i] == ' ')
@@ -35,8 +35,8 @@ void	move_to_next_word(t_rdline *rdl_vars)
 	t_vchar_vec		*history_vec;
 	t_char_vec		*history_line;
 	char			*curr_hstry_line;
-	int				*c_i;
-	int				*l_i;
+	int	*c_i;
+	int	*l_i;
 
 	c_i = &rdl_vars->c_i;
 	l_i = &rdl_vars->l_i;

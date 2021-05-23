@@ -50,9 +50,10 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->printed_lines = 0;
 	rdl_vars->width_of_screen = 0;
 	rdl_vars->reverse_video_mode = 0;
-	rdl_vars->highlight_row_pos = 0;
-	rdl_vars->highlight_colm_pos = 0;
+	rdl_vars->hilitd_row = 0;
+	rdl_vars->hilitd_colm = 0;
 	rdl_vars->reverse_video_mode = 0;
+	rdl_vars->curr_hilitd_char_index = 0;
 	rdl_vars->line = NULL;
 	rdl_vars->prompt = NULL;
 	rdl_vars->old_history = NULL;
