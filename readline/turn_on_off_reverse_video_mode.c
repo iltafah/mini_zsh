@@ -2,44 +2,44 @@
 
 static void		move_cursor_left_or_right(t_rdline *rdl_vars, int key)
 {
-	int				hilitd_colm;
-	int 			hilitd_row;
+	int				s_hilitd_col;
+	int 			s_hilitd_row;
 
-	hilitd_colm = rdl_vars->hilitd_colm;
-	hilitd_row = rdl_vars->hilitd_row;
+	s_hilitd_col = rdl_vars->starting_hilitd_colm;
+	s_hilitd_row = rdl_vars->starting_hilitd_row;
 	if (key == left_arrow)
 	{
-		if (rdl_vars->curr_hilitd_char_index < rdl_vars->c_i)
+		if (rdl_vars->starting_hilitd_index < rdl_vars->curr_hilitd_char_index)
 		{
-			move_cursor_to_colum_and_row(rdl_vars, hilitd_colm, hilitd_row);
-			rdl_vars->c_i = rdl_vars->curr_hilitd_char_index;
+			move_cursor_to_colum_and_row(rdl_vars, s_hilitd_col, s_hilitd_row);
+			rdl_vars->c_i = rdl_vars->starting_hilitd_index;
 		}
+		
 	}
 	else if (key == right_arrow)
 	{
-		if (rdl_vars->curr_hilitd_char_index > rdl_vars->c_i)
+		if (rdl_vars->curr_hilitd_char_index < rdl_vars->starting_hilitd_index)
 		{
-			move_cursor_to_colum_and_row(rdl_vars, hilitd_colm, hilitd_row);
-			rdl_vars->c_i = rdl_vars->curr_hilitd_char_index;
+			move_cursor_to_colum_and_row(rdl_vars, s_hilitd_col, s_hilitd_row);
+			rdl_vars->c_i = rdl_vars->starting_hilitd_index;
 		}
 	}
 }
 
-static void		move_curs_to_left_hilitd_pos(t_rdline *rdl_vars, int *index)
+static void		move_curs_to_left_hilitd_pos(t_rdline *rdl_v, int *index)
 {
-	int				hilitd_colm;
-	int 			hilitd_row;
+	int				strt_hilitd_col;
+	int 			strt_hilitd_row;
 
-	hilitd_colm = rdl_vars->hilitd_colm;
-	hilitd_row = rdl_vars->hilitd_row;
-	if (rdl_vars->curr_hilitd_char_index > rdl_vars->c_i)
-		*index = rdl_vars->c_i;
+	strt_hilitd_col = rdl_v->starting_hilitd_colm;
+	strt_hilitd_row = rdl_v->starting_hilitd_row;
+	if (rdl_v->starting_hilitd_index > rdl_v->curr_hilitd_char_index)
+		*index = rdl_v->curr_hilitd_char_index;
 	else
 	{
-		*index = rdl_vars->curr_hilitd_char_index;
-		move_cursor_to_colum_and_row(rdl_vars, hilitd_colm, hilitd_row);
+		*index = rdl_v->starting_hilitd_index;
+		move_cursor_to_colum_and_row(rdl_v, strt_hilitd_col, strt_hilitd_row);
 	}
-
 }
 
 void			turn_off_reverse_video_mode(t_rdline *rdl_vars, int key)
@@ -73,9 +73,12 @@ void			turn_on_reverse_video_mode(t_rdline *rdl_vars)
 	if (rdl_vars->reverse_video_mode == 0)
 	{
 		tputs(tgetstr("vi", NULL), 1, put_char);
-		rdl_vars->hilitd_colm = rdl_vars->curs_colm_pos;
-		rdl_vars->hilitd_row = rdl_vars->curs_row_pos;
 		rdl_vars->curr_hilitd_char_index = rdl_vars->c_i;
+		rdl_vars->starting_hilitd_colm = rdl_vars->curs_colm_pos;
+		rdl_vars->starting_hilitd_row = rdl_vars->curs_row_pos;
+		rdl_vars->starting_hilitd_index = rdl_vars->c_i;
 		rdl_vars->reverse_video_mode = 1;
 	}
 }
+		// rdl_vars->hilitd_colm = rdl_vars->curs_colm_pos;
+		// rdl_vars->hilitd_row = rdl_vars->curs_row_pos;

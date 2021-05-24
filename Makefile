@@ -54,6 +54,7 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./readline/printing_funcs/print_curr_char.c \
 ./readline/printing_funcs/print_prompt.c \
 ./readline/printing_funcs/put_char.c \
+./readline/printing_funcs/put_colorful_char.c \
 ./readline/printing_funcs/rdl_print_char.c \
 ./readline/process_input.c \
 ./readline/readline.c \

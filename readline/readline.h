@@ -19,6 +19,7 @@
 # define GRN "\e[1;92m"
 # define PRP "\e[1;95m"
 # define WHT "\e[1;97m"
+FILE		*fd;
 
 typedef enum e_key
 {
@@ -32,12 +33,15 @@ typedef enum e_key
 	backspace,
 	home,
 	end,
-	alt_up_arrow,
-	alt_down_arrow,
-	alt_right_arrow,
-	alt_left_arrow,
+	ctl_up_arrow,
+	ctl_down_arrow,
+	ctl_right_arrow,
+	ctl_left_arrow,
 	shift_right_arrow,
 	shift_left_arrow,
+	ctl_s,
+	ctl_v,
+	ctl_x,
 	printable
 }	t_key;
 
@@ -80,9 +84,14 @@ typedef struct s_rdline
 	int				l_i;
 	int				c_i;
 	int				reverse_video_mode;
-	int				hilitd_colm;
-	int				hilitd_row;
+	// int				hilitd_colm;
+	// int				hilitd_row;
 	int				curr_hilitd_char_index;
+	char			*hilitd_text;
+
+	int				starting_hilitd_index;
+	int				starting_hilitd_colm;
+	int				starting_hilitd_row;
 }					t_rdline;
 
 typedef struct s_gvars
@@ -94,6 +103,7 @@ typedef struct s_gvars
 // typedef struct s_termios t_termios;
 
 t_gvars		g_vars;
+void		put_colorful_char(char c, char *color);
 void		turn_on_reverse_video_mode(t_rdline *rdl_vars);
 void		turn_off_reverse_video_mode(t_rdline *rdl_vars, int key);
 int			put_char(int c);

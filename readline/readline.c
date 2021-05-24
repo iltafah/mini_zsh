@@ -5,7 +5,8 @@ void	enable_raw_mode(void)
 	struct termios	raw;
 
 	tcgetattr(g_vars.rdl_vars.tty_fd, &raw);
-	raw.c_lflag &= ~(ECHO | ICANON);
+	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
+	raw.c_iflag &= ~(IXON);
 	tcsetattr(g_vars.rdl_vars.tty_fd, TCSAFLUSH, &raw);
 }
 
