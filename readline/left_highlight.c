@@ -21,9 +21,9 @@ void		left_highlight(t_rdline *rdl_v)
 	last_index = hstry_vec->elements[rdl_v->l_i].last_index;
 	// save_curr_cursor_pos(rdl_v);
 	// move_cursor_to_colum_and_row(rdl_v, rdl_v->hilitd_colm, rdl_v->hilitd_row);
-fprintf(fd, "width = %d\n", rdl_v->width_of_screen);
-fprintf(fd, "curs_col = %d curs_row = %d\n", rdl_v->curs_colm_pos, rdl_v->curs_row_pos);
-fflush(fd);
+// fprintf(fd, "width = %d\n", rdl_v->width_of_screen);
+// fprintf(fd, "curs_col = %d curs_row = %d\n", rdl_v->curs_colm_pos, rdl_v->curs_row_pos);
+// fflush(fd);
 	if (rdl_v->curr_hilitd_char_index > 0)
 	{
 		to_be_highlighted_or_not(rdl_v);

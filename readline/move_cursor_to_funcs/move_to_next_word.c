@@ -1,11 +1,11 @@
 #include "../readline.h"
 
-void	skip_chars_to_the_right(t_rdline *rdl_vars, char *str)
+void	skip_chars_to_the_right(t_rdline *rdl_vars, char *line)
 {
 	int	*c_i;
 
 	c_i = &rdl_vars->c_i;
-	while (str[*c_i] != ' ' && str[*c_i] != '\0')
+	while (line[*c_i] != ' ' && line[*c_i] != '\0')
 	{
 		if (rdl_vars->curs_colm_pos < rdl_vars->width_of_screen - 1)
 			move_cursor_right(rdl_vars);
@@ -15,12 +15,12 @@ void	skip_chars_to_the_right(t_rdline *rdl_vars, char *str)
 	}
 }
 
-void	skip_spaces_to_the_right(t_rdline *rdl_vars, char *str)
+void	skip_spaces_to_the_right(t_rdline *rdl_vars, char *line)
 {
 	int	*c_i;
 
 	c_i = &rdl_vars->c_i;
-	while (str[*c_i] == ' ')
+	while (line[*c_i] == ' ')
 	{
 		if (rdl_vars->curs_colm_pos < rdl_vars->width_of_screen - 1)
 			move_cursor_right(rdl_vars);

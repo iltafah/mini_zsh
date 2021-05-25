@@ -33,12 +33,12 @@ typedef enum e_key
 	backspace,
 	home,
 	end,
+	shift_right_arrow,
+	shift_left_arrow,
 	ctl_up_arrow,
 	ctl_down_arrow,
 	ctl_right_arrow,
 	ctl_left_arrow,
-	shift_right_arrow,
-	shift_left_arrow,
 	ctl_s,
 	ctl_v,
 	ctl_x,
@@ -84,12 +84,11 @@ typedef struct s_rdline
 	int				l_i;
 	int				c_i;
 	int				reverse_video_mode;
-	// int				hilitd_colm;
-	// int				hilitd_row;
-	int				curr_hilitd_char_index;
-	char			*hilitd_text;
-
+	char			*hilitd_txt;
 	int				starting_hilitd_index;
+	int				curr_hilitd_char_index;
+	int				beg_hilitd_index;
+	int				last_hilitd_index;
 	int				starting_hilitd_colm;
 	int				starting_hilitd_row;
 }					t_rdline;
@@ -99,18 +98,11 @@ typedef struct s_gvars
 	t_rdline		rdl_vars;
 }				t_gvars;
 
-// #define termios s_termios;
-// typedef struct s_termios t_termios;
-
 t_gvars		g_vars;
-void		put_colorful_char(char c, char *color);
-void		turn_on_reverse_video_mode(t_rdline *rdl_vars);
-void		turn_off_reverse_video_mode(t_rdline *rdl_vars, int key);
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
 void		read_line(char **line);
-void		rdl_print_char(t_rdline *rdl_vars, char c, char *color);
 char		*get_curr_dir_name(void);
 int			ft_strlen_utf8(char *str);
 void		sigwinch_handler(int sig_num);
@@ -129,15 +121,20 @@ void		move_to_prec_word(t_rdline *rdl_vars);
 void		move_up_vertically(t_rdline *rdl_vars);
 void		update_cursor_data(t_rdline *rdl_vars);
 void		restore_cursor_pos(t_rdline *rdl_vars);
+void		put_colorful_char(char c, char *color);
 void		move_to_end_of_line(t_rdline *rdl_vars);
 int			get_key(t_trie_node *trie_root, char c);
 void		initialize_rdl_vars(t_rdline *rdl_vars);
 void		move_down_vertically(t_rdline *rdl_vars);
 void		save_curr_cursor_pos(t_rdline *rdl_vars);
+void		cut_highlighted_text(t_rdline *rdl_vars);
+void		past_highlighted_text(t_rdline *rdl_vars);
+void		copy_highlighted_text(t_rdline *rdl_vars);
 void		print_curr_char(t_rdline *rdl_vars, char c);
 void		clear_lines_below_cursor(t_rdline *rdl_vars);
 void		move_to_beginning_of_line(t_rdline *rdl_vars);
 void		move_cursor_up_vertically(t_rdline *rdl_vars);
+void		turn_on_reverse_video_mode(t_rdline *rdl_vars);
 void		process_input(char **line, t_rdline *rdl_vars);
 void		erase_and_remove_curr_char(t_rdline *rdl_vars);
 void		move_cursor_to_row(t_rdline *rdl_vars, int row);
@@ -149,7 +146,11 @@ void		move_cursor_to_colum(t_rdline *rdl_vars, int col);
 void		initialize_capabilities(t_capability *capability);
 void		move_cursor_start_of_next_line(t_rdline *rdl_vars);
 void		clear_printed_lines(t_rdline *rdl_vars, int option);
+void		rdl_print_char(t_rdline *rdl_vars, char c, char *color);
+void		turn_off_reverse_video_mode(t_rdline *rdl_vars, int key);
 char		**convert_history_vec_to_array(t_vchar_vec *history_vec);
+void		determine_beg_last_highlighted_txt_indx(t_rdline *rdl_v);
+void		clear_curr_line_after_and_below_cursor(t_rdline *rdl_vars);
 void		add_empty_char_vec_to_history_vec(t_vchar_vec *history_vec);
 void		print_after_cursor(t_rdline *rdl_vars, char *str, int option);
 void		initialize_termios_struct(struct termios *original_termios_state);

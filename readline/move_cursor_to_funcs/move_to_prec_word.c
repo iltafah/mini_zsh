@@ -1,11 +1,11 @@
 #include "../readline.h"
 
-void	skip_spaces_to_the_left(t_rdline *rdl_vars, char *str)
+void	skip_spaces_to_the_left(t_rdline *rdl_vars, char *line)
 {
 	int				*c_i;
 
 	c_i = &rdl_vars->c_i;
-	while (str[*c_i] == ' ')
+	while (line[*c_i] == ' ')
 	{
 		if (rdl_vars->curs_colm_pos > 0)
 			move_cursor_left(rdl_vars);
@@ -15,20 +15,24 @@ void	skip_spaces_to_the_left(t_rdline *rdl_vars, char *str)
 	}
 }
 
-void	skip_chars_to_the_left(t_rdline *rdl_vars, char *str)
+void	skip_chars_to_the_left(t_rdline *rdl_vars, char *line)
 {
 	int				*c_i;
 
 	c_i = &rdl_vars->c_i;
-	while (str[*c_i - 1] != ' ' && *c_i > 0)
+	while (line[*c_i - 1] != ' ' && *c_i > 0)
 	{
-		if (rdl_vars->curs_colm_pos < rdl_vars->width_of_screen - 1)
+		if (rdl_vars->curs_colm_pos > 0)
 			move_cursor_left(rdl_vars);
 		else
-			move_cursor_start_of_next_line(rdl_vars);
+			move_cursor_end_of_prec_line(rdl_vars);
 		(*c_i)--;
 	}
 }
+		// if (rdl_vars->curs_colm_pos < rdl_vars->width_of_screen - 1)
+		// 	move_cursor_left(rdl_vars);
+		// else
+		// 	move_cursor_start_of_next_line(rdl_vars);
 
 void	move_to_prec_word(t_rdline *rdl_vars)
 {

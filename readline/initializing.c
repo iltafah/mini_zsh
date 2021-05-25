@@ -52,9 +52,12 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->reverse_video_mode = 0;
 	rdl_vars->reverse_video_mode = 0;
 	rdl_vars->curr_hilitd_char_index = 0;
-	// rdl_vars->hilitd_row = 0;
-	// rdl_vars->hilitd_colm = 0;
-	rdl_vars->hilitd_text = NULL;
+	rdl_vars->starting_hilitd_colm = 0;
+	rdl_vars->starting_hilitd_row = 0;
+	rdl_vars->starting_hilitd_index = 0;
+	rdl_vars->beg_hilitd_index = 0;
+	rdl_vars->last_hilitd_index = 0;
+	rdl_vars->hilitd_txt = NULL;
 	rdl_vars->line = NULL;
 	rdl_vars->prompt = NULL;
 	rdl_vars->old_history = NULL;

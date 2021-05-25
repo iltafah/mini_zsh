@@ -12,16 +12,18 @@ void	print_curr_char(t_rdline *rdl_vars, char c)
 	history_vec = &rdl_vars->history_vec;
 	history_line = history_vec->elements;
 	history_line[*l_i].add_new_element_at_index(&history_line[*l_i], c, *c_i);
-	put_char(history_line[*l_i].elements[*c_i]);
-	rdl_vars->curs_colm_pos++;
+	rdl_print_char(rdl_vars, history_line[*l_i].elements[*c_i], WHT);
 	(*c_i)++;
-	if (rdl_vars->curs_colm_pos == rdl_vars->width_of_screen)
-	{
-		put_char(' ');
-		move_cursor_left(rdl_vars);
-		rdl_vars->curs_row_pos++;
-		rdl_vars->curs_colm_pos = 0;
-	}
 	print_after_cursor(rdl_vars, history_line[*l_i].elements + *c_i, restore);
 	update_cursor_data(rdl_vars);
 }
+
+	// put_char(history_line[*l_i].elements[*c_i]);
+	// rdl_vars->curs_colm_pos++;
+	// if (rdl_vars->curs_colm_pos == rdl_vars->width_of_screen)
+	// {
+	// 	put_char(' ');
+	// 	move_cursor_left(rdl_vars);
+	// 	rdl_vars->curs_row_pos++;
+	// 	rdl_vars->curs_colm_pos = 0;
+	// }

@@ -7,7 +7,7 @@ static void		move_cursor_left_or_right(t_rdline *rdl_vars, int key)
 
 	s_hilitd_col = rdl_vars->starting_hilitd_colm;
 	s_hilitd_row = rdl_vars->starting_hilitd_row;
-	if (key == left_arrow)
+	if (key == left_arrow || key == ctl_x)
 	{
 		if (rdl_vars->starting_hilitd_index < rdl_vars->curr_hilitd_char_index)
 		{
