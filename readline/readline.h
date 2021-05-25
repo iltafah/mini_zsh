@@ -19,6 +19,7 @@
 # define GRN "\e[1;92m"
 # define PRP "\e[1;95m"
 # define WHT "\e[1;97m"
+# define GRY "\e[38;5;245m"
 FILE		*fd;
 
 typedef enum e_key
@@ -99,6 +100,7 @@ typedef struct s_gvars
 }				t_gvars;
 
 t_gvars		g_vars;
+void		print_suggestions(t_rdline *rdl_vars);
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);

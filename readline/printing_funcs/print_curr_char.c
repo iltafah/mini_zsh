@@ -15,6 +15,7 @@ void	print_curr_char(t_rdline *rdl_vars, char c)
 	rdl_print_char(rdl_vars, history_line[*l_i].elements[*c_i], WHT);
 	(*c_i)++;
 	print_after_cursor(rdl_vars, history_line[*l_i].elements + *c_i, restore);
+	print_suggestions(rdl_vars);
 	update_cursor_data(rdl_vars);
 }
 
