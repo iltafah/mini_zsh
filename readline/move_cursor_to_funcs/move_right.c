@@ -22,4 +22,14 @@ void	move_right(t_rdline *rdl_vars)
 			move_cursor_right(rdl_vars);
 		update_cursor_data(rdl_vars);
 	}
+	else
+	{
+		if (rdl_vars->is_matched_history == true && history_line[*l_i].used_size > 0)
+		{
+			history_line[*l_i].add_set_of_elements_at_index(&history_line[*l_i], history_line[rdl_vars->matched_history_index].elements + *c_i, *c_i);
+			print_after_cursor(rdl_vars, history_line[*l_i].elements + *c_i, dont_restore);
+			*c_i = history_line[*l_i].last_index + 1;
+			rdl_vars->is_matched_history = false;
+		}
+	}
 }

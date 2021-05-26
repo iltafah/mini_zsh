@@ -76,6 +76,7 @@ void	process_input(char **line, t_rdline *rdl_vars)
 	char	c;
 /////////////////////
 fd = fopen("./debug.txt", "w+");
+fd2 = fopen("debug2.txt", "w+");
 /////////////////////
 	key = none;
 	set_rdl_vars(rdl_vars);

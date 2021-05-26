@@ -49,6 +49,8 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->prompt_len = 0;
 	rdl_vars->printed_lines = 0;
 	rdl_vars->width_of_screen = 0;
+	rdl_vars->matched_history_index = 0;
+	rdl_vars->is_matched_history = 0;
 	rdl_vars->reverse_video_mode = 0;
 	rdl_vars->reverse_video_mode = 0;
 	rdl_vars->curr_hilitd_char_index = 0;

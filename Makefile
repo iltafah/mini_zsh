@@ -75,7 +75,9 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./vectors/vector_of_strings.c \
 ./vectors/vector_of_chars.c \
 ./vectors/vector_of_char_vectors.c \
-./vectors/vector_of_strings.c
+./vectors/vector_of_strings.c \
+./get_next_line/get_next_line.c \
+./get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 

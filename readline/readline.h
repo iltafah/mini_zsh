@@ -12,6 +12,7 @@
 # include "../libft/libft.h"
 # include "../vectors/vectors.h"
 # include "../freeing_time/freeing_time.h"
+# include "../get_next_line/get_next_line.h"
 
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
@@ -21,6 +22,7 @@
 # define WHT "\e[1;97m"
 # define GRY "\e[38;5;245m"
 FILE		*fd;
+FILE		*fd2;
 
 typedef enum e_key
 {
@@ -75,6 +77,7 @@ typedef struct s_rdline
 	char			*line;
 	char			*prompt;
 	int				tty_fd;
+	int				history_fd;
 	int				prompt_len;
 	int				curs_colm_pos;
 	int				curs_colm_old_pos;
@@ -86,6 +89,8 @@ typedef struct s_rdline
 	int				c_i;
 	int				reverse_video_mode;
 	char			*hilitd_txt;
+	int				is_matched_history;
+	int				matched_history_index;
 	int				starting_hilitd_index;
 	int				curr_hilitd_char_index;
 	int				beg_hilitd_index;
@@ -100,7 +105,6 @@ typedef struct s_gvars
 }				t_gvars;
 
 t_gvars		g_vars;
-void		print_suggestions(t_rdline *rdl_vars);
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
@@ -117,6 +121,7 @@ void		print_prompt(t_rdline *rdl_vars);
 void		show_old_history(t_rdline *rdl_vars);
 void		show_new_history(t_rdline *rdl_vars);
 void		move_cursor_left(t_rdline *rdl_vars);
+void		print_suggestions(t_rdline *rdl_vars);
 void		move_to_next_word(t_rdline *rdl_vars);
 void		move_cursor_right(t_rdline *rdl_vars);
 void		move_to_prec_word(t_rdline *rdl_vars);
@@ -127,6 +132,7 @@ void		put_colorful_char(char c, char *color);
 void		move_to_end_of_line(t_rdline *rdl_vars);
 int			get_key(t_trie_node *trie_root, char c);
 void		initialize_rdl_vars(t_rdline *rdl_vars);
+t_char_vec	convert_string_to_char_vec(char *string);
 void		move_down_vertically(t_rdline *rdl_vars);
 void		save_curr_cursor_pos(t_rdline *rdl_vars);
 void		cut_highlighted_text(t_rdline *rdl_vars);

@@ -46,10 +46,8 @@ void	insert_curr_line_to_history(t_rdline *rdl_vars)
 	l_i = &rdl_vars->l_i;
 	rdl_vars->line = strdup(history_line[*l_i].elements);
 	if (history_line[*l_i].used_size > 0)
-	{
 		append_curr_line_to_history(rdl_vars);
-		restore_old_history_of_curr_line(rdl_vars);
-	}
 	else
 		history_vec->delete_last_element(history_vec);
+	restore_old_history_of_curr_line(rdl_vars);
 }
