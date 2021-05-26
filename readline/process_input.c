@@ -66,7 +66,9 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 		insert_curr_line_to_history(rdl_vars);
 		put_char('\n');
 	}
+	fprintf(fd, "======================================================\n");
 	fprintf(fd, "curs_pos (%d, %d)\n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos);
+	fprintf(fd, "c_i : (%d) , l_i : (%d)\n", rdl_vars->c_i, rdl_vars->l_i);
 	fflush(fd);
 }
 

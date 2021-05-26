@@ -4,14 +4,19 @@ void	move_up_vertically(t_rdline *rdl_vars)
 {
 	if (rdl_vars->curs_row_pos > 0)
 	{
-		move_cursor_up_vertically(rdl_vars);
-		if (rdl_vars->curs_colm_pos > rdl_vars->prompt_len)
-			rdl_vars->c_i = rdl_vars->c_i - rdl_vars->width_of_screen;
-		else
+		if (rdl_vars->curs_row_pos == 1)
 		{
-			rdl_vars->c_i = 0;
-			move_cursor_to_colum(rdl_vars, rdl_vars->prompt_len);
+			if (rdl_vars->curs_colm_pos < rdl_vars->prompt_len)
+			{
+				rdl_vars->c_i = 0;
+				move_cursor_to_colum(rdl_vars, rdl_vars->prompt_len);
+			}
+			else
+				rdl_vars->c_i -= rdl_vars->width_of_screen;
 		}
+		else
+			rdl_vars->c_i -= rdl_vars->width_of_screen;
+		move_cursor_up_vertically(rdl_vars);
 	}
 }
 
