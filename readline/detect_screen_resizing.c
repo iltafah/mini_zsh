@@ -8,9 +8,3 @@ void	detect_screen_resizing(t_rdline *rdl_vars)
 	rdl_vars->width_of_screen = new_screen_width_size;
 	update_cursor_data(rdl_vars);
 }
-
-void	sigwinch_handler(int sig_num)
-{
-	if (sig_num == SIGWINCH)
-		detect_screen_resizing(&g_vars.rdl_vars);
-}

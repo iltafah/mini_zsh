@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/05/20 19:20:52 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/05/26 18:55:09 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,12 @@ int main(int argc, char **argv, char **env)
 	{
 		// get_next_line(0, &line);
 		read_line(&line);
+		/////////////////////////////////
+		/**				exit		**///
+		if (strcmp(line, "exit") == 0)
+			temp_exit(&tokens_list, ast, line, &env_table);
+		/////////////////////////////////
+
 		line_tokenization(line, &tokens_list);
 		print_tokens(tokens_list);
 		if (check_tokens_syntax(tokens_list) == ERROR)
@@ -247,11 +253,6 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		create_abstract_syntax_tree(&ast, tokens_list);
-		/////////////////////////////////
-		/**				exit		**///
-		if (strcmp(line, "exit") == 0)
-			temp_exit(&tokens_list, ast, line, &env_table);
-		/////////////////////////////////
 
 		// print_preorder(ast, 1, env_table);
 		execute_test(ast, env_table);

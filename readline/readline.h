@@ -77,7 +77,6 @@ typedef struct s_rdline
 	char			*line;
 	char			*prompt;
 	int				tty_fd;
-	int				history_fd;
 	int				prompt_len;
 	int				curs_colm_pos;
 	int				curs_colm_old_pos;
@@ -107,8 +106,13 @@ typedef struct s_gvars
 t_gvars		g_vars;
 int			put_char(int c);
 int			get_screen_width(void);
+void		signals_handler(int sig_num);
 char		*get_prompt_name(void);
 void		read_line(char **line);
+void		detect_screen_resizing(t_rdline *rdl_vars);
+int			open_history_file(t_rdline *rdl_vars, int o_flag);
+void		overwrite_history_file(t_rdline *rdl_vars);
+void		load_history(t_rdline *rdl_vars);
 char		*get_curr_dir_name(void);
 int			ft_strlen_utf8(char *str);
 void		sigwinch_handler(int sig_num);

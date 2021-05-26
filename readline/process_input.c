@@ -80,7 +80,6 @@ fd2 = fopen("debug2.txt", "w+");
 /////////////////////
 	key = none;
 	set_rdl_vars(rdl_vars);
-	signal(SIGWINCH, sigwinch_handler);
 	print_prompt(rdl_vars);
 	while (read(STDIN_FILENO, &c, 1))
 	{
