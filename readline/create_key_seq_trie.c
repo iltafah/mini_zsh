@@ -41,10 +41,10 @@ int	get_key(t_trie_node *trie_root, char c)
 	int					key;
 
 	key = none;
+	if ((int)c < 0 || (int)c > 127)
+		return (none);
 	if (curr_node == NULL)
-	{
 		curr_node = trie_root;
-	}
 	curr_node = curr_node->children[(int)c];
 	if (curr_node != NULL)
 	{
@@ -63,7 +63,7 @@ void	insert_printable_characters(t_trie_node *trie_root)
 	static int	curr_printable_char = 32;
 	static int	last_printable_char = 127;
 
-	while (curr_printable_char < last_printable_char)
+	while (curr_printable_char <= last_printable_char)
 	{
 		printable_char[0] = curr_printable_char;
 		insert_key(trie_root, printable_char, printable);

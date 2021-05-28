@@ -31,5 +31,6 @@ void			cut_highlighted_text(t_rdline *rdl_vars)
 		delete_hilitd_chars_from_history_line(rdl_vars);
 		clear_curr_line_after_and_below_cursor(rdl_vars);
 		turn_off_reverse_video_mode(rdl_vars, ctl_x);
+		rdl_vars->is_matched_history = false;
 	}
 }

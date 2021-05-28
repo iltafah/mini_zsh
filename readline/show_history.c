@@ -18,6 +18,7 @@ void	show_old_history(t_rdline *rdl_vars)
 		print_after_cursor(rdl_vars, history_line[*l_i].elements, dont_restore);
 		*c_i = history_line[*l_i].last_index + 1;
 		update_cursor_data(rdl_vars);
+		rdl_vars->is_matched_history = false;
 	}
 }
 
@@ -37,10 +38,11 @@ void	show_new_history(t_rdline *rdl_vars)
 		(*l_i)++;
 		clear_printed_lines(rdl_vars, dont_restore);
 		print_after_cursor(rdl_vars, history_line[*l_i].elements, dont_restore);
-		if (history_line[*l_i].last_index != 0)
+		if (history_line[*l_i].used_size > 0)
 			*c_i = history_line[*l_i].last_index + 1;
 		else
-			*c_i = history_line[*l_i].last_index;
+			*c_i = 0;
 		update_cursor_data(rdl_vars);
+		rdl_vars->is_matched_history = false;
 	}
 }

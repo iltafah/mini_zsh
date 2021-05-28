@@ -14,6 +14,7 @@
 # include "../freeing_time/freeing_time.h"
 # include "../get_next_line/get_next_line.h"
 
+
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
 # define RED "\e[1;91m"
@@ -21,6 +22,9 @@
 # define PRP "\e[1;95m"
 # define WHT "\e[1;97m"
 # define GRY "\e[38;5;245m"
+
+# define skip continue
+
 FILE		*fd;
 FILE		*fd2;
 
@@ -66,6 +70,10 @@ typedef struct s_capability
 	char		*mv_cursor_to_colm;
 	char		*clear_line_after_cursor;
 	char		*clear_lines_below;
+	char		*make_cursor_invisible;
+	char		*return_cursor_to_normal;
+	char		*leave_standout_mode;
+	char		*enter_standout_mode;
 }				t_capability;
 
 typedef struct s_rdline
@@ -73,15 +81,16 @@ typedef struct s_rdline
 	t_capability	capability;
 	t_trie_node		*key_seq_trie;
 	t_vchar_vec		history_vec;
+	struct termios	original_termios_state;
 	char			**old_history;
 	char			*line;
 	char			*prompt;
 	int				tty_fd;
 	int				prompt_len;
 	int				curs_colm_pos;
-	int				curs_colm_old_pos;
 	int				curs_row_pos;
-	int				curs_row_old_pos;
+	t_int_vec		old_curs_colm_pos_stack;
+	t_int_vec		old_curs_row_pos_stack;
 	int				printed_lines;
 	int				width_of_screen;
 	int				l_i;
@@ -106,25 +115,23 @@ typedef struct s_gvars
 t_gvars		g_vars;
 int			put_char(int c);
 int			get_screen_width(void);
-void		signals_handler(int sig_num);
 char		*get_prompt_name(void);
 void		read_line(char **line);
-void		detect_screen_resizing(t_rdline *rdl_vars);
-int			open_history_file(t_rdline *rdl_vars, int o_flag);
-void		overwrite_history_file(t_rdline *rdl_vars);
-void		load_history(t_rdline *rdl_vars);
 char		*get_curr_dir_name(void);
 int			ft_strlen_utf8(char *str);
+void		signals_handler(int sig_num);
 void		sigwinch_handler(int sig_num);
 void		move_left(t_rdline *rdl_vars);
 void		move_right(t_rdline *rdl_vars);
 t_trie_node	*initialize_key_seq_trie(void);
 void		left_highlight(t_rdline *rdl_v);
+void		load_history(t_rdline *rdl_vars);
 void		right_highlight(t_rdline *rdl_v);
 void		print_prompt(t_rdline *rdl_vars);
 void		show_old_history(t_rdline *rdl_vars);
 void		show_new_history(t_rdline *rdl_vars);
 void		move_cursor_left(t_rdline *rdl_vars);
+void		erase_suggestions(t_rdline *rdl_vars);
 void		print_suggestions(t_rdline *rdl_vars);
 void		move_to_next_word(t_rdline *rdl_vars);
 void		move_cursor_right(t_rdline *rdl_vars);
@@ -142,11 +149,13 @@ void		save_curr_cursor_pos(t_rdline *rdl_vars);
 void		cut_highlighted_text(t_rdline *rdl_vars);
 void		past_highlighted_text(t_rdline *rdl_vars);
 void		copy_highlighted_text(t_rdline *rdl_vars);
+void		detect_screen_resizing(t_rdline *rdl_vars);
+void		overwrite_history_file(t_rdline *rdl_vars);
 void		print_curr_char(t_rdline *rdl_vars, char c);
+void		start_highlighting_mode(t_rdline *rdl_vars);
 void		clear_lines_below_cursor(t_rdline *rdl_vars);
 void		move_to_beginning_of_line(t_rdline *rdl_vars);
 void		move_cursor_up_vertically(t_rdline *rdl_vars);
-void		turn_on_reverse_video_mode(t_rdline *rdl_vars);
 void		process_input(char **line, t_rdline *rdl_vars);
 void		erase_and_remove_curr_char(t_rdline *rdl_vars);
 void		move_cursor_to_row(t_rdline *rdl_vars, int row);
@@ -154,12 +163,15 @@ void		insert_curr_line_to_history(t_rdline *rdl_vars);
 void		move_cursor_down_vertically(t_rdline *rdl_vars);
 void		clear_curr_line_after_cursor(t_rdline *rdl_vars);
 void		move_cursor_end_of_prec_line(t_rdline *rdl_vars);
+int			open_history_file(t_rdline *rdl_vars, int o_flag);
 void		move_cursor_to_colum(t_rdline *rdl_vars, int col);
 void		initialize_capabilities(t_capability *capability);
 void		move_cursor_start_of_next_line(t_rdline *rdl_vars);
+void		disable_raw_mode(struct termios old_termios_state);
 void		clear_printed_lines(t_rdline *rdl_vars, int option);
+void		quit_highlighting_mode(t_rdline *rdl_vars, int key);
+void		move_cursor_to_end_of_printed_line(t_rdline *rdl_vars);
 void		rdl_print_char(t_rdline *rdl_vars, char c, char *color);
-void		turn_off_reverse_video_mode(t_rdline *rdl_vars, int key);
 char		**convert_history_vec_to_array(t_vchar_vec *history_vec);
 void		determine_beg_last_highlighted_txt_indx(t_rdline *rdl_v);
 void		clear_curr_line_after_and_below_cursor(t_rdline *rdl_vars);

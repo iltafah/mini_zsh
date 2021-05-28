@@ -17,7 +17,6 @@ void	disable_raw_mode(struct termios old_termios_state)
 
 void	read_line(char **line)
 {
-	static struct termios	original_termios_state;
 	static int				is_initialized = false;
 	t_rdline				*rdl_vars;
 
@@ -25,7 +24,7 @@ void	read_line(char **line)
 	if (is_initialized == false)
 	{
 		initialize_rdl_vars(rdl_vars);
-		initialize_termios_struct(&original_termios_state);
+		initialize_termios_struct(&rdl_vars->original_termios_state);
 		initialize_capabilities(&rdl_vars->capability);
 		load_history(rdl_vars);
 		signal(SIGINT, signals_handler);
@@ -34,5 +33,5 @@ void	read_line(char **line)
 	}
 	enable_raw_mode();
 	process_input(line, rdl_vars);
-	disable_raw_mode(original_termios_state);
+	disable_raw_mode(rdl_vars->original_termios_state);
 }

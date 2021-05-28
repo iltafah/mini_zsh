@@ -1,5 +1,4 @@
 #include "./vectors.h"
-#include <stdio.h>
 
 void    initialize_vec_of_char(t_char_vec *vec)
 {

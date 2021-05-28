@@ -1,12 +1,34 @@
 #include "../readline.h"
 
+static void	print_matched_history(t_rdline *vars)
+{
+	t_char_vec		*history_line;
+	t_vchar_vec		*history_vec;
+	int				*l_i;
+	int				*c_i;
+
+	history_vec = &vars->history_vec;
+	history_line = history_vec->elements;
+	l_i = &vars->l_i;
+	c_i = &vars->c_i;
+	if (vars->is_matched_history == true && history_line[*l_i].used_size > 0)
+	{
+		history_line[*l_i].add_set_of_elements_at_index(&history_line[*l_i],
+			history_line[vars->matched_history_index].elements + *c_i, *c_i);
+		print_after_cursor(vars, history_line[*l_i].elements + *c_i,
+			dont_restore);
+		*c_i = history_line[*l_i].last_index + 1;
+		vars->is_matched_history = false;
+	}
+}
+
 void	move_right(t_rdline *rdl_vars)
 {
 	t_char_vec		*history_line;
 	t_vchar_vec		*history_vec;
-	int	*curs_colm_pos;
-	int	*l_i;
-	int	*c_i;
+	int				*curs_colm_pos;
+	int				*l_i;
+	int				*c_i;
 
 	history_vec = &rdl_vars->history_vec;
 	history_line = history_vec->elements;
@@ -24,12 +46,7 @@ void	move_right(t_rdline *rdl_vars)
 	}
 	else
 	{
-		if (rdl_vars->is_matched_history == true && history_line[*l_i].used_size > 0)
-		{
-			history_line[*l_i].add_set_of_elements_at_index(&history_line[*l_i], history_line[rdl_vars->matched_history_index].elements + *c_i, *c_i);
-			print_after_cursor(rdl_vars, history_line[*l_i].elements + *c_i, dont_restore);
-			*c_i = history_line[*l_i].last_index + 1;
-			rdl_vars->is_matched_history = false;
-		}
+		print_matched_history(rdl_vars);
+		update_cursor_data(rdl_vars);
 	}
 }

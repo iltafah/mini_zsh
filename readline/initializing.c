@@ -33,6 +33,10 @@ void	initialize_capabilities(t_capability *capability)
 	capability->mv_cursor_to_colm = tgetstr("ch", NULL);
 	capability->clear_line_after_cursor = tgetstr("ce", NULL);
 	capability->clear_lines_below = tgetstr("cd", NULL);
+	capability->make_cursor_invisible = tgetstr("vi", NULL);
+	capability->return_cursor_to_normal = tgetstr("ve", NULL);
+	capability->enter_standout_mode = tgetstr("so", NULL);
+	capability->leave_standout_mode = tgetstr("se", NULL);
 }
 
 void	initialize_rdl_vars(t_rdline *rdl_vars)
@@ -40,12 +44,12 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->key_seq_trie = initialize_key_seq_trie();
 	initialize_tty_device(rdl_vars);
 	initialize_vec_of_char_vec(&rdl_vars->history_vec);
+	initialize_vec_of_int(&rdl_vars->old_curs_colm_pos_stack);
+	initialize_vec_of_int(&rdl_vars->old_curs_row_pos_stack);
 	rdl_vars->c_i = 0;
 	rdl_vars->l_i = 0;
 	rdl_vars->curs_row_pos = 0;
 	rdl_vars->curs_colm_pos = 0;
-	rdl_vars->curs_row_old_pos = 0;
-	rdl_vars->curs_colm_old_pos = 0;
 	rdl_vars->prompt_len = 0;
 	rdl_vars->printed_lines = 0;
 	rdl_vars->width_of_screen = 0;

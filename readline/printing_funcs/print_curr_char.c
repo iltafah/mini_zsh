@@ -4,8 +4,8 @@ void	print_curr_char(t_rdline *rdl_vars, char c)
 {
 	t_char_vec		*history_line;
 	t_vchar_vec		*history_vec;
-	int	*l_i;
-	int	*c_i;
+	int				*l_i;
+	int				*c_i;
 
 	c_i = &rdl_vars->c_i;
 	l_i = &rdl_vars->l_i;

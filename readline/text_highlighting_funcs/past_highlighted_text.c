@@ -18,5 +18,6 @@ void	past_highlighted_text(t_rdline *rdl_vars)
 			rdl_vars->hilitd_txt, char_i);
 		hstry_str = hstry_line[rdl_vars->l_i].elements;
 		print_after_cursor(rdl_vars, hstry_str + char_i, restore);
+		print_suggestions(rdl_vars);
 	}
 }

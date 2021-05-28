@@ -16,16 +16,14 @@ void	set_rdl_vars(t_rdline *rdl_vars)
 	rdl_vars->l_i = history_vec->last_index;
 	rdl_vars->curs_row_pos = 0;
 	rdl_vars->curs_colm_pos = rdl_vars->prompt_len;
-	rdl_vars->curs_row_old_pos = 0;
-	rdl_vars->curs_colm_old_pos = 0;
 }
 
 void	start_key_action(t_rdline *rdl_vars, int key, char c)
 {
 	if (key == shift_left_arrow || key == shift_right_arrow)
-		turn_on_reverse_video_mode(rdl_vars);
+		start_highlighting_mode(rdl_vars);
 	else if (key != ctl_s && key != ctl_x)
-		turn_off_reverse_video_mode(rdl_vars, key);
+		quit_highlighting_mode(rdl_vars, key);
 
 	if (key == up_arrow)
 		show_old_history(rdl_vars);
@@ -64,11 +62,13 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 	else if (key == enter)
 	{
 		insert_curr_line_to_history(rdl_vars);
+		erase_suggestions(rdl_vars);
 		put_char('\n');
 	}
 	fprintf(fd, "======================================================\n");
 	fprintf(fd, "curs_pos (%d, %d)\n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos);
 	fprintf(fd, "c_i : (%d) , l_i : (%d)\n", rdl_vars->c_i, rdl_vars->l_i);
+	fprintf(fd, "printed_lines : (%d)\n", rdl_vars->printed_lines);
 	fflush(fd);
 }
 
@@ -86,8 +86,8 @@ fd2 = fopen("debug2.txt", "w+");
 	while (read(STDIN_FILENO, &c, 1))
 	{
 		key = get_key(rdl_vars->key_seq_trie, c);
-		if (key == waiting)
-			continue ;
+		if (key == none || key == waiting)
+			skip ;
 		start_key_action(rdl_vars, key, c);
 		if (key == enter)
 			break ;
