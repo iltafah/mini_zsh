@@ -6,6 +6,8 @@
 typedef struct          s_quotes
 {
     int                 backslash;
+	int					pipe;
+	int					semicolon;
     int                 double_quotes;
     int                 single_quotes;
     int                 old_state;
@@ -20,7 +22,9 @@ void	initialize_quotes_vars(t_quotes *quotes);
 void    open_and_close_double_quotes(t_quotes *quotes);
 void    open_and_close_single_quotes(t_quotes *quotes);
 void    open_and_close_quotes(char c, t_quotes *quotes);
-void    does_backslash_exist(char c, t_quotes *quotes);
+int		does_backslash_exist(char c, t_quotes *quotes);
+int		does_semicolon_exist(char c, t_quotes *quotes);
+int		does_pipe_exist(char c, t_quotes *quotes);
 void	change_quotes_state(t_quotes *quotes);
 
 #endif

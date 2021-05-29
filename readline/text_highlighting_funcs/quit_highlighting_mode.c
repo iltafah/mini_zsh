@@ -14,7 +14,6 @@ static void		move_cursor_left_or_right(t_rdline *rdl_vars, int key)
 			move_cursor_to_colum_and_row(rdl_vars, s_hilitd_col, s_hilitd_row);
 			rdl_vars->c_i = rdl_vars->starting_hilitd_index;
 		}
-		
 	}
 	else if (key == right_arrow)
 	{

@@ -15,8 +15,6 @@ void	move_cursor_to_end_of_printed_line(t_rdline *rdl_vars)
 	{
 		col_to_move = printed_chars % rdl_vars->width_of_screen;
 		row_to_move = printed_chars / rdl_vars->width_of_screen;
-		fprintf(fd2, "\npos to move : (%d, %d)\n", col_to_move, row_to_move);
-		fflush(fd2);
 		move_cursor_to_colum_and_row(rdl_vars, col_to_move, row_to_move);
 	}
 }

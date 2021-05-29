@@ -13,20 +13,25 @@
 # include "../vectors/vectors.h"
 # include "../freeing_time/freeing_time.h"
 # include "../get_next_line/get_next_line.h"
-
+# include "../parser/usefull_functions/usefull_functions.h"
 
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
-# define RED "\e[1;91m"
+// # define RED "\e[1;91m"
+# define RED_MAX "\e[38;5;196m"
 # define GRN "\e[1;92m"
 # define PRP "\e[1;95m"
 # define WHT "\e[1;97m"
 # define GRY "\e[38;5;245m"
+# define PNK "\e[38;5;200m"
+# define ORN "\e[38;5;202m"
+# define l_CYN "\e[38;5;159m"
 
 # define skip continue
 
 FILE		*fd;
 FILE		*fd2;
+
 
 typedef enum e_key
 {
@@ -124,6 +129,7 @@ void		sigwinch_handler(int sig_num);
 void		move_left(t_rdline *rdl_vars);
 void		move_right(t_rdline *rdl_vars);
 t_trie_node	*initialize_key_seq_trie(void);
+void	print_with_syntax_highlighting(t_rdline *rdl_vars);
 void		left_highlight(t_rdline *rdl_v);
 void		load_history(t_rdline *rdl_vars);
 void		right_highlight(t_rdline *rdl_v);

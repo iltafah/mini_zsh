@@ -37,12 +37,45 @@ void    open_and_close_quotes(char c, t_quotes *quotes)
 		open_and_close_double_quotes(quotes);
 }
 
-void    does_backslash_exist(char c, t_quotes *quotes)
+int		does_backslash_exist(char c, t_quotes *quotes)
 {
 	if ((c == BACKSLASH || c == SPECIAL_BACKSLASH) && quotes->backslash == NONE)
+	{
 		quotes->backslash = EXIST;
+		return (EXIST);
+	}
 	else
 		quotes->backslash = NONE;
+	return (NONE);
+}
+
+int		does_pipe_exist(char c, t_quotes *quotes)
+{
+	if (c == ' ')
+		return (quotes->pipe);
+	if (c == PIPE && quotes->backslash == NONE && quotes->curr_state == CLOSED)
+	{
+		quotes->pipe = EXIST;
+		return (EXIST);
+	}
+	else
+		quotes->pipe = NONE;
+	return (NONE);
+}
+
+int		does_semicolon_exist(char c, t_quotes *quotes)
+{
+	if (c == ' ')
+		return (quotes->semicolon);
+	if (c == SEMICOLON && quotes->backslash == NONE
+		&& quotes->curr_state == CLOSED)
+	{
+		quotes->semicolon = EXIST;
+		return (EXIST);
+	}
+	else
+		quotes->semicolon = NONE;
+	return (NONE);
 }
 
 void		change_quotes_state(t_quotes *quotes)
@@ -56,9 +89,11 @@ void		change_quotes_state(t_quotes *quotes)
 
 void	initialize_quotes_vars(t_quotes *quotes)
 {
+	quotes->pipe = NONE;
+	quotes->semicolon = NONE;
 	quotes->backslash = NONE;
-	quotes->double_quotes = NONE;
-	quotes->single_quotes = NONE;
     quotes->old_state = NONE;
     quotes->curr_state = NONE;
+	quotes->double_quotes = NONE;
+	quotes->single_quotes = NONE;
 }
