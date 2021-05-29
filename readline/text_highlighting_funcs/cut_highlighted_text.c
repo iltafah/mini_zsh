@@ -18,7 +18,14 @@ static void		delete_hilitd_chars_from_history_line(t_rdline *rdl_vars)
 		rdl_vars->beg_hilitd_index);
 		chars_len_to_be_deleted--;
 	}
-}              
+}
+
+static void		move_cursor_to_beg_of_highlighted_text(t_rdline *rdl_vars)
+{
+	if (rdl_vars->starting_hilitd_index < rdl_vars->curr_hilitd_char_index)
+		move_cursor_to_colum_and_row(rdl_vars,
+			rdl_vars->starting_hilitd_colm, rdl_vars->starting_hilitd_row);
+}
 
 void			cut_highlighted_text(t_rdline *rdl_vars)
 {
@@ -27,10 +34,12 @@ void			cut_highlighted_text(t_rdline *rdl_vars)
 	if (rdl_vars->reverse_video_mode == 1)
 	{
 		determine_beg_last_highlighted_txt_indx(rdl_vars);
+		move_cursor_to_beg_of_highlighted_text(rdl_vars);
+		clear_curr_line_after_and_below_cursor(rdl_vars);
 		copy_highlighted_text(rdl_vars);
 		delete_hilitd_chars_from_history_line(rdl_vars);
-		clear_curr_line_after_and_below_cursor(rdl_vars);
-		turn_off_reverse_video_mode(rdl_vars, ctl_x);
+		quit_highlighting_mode(rdl_vars, ctl_x);
+		update_cursor_data(rdl_vars);
 		rdl_vars->is_matched_history = false;
 	}
 }

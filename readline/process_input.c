@@ -70,6 +70,8 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 	fprintf(fd, "c_i : (%d) , l_i : (%d)\n", rdl_vars->c_i, rdl_vars->l_i);
 	fprintf(fd, "printed_lines : (%d)\n", rdl_vars->printed_lines);
 	fflush(fd);
+	fprintf(fd2, "======================================================\n");
+	fflush(fd2);
 }
 
 void	process_input(char **line, t_rdline *rdl_vars)

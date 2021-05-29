@@ -31,7 +31,6 @@ void		left_highlight(t_rdline *rdl_v)
 		rdl_v->curs_colm_pos++;
 		if (rdl_v->curs_colm_pos == rdl_v->width_of_screen)
 			move_cursor_start_of_next_line(rdl_v);
-
 		if (rdl_v->curs_colm_pos > 0)
 			move_cursor_left(rdl_v);
 		else

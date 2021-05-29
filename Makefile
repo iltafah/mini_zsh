@@ -71,9 +71,9 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./readline/text_highlighting_funcs/determine_beg_last_highlighted_text_index.c \
 ./readline/text_highlighting_funcs/left_highlight.c \
 ./readline/text_highlighting_funcs/past_highlighted_text.c \
+./readline/text_highlighting_funcs/quit_highlighting_mode.c \
 ./readline/text_highlighting_funcs/right_highlight.c \
-./readline/text_highlighting_funcs/turn_off_reverse_video_mode.c \
-./readline/text_highlighting_funcs/turn_on_reverse_video_mode.c \
+./readline/text_highlighting_funcs/start_highlighting_mode.c \
 ./readline/update_cursor_data.c \
 ./readline/usefull_history_vec_func.c \
 ./vectors/vector_of_char_vectors.c \
