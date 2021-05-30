@@ -70,8 +70,8 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 	fprintf(fd, "c_i : (%d) , l_i : (%d)\n", rdl_vars->c_i, rdl_vars->l_i);
 	fprintf(fd, "printed_lines : (%d)\n", rdl_vars->printed_lines);
 	fflush(fd);
-	fprintf(fd2, "======================================================\n");
-	fflush(fd2);
+	// fprintf(fd2, "======================================================\n");
+	// fflush(fd2);
 }
 
 void	process_input(char **line, t_rdline *rdl_vars)
@@ -89,7 +89,7 @@ fd2 = fopen("debug2.txt", "w+");
 	{
 		key = get_key(rdl_vars->key_seq_trie, c);
 		if (key == none || key == waiting)
-			skip ;
+			SKIP ;
 		start_key_action(rdl_vars, key, c);
 		if (key == enter)
 			break ;

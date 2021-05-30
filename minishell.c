@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/05/28 21:56:22 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/05/30 20:50:56 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,10 +230,10 @@ int main(int argc, char **argv, char **env)
 	char *line = NULL;
 	t_tokens *tokens_list = NULL;
 	t_ast *ast = NULL;
-	t_env_table env_table;
+	// t_env_table env_table;
 
 	// print_header();
-	create_env_table(&env_table, env);
+	create_env_table(&g_vars.env_table, env);
 	while (1337)
 	{
 		// get_next_line(0, &line);
@@ -251,11 +251,11 @@ int main(int argc, char **argv, char **env)
 		/////////////////////////////////
 		/**				exit		**///
 		if (strcmp(line, "exit") == 0)
-			temp_exit(&tokens_list, ast, line, &env_table);
+			temp_exit(&tokens_list, ast, line, &g_vars.env_table);
 		/////////////////////////////////
 
 		// print_preorder(ast, 1, env_table);
-		execute_test(ast, env_table);
+		execute_test(ast, g_vars.env_table);
 		/////////////////////////////////
 		/**		  freeing time		**///
 		/////////////////////////////////
@@ -275,6 +275,8 @@ int main(int argc, char **argv, char **env)
 /*[42] $fairjfgaiejr\ "ls" */
 /*[1] echo hello > "" */
 /*[2] echo hello > $ */
+/*[6666666666] env -i ./minishell */
+/*[696] echo $@ */
 
 /*[3] "echo $jfhjdf=kdjskdgs" */
 /*[4] echo $ilias_1337_man$  */     //underscor?? dollar at the end??

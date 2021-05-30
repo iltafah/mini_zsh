@@ -1,6 +1,7 @@
 #ifndef READLINE_H
 # define READLINE_H
 
+# include <sys/stat.h>
 # include <sys/ioctl.h>
 # include <termcap.h>
 # include <termios.h>
@@ -27,7 +28,7 @@
 # define ORN "\e[38;5;202m"
 # define l_CYN "\e[38;5;159m"
 
-# define skip continue
+# define SKIP continue
 
 FILE		*fd;
 FILE		*fd2;
@@ -59,6 +60,7 @@ typedef enum e_key
 
 enum e_bool {false, true};
 enum e_restore {dont_restore, restore};
+enum e_is_found {not_found, found};
 
 typedef struct s_trie_node
 {
@@ -112,12 +114,14 @@ typedef struct s_rdline
 	int				starting_hilitd_row;
 }					t_rdline;
 
-typedef struct s_gvars
-{
-	t_rdline		rdl_vars;
-}				t_gvars;
+# include "../global_variables.h"
 
-t_gvars		g_vars;
+// typedef struct s_gvars
+// {
+// 	t_rdline		rdl_vars;
+// }				t_gvars;
+
+
 int			put_char(int c);
 int			get_screen_width(void);
 char		*get_prompt_name(void);

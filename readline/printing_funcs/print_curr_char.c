@@ -1,17 +1,35 @@
 #include "../readline.h"
 
-char	*get_cmd_color(t_quotes vars, char *line, int *len)
+int		check_if_cmd_exist(char *cmd)
+{
+	struct stat buffer;
+	int			does_exist;
+
+	does_exist = stat(cmd, &buffer);
+	if (does_exist == 0)
+		return (found);
+	// else
+	// {
+
+	// }
+	return (not_found);
+}
+
+char	*get_cmd_color(char *line, int *len)
 {
 	char	*color;
 	char	*cmd;
 
-	len = 0;
-	color = GRN;
-	printf("wow\n");
-	if (line[*len] != '\0')
-	while (line[*len + 1] != '\0' && line[*len + 1] != ' ')
+	color = RED_MAX;
+	// printf("wow\n");
+	// if (line[*len] != '\0')
+	while (line[*len] != '\0' && line[*len] != ' ')
 		(*len)++;
 	cmd = ft_substr(line, 0, *len);
+	// fprintf(fd2, "len = %d str = '%s'\n", *len, cmd);
+	// fflush(fd2);
+	if (check_if_cmd_exist(cmd) == EXIST)
+		color = GRN;
 	free(cmd);
 	return (color);
 }
@@ -25,27 +43,26 @@ int		is_there_syntax_error(t_quotes *vars, char c)
 	return (TRUE);
 }
 
-char	*determine_syntax_highlighting_color(t_quotes *vars, char c)
+char	*get_highlighting_color(t_quotes *vars, char *line, int i, int *len)
 {
 	char	*color;
 
 	color = WHT;
-	open_and_close_quotes(c, vars);
+	open_and_close_quotes(line[i], vars);
 	change_quotes_state(vars);
-	if (is_there_syntax_error(vars, c) == ERROR)
+	if ((i == 0 || vars->pipe == EXIST || vars->semicolon == EXIST))
+		color = get_cmd_color(line + i, len);
+	if (is_there_syntax_error(vars, line[i]) == ERROR)
 		return (RED_MAX);
 	if (vars->curr_state != vars->old_state)
-	{
-		if (c == SINGLE_QUOTES || c == DOUBLE_QUOTES)
 			color = PNK;
-	}
 	else if (vars->double_quotes == OPEND || vars->single_quotes == OPEND)
 		color = PRP;
-	if (does_pipe_exist(c, vars) == EXIST)
+	if (does_pipe_exist(line[i], vars) == EXIST)
 		color = YEL;
-	else if (does_semicolon_exist(c, vars) == EXIST)
+	if (does_semicolon_exist(line[i], vars) == EXIST)
 		color = CYN;
-	else if (does_backslash_exist(c, vars) == EXIST)
+	if (does_backslash_exist(line[i], vars) == EXIST)
 		color = ORN;
 	return (color);
 }
@@ -69,12 +86,12 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars)
 		// if ((i == 0 || syntax_vars.pipe == EXIST || syntax_vars.semicolon == EXIST)
 		// 	&& len == 0)
 		// 	color = get_cmd_color(syntax_vars, hstry_line->elements + i, &len);
-		// else
-			color = determine_syntax_highlighting_color(&syntax_vars,
-				hstry_line->elements[i]);
+		// else if (len == 0)
+		if (len == 0)
+			color = get_highlighting_color(&syntax_vars, hstry_line->elements, i, &len);
+		else
+			len--;
 		rdl_print_char(rdl_vars, hstry_line->elements[i], color);
-		// if (len > 0)
-		// 	len--;
 		i++;
 	}
 	restore_cursor_pos(rdl_vars);
