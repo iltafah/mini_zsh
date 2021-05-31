@@ -1,6 +1,5 @@
 #include "readline.h"
 
-	// move_cursor_to_colum(rdl_vars, rdl_vars->curs_colm_pos);
 void	clear_curr_line_after_cursor(t_rdline *rdl_vars)
 {
 	tputs(rdl_vars->capability.clear_line_after_cursor, 1, put_char);

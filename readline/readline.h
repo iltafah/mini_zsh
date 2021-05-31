@@ -1,20 +1,22 @@
 #ifndef READLINE_H
 # define READLINE_H
 
-# include <sys/stat.h>
-# include <sys/ioctl.h>
-# include <termcap.h>
-# include <termios.h>
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "../libft/libft.h"
-# include "../vectors/vectors.h"
-# include "../freeing_time/freeing_time.h"
-# include "../get_next_line/get_next_line.h"
-# include "../parser/usefull_functions/usefull_functions.h"
+// # include <sys/stat.h>
+// # include <sys/ioctl.h>
+// # include <termcap.h>
+// # include <termios.h>
+// # include <signal.h>
+// # include <stdio.h>
+// # include <stdlib.h>
+// # include <unistd.h>
+// # include <fcntl.h>
+// # include "../libft/libft.h"
+// # include "../vectors/vectors.h"
+// # include "../freeing_time/freeing_time.h"
+// # include "../get_next_line/get_next_line.h"
+// # include "../parser/usefull_functions/usefull_functions.h"
+# include "./readline_typedefs.h"
+# include "../minishell.h"
 
 # define CYN "\e[1;96m"
 # define YEL "\e[1;93m"
@@ -34,87 +36,13 @@ FILE		*fd;
 FILE		*fd2;
 
 
-typedef enum e_key
-{
-	none,
-	waiting,
-	up_arrow,
-	down_arrow,
-	left_arrow,
-	right_arrow,
-	enter,
-	backspace,
-	home,
-	end,
-	shift_right_arrow,
-	shift_left_arrow,
-	ctl_up_arrow,
-	ctl_down_arrow,
-	ctl_right_arrow,
-	ctl_left_arrow,
-	ctl_s,
-	ctl_v,
-	ctl_x,
-	printable
-}	t_key;
-
 enum e_bool {false, true};
 enum e_restore {dont_restore, restore};
 enum e_is_found {not_found, found};
 
-typedef struct s_trie_node
-{
-	struct s_trie_node	**children;
-	t_key				key;
-}				t_trie_node;
 
-typedef struct s_capability
-{
-	char		*mv_cursor_down_vertically;
-	char		*mv_cursor_up_vertically;
-	char		*mv_cursor_left;
-	char		*mv_cursor_right;
-	char		*mv_cursor_to_colm;
-	char		*clear_line_after_cursor;
-	char		*clear_lines_below;
-	char		*make_cursor_invisible;
-	char		*return_cursor_to_normal;
-	char		*leave_standout_mode;
-	char		*enter_standout_mode;
-}				t_capability;
 
-typedef struct s_rdline
-{
-	t_capability	capability;
-	t_trie_node		*key_seq_trie;
-	t_vchar_vec		history_vec;
-	struct termios	original_termios_state;
-	char			**old_history;
-	char			*line;
-	char			*prompt;
-	int				tty_fd;
-	int				prompt_len;
-	int				curs_colm_pos;
-	int				curs_row_pos;
-	t_int_vec		old_curs_colm_pos_stack;
-	t_int_vec		old_curs_row_pos_stack;
-	int				printed_lines;
-	int				width_of_screen;
-	int				l_i;
-	int				c_i;
-	int				reverse_video_mode;
-	char			*hilitd_txt;
-	int				is_matched_history;
-	int				matched_history_index;
-	int				starting_hilitd_index;
-	int				curr_hilitd_char_index;
-	int				beg_hilitd_index;
-	int				last_hilitd_index;
-	int				starting_hilitd_colm;
-	int				starting_hilitd_row;
-}					t_rdline;
-
-# include "../global_variables.h"
+// # include "../global_variables.h"
 
 // typedef struct s_gvars
 // {
@@ -123,6 +51,9 @@ typedef struct s_rdline
 
 
 int			put_char(int c);
+int		check_if_file_exist(char *file);
+int		check_if_cmd_exist(char *cmd);
+void	print_with_syntax_highlighting(t_rdline *rdl_vars);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
 void		read_line(char **line);

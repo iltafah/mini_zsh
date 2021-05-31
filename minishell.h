@@ -10,10 +10,20 @@
 # include "./vectors/vectors.h"
 # include "./parser/parser.h"
 # include "./libft/libft.h"
-# include "./global_variables.h"
+# include "./freeing_time/freeing_time.h"
+# include "./get_next_line/get_next_line.h"
+# include "./readline/readline.h"
 
+typedef struct s_gvars
+{
+	t_rdline		rdl_vars;
+	t_env_table		env_table;
+}				t_gvars;
+
+extern t_gvars		g_vars;
 
 t_gvars	g_vars;
+
 void	expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table);
 int		check_tokens_syntax(t_tokens *tokens_list);
 void	line_tokenization(char *line, t_tokens **tokens_list);

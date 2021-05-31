@@ -3,12 +3,15 @@ LIB = libft
 
 FLAGS = #-Wall -Wextra -Werror
 
-SRC = ./environment/convert_env_table_to_array.c \
+SRC = ./minishell.c \
+./environment/convert_env_table_to_array.c \
 ./environment/create_env_table.c \
+./environment/get_value_of_env_name.c \
 ./freeing_time/free_abstract_syntax_tree.c \
-./freeing_time/free_tokens_list.c \
 ./freeing_time/free_array_of_pointers.c \
-./minishell.c \
+./freeing_time/free_tokens_list.c \
+./get_next_line/get_next_line.c \
+./get_next_line/get_next_line_utils.c \
 ./parser/check_tokens_syntax/check_simple_word_syntax.c \
 ./parser/check_tokens_syntax/check_tokens_order.c \
 ./parser/check_tokens_syntax/check_tokens_syntax.c \
@@ -66,6 +69,9 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./readline/restore_cursor_position.c \
 ./readline/show_history.c \
 ./readline/signals_handler.c \
+./readline/syntax_highlighting_funcs/check_if_cmd_exist.c \
+./readline/syntax_highlighting_funcs/check_if_file_exist.c \
+./readline/syntax_highlighting_funcs/print_with_syntax_highlighting.c \
 ./readline/text_highlighting_funcs/copy_highlighted_text.c \
 ./readline/text_highlighting_funcs/cut_highlighted_text.c \
 ./readline/text_highlighting_funcs/determine_beg_last_highlighted_text_index.c \
@@ -79,9 +85,7 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./vectors/vector_of_char_vectors.c \
 ./vectors/vector_of_chars.c \
 ./vectors/vector_of_int.c \
-./vectors/vector_of_strings.c \
-./get_next_line/get_next_line.c \
-./get_next_line/get_next_line_utils.c
+./vectors/vector_of_strings.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -92,7 +96,7 @@ $(NAME): $(OBJ)
 	gcc -o $@ $^ -ltermcap ./libft/libft.a
 
 %.o : %.c
-	gcc $(FLAGS) -o $@ -c $^
+	gcc $(FLAGS) -o $@ -c $^ -H
 
 clean :
 		rm -f $(OBJ)

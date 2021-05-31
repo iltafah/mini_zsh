@@ -17,10 +17,10 @@ typedef struct s_env_table
 
 /*
 ** ************************************************************************** **
-** ************************************************************************** **
 */
 
 char    **convert_env_table_to_array(t_env_table env_table);
 void    create_env_table(t_env_table *env_table, char **env);
+char	*get_value_of_env_name(t_env_table env_table, char *name);
 
 #endif

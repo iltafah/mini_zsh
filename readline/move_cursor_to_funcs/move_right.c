@@ -17,6 +17,7 @@ static void	print_matched_history(t_rdline *vars)
 			history_line[vars->matched_history_index].elements + *c_i, *c_i);
 		print_after_cursor(vars, history_line[*l_i].elements + *c_i,
 			dont_restore);
+		print_with_syntax_highlighting(vars);
 		*c_i = history_line[*l_i].last_index + 1;
 		vars->is_matched_history = false;
 	}

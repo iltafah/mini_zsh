@@ -56,6 +56,7 @@ void			quit_highlighting_mode(t_rdline *rdl_vars, int key)
 		tputs(rdl_vars->capability.return_cursor_to_normal, 1, put_char);
 		tputs(rdl_vars->capability.leave_standout_mode, 1, put_char);
 		print_after_cursor(rdl_vars, hstry_str + higligtd_beg_i, dont_restore);
+		print_with_syntax_highlighting(rdl_vars);
 		restore_cursor_pos(rdl_vars);
 		move_cursor_left_or_right(rdl_vars, key);
 		rdl_vars->reverse_video_mode = 0;
