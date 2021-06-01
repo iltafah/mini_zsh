@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/05/30 20:50:56 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/01 21:18:53 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,19 +225,22 @@ void print_header()
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
 }
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	char *line = NULL;
-	t_tokens *tokens_list = NULL;
-	t_ast *ast = NULL;
+	char		*line;
+	char		*prompt;
+	t_tokens	*tokens_list = NULL;
+	t_ast		*ast = NULL;
 	// t_env_table env_table;
 
-	// print_header();
+	line = NULL;
+	prompt = NULL;
 	create_env_table(&g_vars.env_table, env);
 	while (1337)
 	{
 		// get_next_line(0, &line);
-		read_line(&line);
+		prompt = get_prompt_name();
+		line = read_line(prompt);
 
 		line_tokenization(line, &tokens_list);
 		print_tokens(tokens_list);
@@ -262,6 +265,7 @@ int main(int argc, char **argv, char **env)
 		free_tokens_list(&tokens_list);//
 		free_abstract_syntax_tree(ast);//
 		free(line);					   //
+		free(prompt);				   //
 		/////////////////////////////////
 	}
 	

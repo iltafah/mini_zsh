@@ -15,7 +15,7 @@ void	disable_raw_mode(struct termios old_termios_state)
 	tcsetattr(g_vars.rdl_vars.tty_fd, TCSAFLUSH, &old_termios_state);
 }
 
-void	read_line(char **line)
+char	*read_line(char *prompt)
 {
 	static int				is_initialized = false;
 	t_rdline				*rdl_vars;
@@ -32,6 +32,7 @@ void	read_line(char **line)
 		is_initialized = true;
 	}
 	enable_raw_mode();
-	process_input(line, rdl_vars);
+	process_input(rdl_vars, prompt);
 	disable_raw_mode(rdl_vars->original_termios_state);
+	return (rdl_vars->line);
 }

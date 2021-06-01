@@ -9,6 +9,8 @@ void	overwrite_history_file(t_rdline *rdl_vars)
 	t_vchar_vec		*history_vec;
 
 	history_fd = open_history_file(rdl_vars, (O_CREAT | O_WRONLY | O_TRUNC));
+	if (history_fd == -1)
+		return ;
 	history_vec = &rdl_vars->history_vec;
 	line_index = 0;
 	while (line_index < history_vec->last_index)

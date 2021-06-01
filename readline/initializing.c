@@ -20,6 +20,8 @@ void	initialize_termios_struct(struct termios *original_termios_state)
 	char		*term_type;
 
 	term_type = getenv("TERM");
+	if (term_type == NULL)
+		term_type = "xterm-256color";
 	tgetent(NULL, term_type);
 	tcgetattr(g_vars.rdl_vars.tty_fd, original_termios_state);
 }
@@ -39,6 +41,32 @@ void	initialize_capabilities(t_capability *capability)
 	capability->leave_standout_mode = tgetstr("se", NULL);
 }
 
+void	initialize_printing_methods(t_rdline *rdl_vars)
+{
+	char	*value;
+
+	value = getenv("SYNTAX_HIGHLIGHTING");
+	if (value == NULL)
+		rdl_vars->syntax_highlighting = off;
+	else
+	{
+		if (strcmp(value, "ON") == 0)
+			rdl_vars->syntax_highlighting = on;
+		else
+			rdl_vars->syntax_highlighting = off;
+	}
+	value = getenv("AUTO_SUGGESTIONS");
+	if (value == NULL)
+		rdl_vars->auto_suggestions = off;
+	else
+	{
+		if (strcmp(value, "ON") == 0)
+			rdl_vars->auto_suggestions = on;
+		else
+			rdl_vars->auto_suggestions = off;
+	}
+}
+
 void	initialize_rdl_vars(t_rdline *rdl_vars)
 {
 	rdl_vars->key_seq_trie = initialize_key_seq_trie();
@@ -46,6 +74,7 @@ void	initialize_rdl_vars(t_rdline *rdl_vars)
 	initialize_vec_of_char_vec(&rdl_vars->history_vec);
 	initialize_vec_of_int(&rdl_vars->old_curs_colm_pos_stack);
 	initialize_vec_of_int(&rdl_vars->old_curs_row_pos_stack);
+	initialize_printing_methods(rdl_vars);
 	rdl_vars->c_i = 0;
 	rdl_vars->l_i = 0;
 	rdl_vars->curs_row_pos = 0;

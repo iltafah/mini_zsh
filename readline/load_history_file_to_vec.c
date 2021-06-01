@@ -9,6 +9,8 @@ void	load_history(t_rdline *rdl_vars)
 	int				is_not_last_line;
 
 	history_fd = open_history_file(rdl_vars, (O_CREAT | O_RDONLY));
+	if (history_fd == -1)
+		return ;
 	history_vec = &rdl_vars->history_vec;
 	is_not_last_line = true;
 	while (is_not_last_line == true)

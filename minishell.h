@@ -31,7 +31,9 @@ void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
 void	free_tokens_list(t_tokens **tokens_list);
 void	free_abstract_syntax_tree(t_ast *ast);
 
-void	read_line(char **line);
+char	*get_prompt_name(void);
+char	*get_curr_dir_name(void);
+int		ft_strlen_utf8(char *str);
 
 
 #endif

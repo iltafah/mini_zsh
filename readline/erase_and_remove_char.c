@@ -4,9 +4,9 @@ void	erase_and_remove_curr_char(t_rdline *rdl_vars)
 {
 	t_vchar_vec		*history_vec;
 	t_char_vec		*hstry_line;
-	int	*curs_colm_pos;
-	int	*l_i;
-	int	*c_i;
+	int				*curs_colm_pos;
+	int				*l_i;
+	int				*c_i;
 
 	c_i = &rdl_vars->c_i;
 	l_i = &rdl_vars->l_i;
@@ -21,9 +21,13 @@ void	erase_and_remove_curr_char(t_rdline *rdl_vars)
 			move_cursor_end_of_prec_line(rdl_vars);
 		else
 			move_cursor_left(rdl_vars);
-		print_after_cursor(rdl_vars, hstry_line[*l_i].elements + *c_i, restore);
-		print_with_syntax_highlighting(rdl_vars);
-		print_suggestions(rdl_vars);
+		print_line_with_chosen_method(rdl_vars,
+			hstry_line[*l_i].elements + *c_i, restore);
+		if (rdl_vars->auto_suggestions == on)
+			print_suggestions(rdl_vars);
 		update_cursor_data(rdl_vars);
 	}
 }
+
+		// print_after_cursor(rdl_vars, hstry_line[*l_i].elements + *c_i, restore);
+		// print_with_syntax_highlighting(rdl_vars);

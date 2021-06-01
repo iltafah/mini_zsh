@@ -36,13 +36,6 @@ typedef enum e_key
 	printable
 }	t_key;
 
-typedef enum e_print_method
-{
-	none,
-	syntax_highlighting,
-	
-}	t_print_method;
-
 typedef struct s_trie_node
 {
 	struct s_trie_node	**children;
@@ -93,7 +86,8 @@ typedef struct s_rdline
 	int				last_hilitd_index;
 	int				starting_hilitd_colm;
 	int				starting_hilitd_row;
-	int				printing_method;
+	int				syntax_highlighting;
+	int				auto_suggestions;
 }					t_rdline;
 
 #endif

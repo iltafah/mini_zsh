@@ -1,20 +1,6 @@
 #ifndef READLINE_H
 # define READLINE_H
 
-// # include <sys/stat.h>
-// # include <sys/ioctl.h>
-// # include <termcap.h>
-// # include <termios.h>
-// # include <signal.h>
-// # include <stdio.h>
-// # include <stdlib.h>
-// # include <unistd.h>
-// # include <fcntl.h>
-// # include "../libft/libft.h"
-// # include "../vectors/vectors.h"
-// # include "../freeing_time/freeing_time.h"
-// # include "../get_next_line/get_next_line.h"
-// # include "../parser/usefull_functions/usefull_functions.h"
 # include "./readline_typedefs.h"
 # include "../minishell.h"
 
@@ -39,32 +25,22 @@ FILE		*fd2;
 enum e_bool {false, true};
 enum e_restore {dont_restore, restore};
 enum e_is_found {not_found, found};
-
-
-
-// # include "../global_variables.h"
-
-// typedef struct s_gvars
-// {
-// 	t_rdline		rdl_vars;
-// }				t_gvars;
+enum e_is_on {off, on};
 
 
 int			put_char(int c);
-int		check_if_file_exist(char *file);
-int		check_if_cmd_exist(char *cmd);
-void	print_with_syntax_highlighting(t_rdline *rdl_vars);
 int			get_screen_width(void);
 char		*get_prompt_name(void);
-void		read_line(char **line);
+char		*read_line(char *prompt);
 char		*get_curr_dir_name(void);
 int			ft_strlen_utf8(char *str);
 void		signals_handler(int sig_num);
+int			check_if_cmd_exist(char *cmd);
 void		sigwinch_handler(int sig_num);
 void		move_left(t_rdline *rdl_vars);
 void		move_right(t_rdline *rdl_vars);
 t_trie_node	*initialize_key_seq_trie(void);
-void	print_with_syntax_highlighting(t_rdline *rdl_vars);
+int			check_if_file_exist(char *file);
 void		left_highlight(t_rdline *rdl_v);
 void		load_history(t_rdline *rdl_vars);
 void		right_highlight(t_rdline *rdl_v);
@@ -97,8 +73,8 @@ void		start_highlighting_mode(t_rdline *rdl_vars);
 void		clear_lines_below_cursor(t_rdline *rdl_vars);
 void		move_to_beginning_of_line(t_rdline *rdl_vars);
 void		move_cursor_up_vertically(t_rdline *rdl_vars);
-void		process_input(char **line, t_rdline *rdl_vars);
 void		erase_and_remove_curr_char(t_rdline *rdl_vars);
+void		process_input(t_rdline *rdl_vars, char *prompt);
 void		move_cursor_to_row(t_rdline *rdl_vars, int row);
 void		insert_curr_line_to_history(t_rdline *rdl_vars);
 void		move_cursor_down_vertically(t_rdline *rdl_vars);
@@ -118,7 +94,9 @@ void		determine_beg_last_highlighted_txt_indx(t_rdline *rdl_v);
 void		clear_curr_line_after_and_below_cursor(t_rdline *rdl_vars);
 void		add_empty_char_vec_to_history_vec(t_vchar_vec *history_vec);
 void		print_after_cursor(t_rdline *rdl_vars, char *str, int option);
+void		print_with_syntax_highlighting(t_rdline *rdl_vars, int option);
 void		initialize_termios_struct(struct termios *original_termios_state);
 void		move_cursor_to_colum_and_row(t_rdline *rdl_vars, int col, int row);
+void		print_line_with_chosen_method(t_rdline *rdl, char *lin, int option);
 
 #endif

@@ -3,15 +3,60 @@ LIB = libft
 
 FLAGS = #-Wall -Wextra -Werror
 
-SRC = ./minishell.c \
-./environment/convert_env_table_to_array.c \
+SRC = ./environment/convert_env_table_to_array.c \
 ./environment/create_env_table.c \
 ./environment/get_value_of_env_name.c \
 ./freeing_time/free_abstract_syntax_tree.c \
 ./freeing_time/free_array_of_pointers.c \
 ./freeing_time/free_tokens_list.c \
+./ft_strlen_utf8.c \
+./get_curr_dir_name.c \
 ./get_next_line/get_next_line.c \
-./get_next_line/get_next_line_utils.c \
+./get_prompt_name.c \
+./libft/ft_atoi.c \
+./libft/ft_bzero.c \
+./libft/ft_calloc.c \
+./libft/ft_isalnum.c \
+./libft/ft_isalpha.c \
+./libft/ft_isascii.c \
+./libft/ft_isdigit.c \
+./libft/ft_isprint.c \
+./libft/ft_itoa.c \
+./libft/ft_lstadd_back_bonus.c \
+./libft/ft_lstadd_front_bonus.c \
+./libft/ft_lstclear_bonus.c \
+./libft/ft_lstdelone_bonus.c \
+./libft/ft_lstiter_bonus.c \
+./libft/ft_lstlast_bonus.c \
+./libft/ft_lstmap_bonus.c \
+./libft/ft_lstnew_bonus.c \
+./libft/ft_lstsize_bonus.c \
+./libft/ft_memccpy.c \
+./libft/ft_memchr.c \
+./libft/ft_memcmp.c \
+./libft/ft_memcpy.c \
+./libft/ft_memmove.c \
+./libft/ft_memset.c \
+./libft/ft_putchar_fd.c \
+./libft/ft_putendl_fd.c \
+./libft/ft_putnbr_fd.c \
+./libft/ft_putstr_fd.c \
+./libft/ft_split.c \
+./libft/ft_strchr.c \
+./libft/ft_strdup.c \
+./libft/ft_strjoin.c \
+./libft/ft_strlcat.c \
+./libft/ft_strlcpy.c \
+./libft/ft_strlen.c \
+./libft/ft_strmapi.c \
+./libft/ft_strncmp.c \
+./libft/ft_strnstr.c \
+./libft/ft_strrchr.c \
+./libft/ft_strtrim.c \
+./libft/ft_substr.c \
+./libft/ft_tolower.c \
+./libft/ft_toupper.c \
+./minishell.c \
 ./parser/check_tokens_syntax/check_simple_word_syntax.c \
 ./parser/check_tokens_syntax/check_tokens_order.c \
 ./parser/check_tokens_syntax/check_tokens_syntax.c \
@@ -33,9 +78,6 @@ SRC = ./minishell.c \
 ./readline/create_key_seq_trie.c \
 ./readline/detect_screen_resizing.c \
 ./readline/erase_and_remove_char.c \
-./readline/ft_strlen_utf8.c \
-./readline/get_curr_dir_name.c \
-./readline/get_prompt_name.c \
 ./readline/get_screen_width.c \
 ./readline/initializing.c \
 ./readline/insert_curr_line_to_history.c \
@@ -59,6 +101,7 @@ SRC = ./minishell.c \
 ./readline/overwrite_history_file.c \
 ./readline/printing_funcs/print_after_cursor.c \
 ./readline/printing_funcs/print_curr_char.c \
+./readline/printing_funcs/print_line_with_chosen_method.c \
 ./readline/printing_funcs/print_prompt.c \
 ./readline/printing_funcs/print_suggestions.c \
 ./readline/printing_funcs/put_char.c \
@@ -96,7 +139,7 @@ $(NAME): $(OBJ)
 	gcc -o $@ $^ -ltermcap ./libft/libft.a
 
 %.o : %.c
-	gcc $(FLAGS) -o $@ -c $^ -H
+	gcc $(FLAGS) -o $@ -c $^
 
 clean :
 		rm -f $(OBJ)

@@ -50,7 +50,7 @@ static char	*get_highlighting_color(t_quotes *vars, char *line, int i, int *len)
 	return (color);
 }
 
-void	print_with_syntax_highlighting(t_rdline *rdl_vars)
+void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
 {
 	int				i;
 	int				len;
@@ -61,7 +61,8 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars)
 	i = 0;
 	len = 0;
 	hstry_line = &rdl_vars->history_vec.elements[rdl_vars->l_i];
-	save_curr_cursor_pos(rdl_vars);
+	if (option == restore)
+		save_curr_cursor_pos(rdl_vars);
 	move_cursor_to_colum_and_row(rdl_vars, rdl_vars->prompt_len, 0);
 	initialize_quotes_vars(&syntax_vars);
 	while (i < hstry_line->used_size)
@@ -74,5 +75,6 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars)
 		rdl_print_char(rdl_vars, hstry_line->elements[i], color);
 		i++;
 	}
-	restore_cursor_pos(rdl_vars);
+	if (option == restore)
+		restore_cursor_pos(rdl_vars);
 }

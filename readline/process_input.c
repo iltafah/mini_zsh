@@ -1,6 +1,6 @@
 #include	"readline.h"
 
-void	set_rdl_vars(t_rdline *rdl_vars)
+void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 {
 	t_vchar_vec		*history_vec;
 	t_char_vec		*history_line;
@@ -9,7 +9,7 @@ void	set_rdl_vars(t_rdline *rdl_vars)
 	history_line = history_vec->elements;
 	rdl_vars->old_history = convert_history_vec_to_array(history_vec);
 	add_empty_char_vec_to_history_vec(history_vec);
-	rdl_vars->prompt = get_prompt_name();
+	rdl_vars->prompt = prompt;
 	rdl_vars->prompt_len = ft_strlen_utf8(rdl_vars->prompt);
 	rdl_vars->width_of_screen = get_screen_width();
 	rdl_vars->c_i = 0;
@@ -74,7 +74,7 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 	// fflush(fd2);
 }
 
-void	process_input(char **line, t_rdline *rdl_vars)
+void	process_input(t_rdline *rdl_vars, char *prompt)
 {
 	int		key;
 	char	c;
@@ -83,7 +83,7 @@ fd = fopen("./debug.txt", "w+");
 fd2 = fopen("debug2.txt", "w+");
 /////////////////////
 	key = none;
-	set_rdl_vars(rdl_vars);
+	set_rdl_vars(rdl_vars, prompt);
 	print_prompt(rdl_vars);
 	while (read(STDIN_FILENO, &c, 1))
 	{
@@ -94,7 +94,5 @@ fd2 = fopen("debug2.txt", "w+");
 		if (key == enter)
 			break ;
 	}
-	*line = rdl_vars->line;
 	free_array(&rdl_vars->old_history);
-	free(rdl_vars->prompt);
 }

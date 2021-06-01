@@ -1,4 +1,4 @@
-#include "readline.h"
+#include "./minishell.h"
 
 char	*get_prompt_name(void)
 {

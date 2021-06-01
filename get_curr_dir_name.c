@@ -1,4 +1,4 @@
-#include "readline.h"
+#include "./minishell.h"
 
 char	*get_curr_dir_name(void)
 {
