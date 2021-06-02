@@ -1,6 +1,6 @@
 #include "./readline.h"
 
-int		open_history_file(t_rdline *rdl_vars, int o_flag)
+int		open_history_file(int o_flag)
 {
 	char	*hstry_file_path;
 	char	*home_directory;

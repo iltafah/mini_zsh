@@ -66,7 +66,6 @@ void    add_new_int_at_index(t_int_vec *vec, int num, int index)
 {
 	int		last_element;
 	int		last_index;
-	int		i;
 
 	if (index < 0 || index > vec->size)
 		return ;

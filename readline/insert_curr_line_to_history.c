@@ -18,21 +18,23 @@ void	append_curr_line_to_history(t_rdline *rdl_vars)
 
 void	restore_old_history_of_curr_line(t_rdline *rdl_vars)
 {
+	char			**old_history;
 	t_vchar_vec		*history_vec;
 	t_char_vec		old_line;
-	char			**old_history;
-	int	*l_i;
+	int				*l_i;
 
 	l_i = &rdl_vars->l_i;
 	history_vec = &rdl_vars->history_vec;
 	old_history = rdl_vars->old_history;
-	initialize_vec_of_char(&old_line);
 	if (rdl_vars->old_history[*l_i] != NULL)
 	{
+		initialize_vec_of_char(&old_line);
 		old_line.add_set_of_elements(&old_line, old_history[*l_i]);
 		history_vec->delete_element_at_index(history_vec, *l_i);
 		history_vec->add_new_element_at_index(history_vec, old_line, *l_i);
 	}
+	// else
+		// history_vec->delete_element_at_index(history_vec, *l_i);
 }
 
 void	insert_curr_line_to_history(t_rdline *rdl_vars)

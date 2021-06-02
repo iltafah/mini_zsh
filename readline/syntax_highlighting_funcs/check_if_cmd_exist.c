@@ -13,30 +13,30 @@ static char	*join_cmd_with_path(char *path, char *cmd)
 
 static int	check_if_cmd_exists_in_given_paths(char *cmd, char *path_env)
 {
+	int			i;
 	char		*file;
 	char		*path;
 	int			start;
-	int			i;
+	int			is_exist;
 
 	i = 0;
 	start = 0;
-	while (path_env[i] != '\0')
+	is_exist = NONE;
+	while (path_env[i] != '\0' && is_exist == NONE)
 	{
 		if (path_env[i] == ':')
 		{
 			path = ft_substr(path_env, start, i - start);
 			file = join_cmd_with_path(path, cmd);
 			if (check_if_file_exist(file) == EXIST)
-			{
-				free(file);
-				return (EXIST);
-			}
+				is_exist = TRUE;
 			free(file);
+			free(path);
 			start = i + 1;
 		}
 		i++;
 	}
-	return (NONE);
+	return (is_exist);
 }
 
 int	check_if_cmd_exist(char *cmd)

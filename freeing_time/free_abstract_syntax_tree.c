@@ -17,8 +17,9 @@ void	free_redirection_list(t_redirection **redirection_list)
 
 void	free_args_vec(t_str_vec *args_vec)
 {
-	free(args_vec->elements);
-	args_vec->elements = NULL;
+	// free(args_vec->elements);
+	// args_vec->elements = NULL;
+	args_vec->free(args_vec);
 }
 
 void	free_data_node_content(t_data *node_data)

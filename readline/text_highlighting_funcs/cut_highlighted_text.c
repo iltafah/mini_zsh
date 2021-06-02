@@ -29,8 +29,6 @@ static void		move_cursor_to_beg_of_highlighted_text(t_rdline *rdl_vars)
 
 void			cut_highlighted_text(t_rdline *rdl_vars)
 {
-	int				chars_len_to_be_deleted;
-
 	if (rdl_vars->reverse_video_mode == 1)
 	{
 		determine_beg_last_highlighted_txt_indx(rdl_vars);

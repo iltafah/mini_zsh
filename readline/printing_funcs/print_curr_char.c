@@ -21,6 +21,7 @@ void	print_curr_char(t_rdline *rdl_vars, char c)
 	else
 		move_cursor_right(rdl_vars);
 	(*c_i)++;
+
 	update_cursor_data(rdl_vars);
 }
 

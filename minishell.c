@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/01 21:18:53 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/02 20:51:20 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	execute_test(t_ast *ast, t_env_table env_table)
 ** ************************************************************************** **
 */
 
-void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line, t_env_table *env_table)
+void	temp_exit(t_tokens **tokens_list, t_ast *ast, char *line)
 {
 	/////////////////////////////////
 	/**		  freeing time		**///
@@ -231,44 +231,45 @@ int	main(int argc, char **argv, char **env)
 	char		*prompt;
 	t_tokens	*tokens_list = NULL;
 	t_ast		*ast = NULL;
-	// t_env_table env_table;
 
 	line = NULL;
 	prompt = NULL;
-	create_env_table(&g_vars.env_table, env);
-	while (1337)
+	if (argc == 1)
 	{
-		// get_next_line(0, &line);
-		prompt = get_prompt_name();
-		line = read_line(prompt);
-
-		line_tokenization(line, &tokens_list);
-		print_tokens(tokens_list);
-		if (check_tokens_syntax(tokens_list) == ERROR)
+		(void)argv;
+		create_env_table(&g_vars.env_table, env);
+		while (1337)
 		{
-			free_tokens_list(&tokens_list);
-			free(line);
-			continue ;
-		}
-		create_abstract_syntax_tree(&ast, tokens_list);
-		/////////////////////////////////
-		/**				exit		**///
-		if (strcmp(line, "exit") == 0)
-			temp_exit(&tokens_list, ast, line, &g_vars.env_table);
-		/////////////////////////////////
-
-		// print_preorder(ast, 1, env_table);
-		execute_test(ast, g_vars.env_table);
-		/////////////////////////////////
-		/**		  freeing time		**///
-		/////////////////////////////////
-		free_tokens_list(&tokens_list);//
-		free_abstract_syntax_tree(ast);//
-		free(line);					   //
-		free(prompt);				   //
-		/////////////////////////////////
-	}
+			prompt = get_prompt_name();
+			line = read_line(prompt);
+			line_tokenization(line, &tokens_list);
 	
+			print_tokens(tokens_list);
+			if (check_tokens_syntax(tokens_list) == ERROR)
+			{
+				free_tokens_list(&tokens_list);
+				free(line);
+				continue ;
+			}
+			create_abstract_syntax_tree(&ast, tokens_list);
+			/////////////////////////////////
+			/**				exit		**///
+			if (strcmp(line, "exit") == 0)
+				temp_exit(&tokens_list, ast, line);
+			/////////////////////////////////
+	
+			// print_preorder(ast, 1, env_table);
+			execute_test(ast, g_vars.env_table);
+			/////////////////////////////////
+			/**		  freeing time		**///
+			/////////////////////////////////
+			free_tokens_list(&tokens_list);//
+			free_abstract_syntax_tree(ast);//
+			free(line);					   //
+			free(prompt);				   //
+			/////////////////////////////////
+		}
+	}
 	return (0);
 }
 

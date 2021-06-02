@@ -8,7 +8,7 @@ void	load_history(t_rdline *rdl_vars)
 	t_vchar_vec		*history_vec;
 	int				is_not_last_line;
 
-	history_fd = open_history_file(rdl_vars, (O_CREAT | O_RDONLY));
+	history_fd = open_history_file((O_CREAT | O_RDONLY));
 	if (history_fd == -1)
 		return ;
 	history_vec = &rdl_vars->history_vec;
@@ -20,8 +20,12 @@ void	load_history(t_rdline *rdl_vars)
 		{
 			new_vec = convert_string_to_char_vec(line);
 			history_vec->add_new_element(history_vec, new_vec);
-			free(line);
 		}
+		if (is_not_last_line != -1)
+			free(line);
 	}
 	close(history_fd);
 }
+
+			// new_vec.free(&new_vec);
+			// free(line);

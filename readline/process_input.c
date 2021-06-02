@@ -10,7 +10,10 @@ void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 	rdl_vars->old_history = convert_history_vec_to_array(history_vec);
 	add_empty_char_vec_to_history_vec(history_vec);
 	rdl_vars->prompt = prompt;
-	rdl_vars->prompt_len = ft_strlen_utf8(rdl_vars->prompt);
+	if (prompt == NULL)
+		rdl_vars->prompt_len = 0;
+	else
+		rdl_vars->prompt_len = ft_strlen_utf8(rdl_vars->prompt);
 	rdl_vars->width_of_screen = get_screen_width();
 	rdl_vars->c_i = 0;
 	rdl_vars->l_i = history_vec->last_index;
@@ -62,16 +65,16 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 	else if (key == enter)
 	{
 		insert_curr_line_to_history(rdl_vars);
+		move_cursor_to_end_of_printed_line(rdl_vars);
 		erase_suggestions(rdl_vars);
 		put_char('\n');
 	}
+
 	fprintf(fd, "======================================================\n");
 	fprintf(fd, "curs_pos (%d, %d)\n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos);
 	fprintf(fd, "c_i : (%d) , l_i : (%d)\n", rdl_vars->c_i, rdl_vars->l_i);
 	fprintf(fd, "printed_lines : (%d)\n", rdl_vars->printed_lines);
 	fflush(fd);
-	// fprintf(fd2, "======================================================\n");
-	// fflush(fd2);
 }
 
 void	process_input(t_rdline *rdl_vars, char *prompt)
@@ -87,6 +90,7 @@ fd2 = fopen("debug2.txt", "w+");
 	print_prompt(rdl_vars);
 	while (read(STDIN_FILENO, &c, 1))
 	{
+		// printf("-> '%c'\n", c);
 		key = get_key(rdl_vars->key_seq_trie, c);
 		if (key == none || key == waiting)
 			SKIP ;
@@ -95,4 +99,8 @@ fd2 = fopen("debug2.txt", "w+");
 			break ;
 	}
 	free_array(&rdl_vars->old_history);
+/////////////////////
+fclose(fd);
+fclose(fd2);
+/////////////////////
 }

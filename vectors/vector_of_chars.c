@@ -68,7 +68,6 @@ void    add_new_char_at_index(t_char_vec *vec, char c, int index)
 {
 	char	last_element;
 	int		last_index;
-	int		i;
 
 	if (index < 0 || index > vec->size)
 		return ;

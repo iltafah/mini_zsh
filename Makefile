@@ -1,7 +1,7 @@
 NAME = minishell
 LIB = libft
 
-FLAGS = #-Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 SRC = ./environment/convert_env_table_to_array.c \
 ./environment/create_env_table.c \

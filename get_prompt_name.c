@@ -8,10 +8,15 @@ char	*get_prompt_name(void)
 	char		*tmp_ptr;
 	char		*prompt;
 
+	prompt = NULL;
 	curr_dir = get_curr_dir_name();
-	prompt = ft_strjoin(arrow, curr_dir);
-	tmp_ptr = ft_strjoin(prompt, spaces);
-	free(prompt);
-	prompt = tmp_ptr;
+	if (curr_dir != NULL)
+	{
+		prompt = ft_strjoin(arrow, curr_dir);
+		free(curr_dir);
+		tmp_ptr = ft_strjoin(prompt, spaces);
+		free(prompt);
+		prompt = tmp_ptr;
+	}
 	return (prompt);
 }

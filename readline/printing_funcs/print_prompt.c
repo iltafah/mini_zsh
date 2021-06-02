@@ -7,11 +7,21 @@ void	print_prompt(t_rdline *rdl_vars)
 
 	i = 0;
 	prompt = rdl_vars->prompt;
-	ft_putstr_fd(GRN, rdl_vars->tty_fd);
-	while (prompt[i] != ' ')
-		put_char(prompt[i++]);
-	ft_putstr_fd(CYN, rdl_vars->tty_fd);
-	while (prompt[i] != '\0')
-		put_char(prompt[i++]);
-	ft_putstr_fd(WHT, rdl_vars->tty_fd);
+	if (prompt != NULL)
+	{
+		ft_putstr_fd(GRN, rdl_vars->tty_fd);
+		while (prompt[i] != ' ')
+			put_char(prompt[i++]);
+		ft_putstr_fd(CYN, rdl_vars->tty_fd);
+		while (prompt[i] != '\0')
+			put_char(prompt[i++]);
+		ft_putstr_fd(WHT, rdl_vars->tty_fd);
+	}
+	else
+	{
+		ft_putstr_fd(GRN, rdl_vars->tty_fd);
+		ft_putstr_fd("➜ ", rdl_vars->tty_fd);
+		ft_putstr_fd(WHT, rdl_vars->tty_fd);
+		rdl_vars->prompt_len = ft_strlen_utf8("➜ ");
+	}
 }

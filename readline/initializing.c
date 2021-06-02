@@ -1,5 +1,9 @@
 #include "./readline.h"
 
+	// else if (isatty(STDOUT_FILENO))
+	// 	std_fd = STDOUT_FILENO;
+	// else if (isatty(STDERR_FILENO))
+	// 	std_fd = STDERR_FILENO;
 void	initialize_tty_device(t_rdline *rdl_vars)
 {
 	int		std_fd;
@@ -7,10 +11,8 @@ void	initialize_tty_device(t_rdline *rdl_vars)
 
 	if (isatty(STDIN_FILENO))
 		std_fd = STDIN_FILENO;
-	else if (isatty(STDOUT_FILENO))
-		std_fd = STDOUT_FILENO;
-	else if (isatty(STDERR_FILENO))
-		std_fd = STDERR_FILENO;
+	else
+		exit(0);
 	tty_name = ttyname(std_fd);
 	rdl_vars->tty_fd = open(tty_name, O_WRONLY);
 }
