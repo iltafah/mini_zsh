@@ -12,7 +12,7 @@ void	overwrite_history_file(t_rdline *rdl_vars)
 		return ;
 	history_vec = &rdl_vars->history_vec;
 	line_index = 0;
-	while (line_index < history_vec->last_index)
+	while (line_index <= history_vec->last_index)
 	{
 		line = history_vec->elements[line_index].elements;
 		write(history_fd, line, history_vec->elements[line_index].used_size);

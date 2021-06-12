@@ -93,6 +93,7 @@ t_trie_node	*initialize_key_seq_trie(void)
 	insert_key(trie_root, "\023", ctl_s);
 	insert_key(trie_root, "\026", ctl_v);
 	insert_key(trie_root, "\030", ctl_x);
+	insert_key(trie_root, "\04", ctl_d);
 	insert_key(trie_root, "\n", enter);
 	return (trie_root);
 }

@@ -41,9 +41,25 @@ void	call_suitable_func(t_func_ptr *func, t_rdline *rdl_v, int key, char c)
 		func[key].second(rdl_v, c);
 }
 
+void	exit_program(t_rdline *rdl_vars)
+{
+	t_vchar_vec		*history_vec;
+	t_char_vec		*history_line;
+
+	history_vec = &rdl_vars->history_vec;
+	history_line = history_vec->elements;
+	if (history_line[rdl_vars->l_i].used_size == 0)
+	{
+		g_vars.rdl_vars.history_vec.delete_last_element(history_vec);
+		overwrite_history_file(rdl_vars);
+		ft_putstr_fd("exit\n", rdl_vars->tty_fd);
+		exit(0);
+	}
+}
+
 void	start_key_action(t_rdline *rdl_vars, int key, char c)
 {
-	static t_func_ptr	func_ptrs[20] = {
+	static t_func_ptr	func_ptrs[21] = {
 		{NULL}, {NULL},
 		{.first = start_up_arrow_action},
 		{.first = start_down_arrow_action},
@@ -62,6 +78,7 @@ void	start_key_action(t_rdline *rdl_vars, int key, char c)
 		{.first = start_ctl_s_action},
 		{.first = start_ctl_v_action},
 		{.first = start_ctl_x_action},
+		{.first = exit_program},
 		{.second = start_printable_action}
 	};
 

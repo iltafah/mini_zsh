@@ -33,6 +33,7 @@ typedef enum e_key
 	ctl_s,
 	ctl_v,
 	ctl_x,
+	ctl_d,
 	printable
 }	t_key;
 

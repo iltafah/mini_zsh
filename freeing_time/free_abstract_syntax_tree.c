@@ -2,9 +2,9 @@
 
 void	free_redirection_list(t_redirection **redirection_list)
 {
-	t_redirection *curr_redir_node;
-	t_redirection *next_redir_node;
-	
+	t_redirection	*curr_redir_node;
+	t_redirection	*next_redir_node;
+
 	curr_redir_node = *redirection_list;
 	while (curr_redir_node)
 	{
@@ -17,8 +17,6 @@ void	free_redirection_list(t_redirection **redirection_list)
 
 void	free_args_vec(t_str_vec *args_vec)
 {
-	// free(args_vec->elements);
-	// args_vec->elements = NULL;
 	args_vec->free(args_vec);
 }
 
@@ -30,12 +28,12 @@ void	free_data_node_content(t_data *node_data)
 
 void	free_abstract_syntax_tree(t_ast *ast)
 {
-    if (ast == NULL)
-        return;
+	if (ast == NULL)
+		return ;
 	if (ast->tag != e_data_node)
 	{
-    	free_abstract_syntax_tree(ast->node.dir.bottom);
-    	free_abstract_syntax_tree(ast->node.dir.next);
+		free_abstract_syntax_tree(ast->node.dir.bottom);
+		free_abstract_syntax_tree(ast->node.dir.next);
 	}
 	else
 		free_data_node_content(&ast->node.data);
