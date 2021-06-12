@@ -1,9 +1,5 @@
 #include "./readline.h"
 
-	// else if (isatty(STDOUT_FILENO))
-	// 	std_fd = STDOUT_FILENO;
-	// else if (isatty(STDERR_FILENO))
-	// 	std_fd = STDERR_FILENO;
 void	initialize_tty_device(t_rdline *rdl_vars)
 {
 	int		std_fd;
@@ -72,11 +68,9 @@ void	initialize_printing_methods(t_rdline *rdl_vars)
 void	initialize_rdl_vars(t_rdline *rdl_vars)
 {
 	rdl_vars->key_seq_trie = initialize_key_seq_trie();
-	initialize_tty_device(rdl_vars);
 	initialize_vec_of_char_vec(&rdl_vars->history_vec);
 	initialize_vec_of_int(&rdl_vars->old_curs_colm_pos_stack);
 	initialize_vec_of_int(&rdl_vars->old_curs_row_pos_stack);
-	initialize_printing_methods(rdl_vars);
 	rdl_vars->c_i = 0;
 	rdl_vars->l_i = 0;
 	rdl_vars->curs_row_pos = 0;

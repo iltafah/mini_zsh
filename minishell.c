@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/02 20:51:20 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/11 21:06:49 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int	main(int argc, char **argv, char **env)
 // Tests to fix
 
 /*[1337] echo $"PWD" */
-/*[42] $fairjfgaiejr\ "ls" */
+/*[42] $fairjfgaiejr\ "ls" */ //noice
 /*[1] echo hello > "" */
 /*[2] echo hello > $ */
 /*[6666666666] env -i ./minishell */

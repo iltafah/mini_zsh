@@ -5,7 +5,7 @@ void	append_curr_line_to_history(t_rdline *rdl_vars)
 	t_char_vec		*hstry_line;
 	t_vchar_vec		*hstry_vec;
 	t_char_vec		new_vec;
-	int	*l_i;
+	int				*l_i;
 
 	l_i = &rdl_vars->l_i;
 	hstry_vec = &rdl_vars->history_vec;
@@ -33,15 +33,13 @@ void	restore_old_history_of_curr_line(t_rdline *rdl_vars)
 		history_vec->delete_element_at_index(history_vec, *l_i);
 		history_vec->add_new_element_at_index(history_vec, old_line, *l_i);
 	}
-	// else
-		// history_vec->delete_element_at_index(history_vec, *l_i);
 }
 
 void	insert_curr_line_to_history(t_rdline *rdl_vars)
 {
 	t_char_vec		*history_line;
 	t_vchar_vec		*history_vec;
-	int	*l_i;
+	int				*l_i;
 
 	history_vec = &rdl_vars->history_vec;
 	history_line = history_vec->elements;

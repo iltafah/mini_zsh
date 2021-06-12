@@ -1,6 +1,6 @@
 #include "../readline.h"
 
-static void		delete_hilitd_chars_from_history_line(t_rdline *rdl_vars)
+static void	delete_hilitd_chars_from_history_line(t_rdline *rdl_vars)
 {
 	t_char_vec		*hstry_line;
 	t_vchar_vec		*history_vec;
@@ -20,14 +20,14 @@ static void		delete_hilitd_chars_from_history_line(t_rdline *rdl_vars)
 	}
 }
 
-static void		move_cursor_to_beg_of_highlighted_text(t_rdline *rdl_vars)
+static void	move_cursor_to_beg_of_highlighted_text(t_rdline *rdl_vars)
 {
 	if (rdl_vars->starting_hilitd_index < rdl_vars->curr_hilitd_char_index)
 		move_cursor_to_colum_and_row(rdl_vars,
 			rdl_vars->starting_hilitd_colm, rdl_vars->starting_hilitd_row);
 }
 
-void			cut_highlighted_text(t_rdline *rdl_vars)
+void	cut_highlighted_text(t_rdline *rdl_vars)
 {
 	if (rdl_vars->reverse_video_mode == 1)
 	{

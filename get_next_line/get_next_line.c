@@ -6,13 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 03:44:32 by iltafah           #+#    #+#             */
-/*   Updated: 2021/05/26 16:54:48 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/12 07:56:00 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./get_next_line.h"
+#include "get_next_line.h"
 
-int		is_n(char *str)
+int	is_n(char *str)
 {
 	while (*str)
 	{
@@ -23,13 +23,7 @@ int		is_n(char *str)
 	return (0);
 }
 
-void	free_it(char **str)
-{
-	free(*str);
-	*str = NULL;
-}
-
-int		fill_line(int fd, char **line, char **content)
+int	fill_line(int fd, char **line, char **content)
 {
 	char	*tmp;
 	int		end;
@@ -47,48 +41,58 @@ int		fill_line(int fd, char **line, char **content)
 	else if (content[fd][end] == '\0')
 	{
 		*line = ft_strdup(content[fd]);
-		free_it(&content[fd]);
+		free(content[fd]);
+		content[fd] = NULL;
 		return (0);
 	}
 	return (1);
 }
 
-int		e_error(int size, int fd, char **line)
+int	check_error(int size, int fd, char **line)
 {
 	char	buffer;
 
 	if (fd < 0 || fd > 4864 || size <= 0 || !line)
-		return (-1);
+		return (ERROR);
 	if (read(fd, &buffer, 0) < 0)
-		return (-1);
+		return (ERROR);
 	return (1);
 }
 
-int		get_next_line(int fd, char **line)
+void	read_input(int fd, char *buffer, char **content)
 {
-	static char *content[4864];
-	char		*buffer;
-	char		*tmp;
 	int			r;
+	char		*tmp;
+
+	r = read(fd, buffer, BUFFER_SIZE);
+	while (r > 0)
+	{
+		buffer[r] = '\0';
+		tmp = ft_strjoin(content[fd], buffer);
+		free(content[fd]);
+		content[fd] = tmp;
+		if (is_n(buffer))
+			break ;
+		r = read(fd, buffer, BUFFER_SIZE);
+	}
+}
+
+int	get_next_line(int fd, char **line)
+{
+	static char	*content[4864];
+	char		*buffer;
 	int			e;
 
-	r = 0;
-	if ((e = e_error(BUFFER_SIZE, fd, line)) != 1)
-		return (e);
-	if (!(buffer = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return (-1);
+	e = check_error(BUFFER_SIZE, fd, line);
+	if (e == ERROR)
+		return (ERROR);
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (ERROR);
 	if (!content[fd])
 		content[fd] = ft_strdup("");
 	if (!is_n(content[fd]))
-		while (((r = read(fd, buffer, BUFFER_SIZE)) > 0))
-		{
-			buffer[r] = '\0';
-			tmp = ft_strjoin(content[fd], buffer);
-			free(content[fd]);
-			content[fd] = tmp;
-			if (is_n(buffer))
-				break ;
-		}
+		read_input(fd, buffer, content);
 	free(buffer);
 	return (fill_line(fd, line, content));
 }

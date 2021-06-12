@@ -21,10 +21,5 @@ void	print_curr_char(t_rdline *rdl_vars, char c)
 	else
 		move_cursor_right(rdl_vars);
 	(*c_i)++;
-
 	update_cursor_data(rdl_vars);
 }
-
-	// rdl_print_char(rdl_vars, history_line[*l_i].elements[*c_i], WHT);
-	// print_after_cursor(rdl_vars, history_line[*l_i].elements + *c_i, restore);
-	// print_with_syntax_highlighting(rdl_vars);

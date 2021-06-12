@@ -1,6 +1,6 @@
 #include "../readline.h"
 
-void			start_highlighting_mode(t_rdline *rdl_vars)
+void	start_highlighting_mode(t_rdline *rdl_vars)
 {
 	t_vchar_vec		*history_vec;
 	int				used_size;

@@ -23,8 +23,8 @@ void	search_for_matched_history(t_rdline *rdl_vars)
 		while (curr_line_index >= 0)
 		{
 			if (ft_strncmp(hstry_line[l_i].elements,
-				hstry_line[curr_line_index].elements,
-				hstry_line[l_i].used_size) == 0)
+					hstry_line[curr_line_index].elements,
+					hstry_line[l_i].used_size) == 0)
 			{
 				rdl_vars->is_matched_history = true;
 				rdl_vars->matched_history_index = curr_line_index;
@@ -61,39 +61,3 @@ void	print_suggestions(t_rdline *rdl_vars)
 	}
 	restore_cursor_pos(rdl_vars);
 }
-
-//////////////////////////////////////////
-	// int	old_col = rdl_vars->curs_colm_old_pos;
-	// int	old_row = rdl_vars->curs_row_old_pos;
-//////////////////////////////////////////
-/////////////////////////////
-	// rdl_vars->curs_colm_old_pos = old_col;
-	// rdl_vars->curs_row_old_pos = old_row;
-/////////////////////////////
-// fprintf(fd2, "pos_to_restore = (%d, %d)\n", old_col, old_row);
-// fflush(fd2);
-	// clear_curr_line_after_cursor(rdl_vars);
-	// if (l_i > 0 && hstry_line[l_i].used_size > 0)
-	// {
-	// 	curr_line_index = l_i - 1;
-	// 	while (curr_line_index >= 0)
-	// 	{
-	// 		if (ft_strncmp(hstry_line[l_i].elements,
-	// 			hstry_line[curr_line_index].elements,
-	// 			hstry_line[l_i].used_size) == 0)
-	// 		{
-	// 			rdl_vars->is_matched_history = true;
-	// 			rdl_vars->matched_history_index = curr_line_index;
-	// 			int		i;
-
-	// 			i = hstry_line[l_i].last_index + 1;
-	// 			while (i < hstry_line[curr_line_index].used_size)
-	// 			{
-	// 				rdl_print_char(rdl_vars, hstry_line[curr_line_index].elements[i], GRY);
-	// 				i++;
-	// 			}
-	// 			break ;
-	// 		}
-	// 		curr_line_index--;
-	// 	}
-	// }

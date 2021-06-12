@@ -1,15 +1,5 @@
 #include "expanding.h"
 
-int	is_alpha(char c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-
-int	is_digit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
-
 char	*get_dollar_name(char *str, int *index_addr)
 {
 	int		i;
@@ -20,7 +10,7 @@ char	*get_dollar_name(char *str, int *index_addr)
 	len = 0;
 	start = *index_addr + 1;
 	i = start;
-	if (is_digit(str[i]))
+	if (ft_isdigit(str[i]))
 	{
 		i++;
 		len++;
@@ -28,7 +18,7 @@ char	*get_dollar_name(char *str, int *index_addr)
 	else
 	{
 		while (str[i] != '\0' &&
-			(is_alpha(str[i]) || is_digit(str[i]) || str[i] == '_'))
+			(ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_'))
 		{
 			i++;
 			len++;
@@ -84,7 +74,6 @@ void	expand_dollar_vars(char **arg_str, t_env_table env_table)
 	i = 0;
 	initialize_vec_of_char(&vec);
 	initialize_quotes_vars(&quotes);
-
 	while ((*arg_str)[i] != '\0')
 	{
 		if ((*arg_str)[i] == SPECIAL_SINGLE_QUOTES)

@@ -4,8 +4,8 @@ void	show_old_history(t_rdline *rdl_vars)
 {
 	t_char_vec		*history_line;
 	t_vchar_vec		*history_vec;
-	int	*l_i;
-	int	*c_i;
+	int				*l_i;
+	int				*c_i;
 
 	l_i = &rdl_vars->l_i;
 	c_i = &rdl_vars->c_i;
@@ -22,15 +22,13 @@ void	show_old_history(t_rdline *rdl_vars)
 		rdl_vars->is_matched_history = false;
 	}
 }
-		// print_after_cursor(rdl_vars, history_line[*l_i].elements, dont_restore);
-		// print_with_syntax_highlighting(rdl_vars);
 
 void	show_new_history(t_rdline *rdl_vars)
 {
 	t_char_vec		*history_line;
 	t_vchar_vec		*history_vec;
-	int	*l_i;
-	int	*c_i;
+	int				*l_i;
+	int				*c_i;
 
 	l_i = &rdl_vars->l_i;
 	c_i = &rdl_vars->c_i;
@@ -50,6 +48,3 @@ void	show_new_history(t_rdline *rdl_vars)
 		rdl_vars->is_matched_history = false;
 	}
 }
-
-		// print_after_cursor(rdl_vars, history_line[*l_i].elements, dont_restore);
-		// print_with_syntax_highlighting(rdl_vars);

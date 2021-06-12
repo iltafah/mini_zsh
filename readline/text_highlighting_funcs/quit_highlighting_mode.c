@@ -1,9 +1,9 @@
 #include "../readline.h"
 
-static void		move_cursor_left_or_right(t_rdline *rdl_vars, int key)
+static void	move_cursor_left_or_right(t_rdline *rdl_vars, int key)
 {
-	int				s_hilitd_col;
-	int 			s_hilitd_row;
+	int	s_hilitd_col;
+	int	s_hilitd_row;
 
 	s_hilitd_col = rdl_vars->starting_hilitd_colm;
 	s_hilitd_row = rdl_vars->starting_hilitd_row;
@@ -25,10 +25,10 @@ static void		move_cursor_left_or_right(t_rdline *rdl_vars, int key)
 	}
 }
 
-static void		move_curs_to_left_hilitd_pos(t_rdline *rdl_v, int *index)
+static void	move_curs_to_left_hilitd_pos(t_rdline *rdl_v, int *index)
 {
-	int				strt_hilitd_col;
-	int 			strt_hilitd_row;
+	int	strt_hilitd_col;
+	int	strt_hilitd_row;
 
 	strt_hilitd_col = rdl_v->starting_hilitd_colm;
 	strt_hilitd_row = rdl_v->starting_hilitd_row;
@@ -41,7 +41,7 @@ static void		move_curs_to_left_hilitd_pos(t_rdline *rdl_v, int *index)
 	}
 }
 
-void			quit_highlighting_mode(t_rdline *rdl_vars, int key)
+void	quit_highlighting_mode(t_rdline *rdl_vars, int key)
 {
 	t_vchar_vec		*history_vec;
 	char			*hstry_str;
@@ -62,6 +62,3 @@ void			quit_highlighting_mode(t_rdline *rdl_vars, int key)
 		rdl_vars->reverse_video_mode = 0;
 	}
 }
-
-		// print_after_cursor(rdl_vars, hstry_str + higligtd_beg_i, dont_restore);
-		// print_with_syntax_highlighting(rdl_vars);

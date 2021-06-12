@@ -1,6 +1,6 @@
 #include "../readline.h"
 
-static void to_be_highlighted_or_not(t_rdline *rdl_v)
+static void	to_be_highlighted_or_not(t_rdline *rdl_v)
 {
 	if (rdl_v->curr_hilitd_char_index < rdl_v->starting_hilitd_index)
 		tputs(rdl_v->capability.leave_standout_mode, 1, put_char);
@@ -8,7 +8,7 @@ static void to_be_highlighted_or_not(t_rdline *rdl_v)
 		tputs(rdl_v->capability.enter_standout_mode, 1, put_char);
 }
 
-void		right_highlight(t_rdline *rdl_v)
+void	right_highlight(t_rdline *rdl_v)
 {
 	t_vchar_vec		*hstry_vec;
 	t_char_vec		*hstry_line;
@@ -30,19 +30,3 @@ void		right_highlight(t_rdline *rdl_v)
 		rdl_v->c_i++;
 	}
 }
-	// save_curr_cursor_pos(rdl_v);
-	// move_cursor_to_colum_and_row(rdl_v, rdl_v->hilitd_colm, rdl_v->hilitd_row);
-		
-		// if (rdl_v->curs_colm_pos == rdl_v->width_of_screen)
-			// move_cursor_start_of_next_line(rdl_v);
-		// rdl_print_char(rdl_v, char_to_be_hilitd, WHT);
-		
-		// if (rdl_v->curs_colm_pos < rdl_v->width_of_screen)
-		// 	rdl_v->curs_colm_pos++;
-		// else
-		// 	move_cursor_start_of_next_line(rdl_v);
-		
-		// rdl_v->hilitd_colm = rdl_v->curs_colm_pos;
-		// rdl_v->hilitd_row = rdl_v->curs_row_pos;
-	
-	// restore_cursor_pos(rdl_v);

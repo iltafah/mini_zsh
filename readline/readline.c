@@ -17,15 +17,17 @@ void	disable_raw_mode(struct termios old_termios_state)
 
 char	*read_line(char *prompt)
 {
-	static int				is_initialized = false;
-	t_rdline				*rdl_vars;
+	static int	is_initialized = false;
+	t_rdline	*rdl_vars;
 
 	rdl_vars = &g_vars.rdl_vars;
 	if (is_initialized == false)
 	{
 		initialize_rdl_vars(rdl_vars);
+		initialize_tty_device(rdl_vars);
 		initialize_termios_struct(&rdl_vars->original_termios_state);
 		initialize_capabilities(&rdl_vars->capability);
+		initialize_printing_methods(rdl_vars);
 		load_history(rdl_vars);
 		signal(SIGINT, signals_handler);
 		signal(SIGWINCH, signals_handler);

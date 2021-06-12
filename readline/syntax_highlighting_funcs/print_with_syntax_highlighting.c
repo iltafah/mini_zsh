@@ -38,7 +38,7 @@ static char	*get_highlighting_color(t_quotes *vars, char *line, int i, int *len)
 	if (is_there_syntax_error(vars, line[i]) == ERROR)
 		return (RED_MAX);
 	if (vars->curr_state != vars->old_state)
-			color = PNK;
+		color = PNK;
 	else if (vars->double_quotes == OPEND || vars->single_quotes == OPEND)
 		color = PRP;
 	if (does_pipe_exist(line[i], vars) == EXIST)
@@ -69,7 +69,7 @@ void	print_with_syntax_highlighting(t_rdline *rdl_vars, int option)
 	{
 		if (len == 0)
 			color = get_highlighting_color(&syntax_vars, hstry_line->elements,
-				i, &len);
+					i, &len);
 		else
 			len--;
 		rdl_print_char(rdl_vars, hstry_line->elements[i], color);

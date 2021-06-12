@@ -1,8 +1,8 @@
 #include "../readline.h"
 
-int		check_if_file_exist(char *file)
+int	check_if_file_exist(char *file)
 {
-	struct stat buffer;
+	struct stat	buffer;
 	int			does_exist;
 
 	does_exist = stat(file, &buffer);

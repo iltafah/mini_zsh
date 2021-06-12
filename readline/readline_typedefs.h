@@ -36,6 +36,8 @@ typedef enum e_key
 	printable
 }	t_key;
 
+typedef enum e_prototype {first, second}	t_prototype;
+
 typedef struct s_trie_node
 {
 	struct s_trie_node	**children;
@@ -89,5 +91,11 @@ typedef struct s_rdline
 	int				syntax_highlighting;
 	int				auto_suggestions;
 }					t_rdline;
+
+typedef union u_func_ptr
+{
+	void	(*first)(t_rdline *rdl_vars);
+	void	(*second)(t_rdline *rdl_vars, char c);
+}				t_func_ptr;
 
 #endif

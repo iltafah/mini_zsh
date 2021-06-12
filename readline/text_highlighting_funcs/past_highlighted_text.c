@@ -23,5 +23,3 @@ void	past_highlighted_text(t_rdline *rdl_vars)
 			print_suggestions(rdl_vars);
 	}
 }
-
-		// print_after_cursor(rdl_vars, hstry_str + char_i, restore);

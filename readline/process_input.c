@@ -1,4 +1,4 @@
-#include	"readline.h"
+#include	"./readline.h"
 
 void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 {
@@ -21,76 +21,63 @@ void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 	rdl_vars->curs_colm_pos = rdl_vars->prompt_len;
 }
 
+int	which_prototype(int key)
+{
+	if (key >= up_arrow && key <= ctl_x)
+		return (first);
+	else if (key == printable)
+		return (second);
+	return (none);
+}
+
+void	call_suitable_func(t_func_ptr *func, t_rdline *rdl_v, int key, char c)
+{
+	int	proto_type;
+
+	proto_type = which_prototype(key);
+	if (proto_type == first)
+		func[key].first(rdl_v);
+	else if (proto_type == second)
+		func[key].second(rdl_v, c);
+}
+
 void	start_key_action(t_rdline *rdl_vars, int key, char c)
 {
-	if (key == shift_left_arrow || key == shift_right_arrow)
-		start_highlighting_mode(rdl_vars);
-	else if (key != ctl_s && key != ctl_x)
-		quit_highlighting_mode(rdl_vars, key);
+	static t_func_ptr	func_ptrs[20] = {
+		{NULL}, {NULL},
+		{.first = start_up_arrow_action},
+		{.first = start_down_arrow_action},
+		{.first = start_left_arrow_action},
+		{.first = start_right_arrow_action},
+		{.first = start_enter_action},
+		{.first = start_backspace_action},
+		{.first = start_home_action},
+		{.first = start_end_action},
+		{.first = start_shift_right_arrow_action},
+		{.first = start_shift_left_arrow_action},
+		{.first = start_ctl_up_arrow_action},
+		{.first = start_ctl_down_arrow_action},
+		{.first = start_ctl_right_arrow_action},
+		{.first = start_ctl_left_arrow_action},
+		{.first = start_ctl_s_action},
+		{.first = start_ctl_v_action},
+		{.first = start_ctl_x_action},
+		{.second = start_printable_action}
+	};
 
-	if (key == up_arrow)
-		show_old_history(rdl_vars);
-	else if (key == down_arrow)
-		show_new_history(rdl_vars);
-	else if (key == left_arrow)
-		move_left(rdl_vars);
-	else if (key == right_arrow)
-		move_right(rdl_vars);
-	else if (key == backspace)
-		erase_and_remove_curr_char(rdl_vars);
-	else if (key == home)
-		move_to_beginning_of_line(rdl_vars);
-	else if (key == end)
-		move_to_end_of_line(rdl_vars);
-	else if (key == printable)
-		print_curr_char(rdl_vars, c);
-	else if (key == shift_left_arrow)
-		left_highlight(rdl_vars);
-	else if (key == shift_right_arrow)
-		right_highlight(rdl_vars);
-	else if (key == ctl_up_arrow)
-		move_up_vertically(rdl_vars);
-	else if (key == ctl_down_arrow)
-		move_down_vertically(rdl_vars);
-	else if (key == ctl_right_arrow)
-		move_to_next_word(rdl_vars);
-	else if (key == ctl_left_arrow)
-		move_to_prec_word(rdl_vars);
-	else if (key == ctl_s)
-		copy_highlighted_text(rdl_vars);
-	else if (key == ctl_v)
-		past_highlighted_text(rdl_vars);
-	else if (key == ctl_x)
-		cut_highlighted_text(rdl_vars);
-	else if (key == enter)
-	{
-		insert_curr_line_to_history(rdl_vars);
-		move_cursor_to_end_of_printed_line(rdl_vars);
-		erase_suggestions(rdl_vars);
-		put_char('\n');
-	}
-
-	fprintf(fd, "======================================================\n");
-	fprintf(fd, "curs_pos (%d, %d)\n", rdl_vars->curs_colm_pos, rdl_vars->curs_row_pos);
-	fprintf(fd, "c_i : (%d) , l_i : (%d)\n", rdl_vars->c_i, rdl_vars->l_i);
-	fprintf(fd, "printed_lines : (%d)\n", rdl_vars->printed_lines);
-	fflush(fd);
+	call_suitable_func(func_ptrs, rdl_vars, key, c);
 }
 
 void	process_input(t_rdline *rdl_vars, char *prompt)
 {
 	int		key;
 	char	c;
-/////////////////////
-fd = fopen("./debug.txt", "w+");
-fd2 = fopen("debug2.txt", "w+");
-/////////////////////
+
 	key = none;
 	set_rdl_vars(rdl_vars, prompt);
 	print_prompt(rdl_vars);
 	while (read(STDIN_FILENO, &c, 1))
 	{
-		// printf("-> '%c'\n", c);
 		key = get_key(rdl_vars->key_seq_trie, c);
 		if (key == none || key == waiting)
 			SKIP ;
@@ -99,8 +86,4 @@ fd2 = fopen("debug2.txt", "w+");
 			break ;
 	}
 	free_array(&rdl_vars->old_history);
-/////////////////////
-fclose(fd);
-fclose(fd2);
-/////////////////////
 }

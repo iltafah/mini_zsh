@@ -14,19 +14,17 @@
 # define GRY "\e[38;5;245m"
 # define PNK "\e[38;5;200m"
 # define ORN "\e[38;5;202m"
-# define l_CYN "\e[38;5;159m"
+# define L_CYN "\e[38;5;159m"
 
 # define SKIP continue
 
-FILE		*fd;
-FILE		*fd2;
-
+// FILE		*fd;
+// FILE		*fd2;
 
 enum e_bool {false, true};
 enum e_restore {dont_restore, restore};
 enum e_is_found {not_found, found};
 enum e_is_on {off, on};
-
 
 int			put_char(int c);
 int			get_screen_width(void);
@@ -65,17 +63,21 @@ t_char_vec	convert_string_to_char_vec(char *string);
 void		move_down_vertically(t_rdline *rdl_vars);
 void		save_curr_cursor_pos(t_rdline *rdl_vars);
 void		cut_highlighted_text(t_rdline *rdl_vars);
+void		initialize_tty_device(t_rdline *rdl_vars);
 void		past_highlighted_text(t_rdline *rdl_vars);
 void		copy_highlighted_text(t_rdline *rdl_vars);
+void		move_cursor_left_or_up(t_rdline *rdl_vars);
 void		detect_screen_resizing(t_rdline *rdl_vars);
 void		overwrite_history_file(t_rdline *rdl_vars);
 void		print_curr_char(t_rdline *rdl_vars, char c);
 void		start_highlighting_mode(t_rdline *rdl_vars);
 void		clear_lines_below_cursor(t_rdline *rdl_vars);
+void		move_cursor_right_or_down(t_rdline *rdl_vars);
 void		move_to_beginning_of_line(t_rdline *rdl_vars);
 void		move_cursor_up_vertically(t_rdline *rdl_vars);
 void		erase_and_remove_curr_char(t_rdline *rdl_vars);
 void		process_input(t_rdline *rdl_vars, char *prompt);
+void		initialize_printing_methods(t_rdline *rdl_vars);
 void		move_cursor_to_row(t_rdline *rdl_vars, int row);
 void		insert_curr_line_to_history(t_rdline *rdl_vars);
 void		move_cursor_down_vertically(t_rdline *rdl_vars);
@@ -98,5 +100,25 @@ void		print_with_syntax_highlighting(t_rdline *rdl_vars, int option);
 void		initialize_termios_struct(struct termios *original_termios_state);
 void		move_cursor_to_colum_and_row(t_rdline *rdl_vars, int col, int row);
 void		print_line_with_chosen_method(t_rdline *rdl, char *lin, int option);
+
+void		start_end_action(t_rdline *rdl_vars);
+void		start_home_action(t_rdline *rdl_vars);
+void		start_ctl_v_action(t_rdline *rdl_vars);
+void		start_enter_action(t_rdline *rdl_vars);
+void		start_ctl_s_action(t_rdline *rdl_vars);
+void		start_ctl_x_action(t_rdline *rdl_vars);
+void		start_up_arrow_action(t_rdline *rdl_vars);
+void		start_backspace_action(t_rdline *rdl_vars);
+void		start_backspace_action(t_rdline *rdl_vars);
+void		start_left_arrow_action(t_rdline *rdl_vars);
+void		start_down_arrow_action(t_rdline *rdl_vars);
+void		start_right_arrow_action(t_rdline *rdl_vars);
+void		start_ctl_up_arrow_action(t_rdline *rdl_vars);
+void		start_ctl_left_arrow_action(t_rdline *rdl_vars);
+void		start_ctl_down_arrow_action(t_rdline *rdl_vars);
+void		start_ctl_right_arrow_action(t_rdline *rdl_vars);
+void		start_shift_left_arrow_action(t_rdline *rdl_vars);
+void		start_printable_action(t_rdline *rdl_vars, char c);
+void		start_shift_right_arrow_action(t_rdline *rdl_vars);
 
 #endif

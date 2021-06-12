@@ -22,13 +22,3 @@ void	copy_highlighted_text(t_rdline *rdl_vars)
 		ft_strlcpy(rdl_vars->hilitd_txt, hstry_str + beg, hilitd_txt_len + 1);
 	}
 }
-
-	// int				i;
-		// i = 0;
-		// while (beg < last)
-		// {
-		// 	rdl_vars->hilitd_txt[i] = hstry_str[beg];
-		// 	beg++;
-		// 	i++;
-		// }
-		// rdl_vars->hilitd_txt[i] = '\0';

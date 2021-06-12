@@ -26,6 +26,3 @@ void	load_history(t_rdline *rdl_vars)
 	}
 	close(history_fd);
 }
-
-			// new_vec.free(&new_vec);
-			// free(line);

@@ -1,6 +1,6 @@
 #include "./readline.h"
 
-void		add_empty_char_vec_to_history_vec(t_vchar_vec *history_vec)
+void	add_empty_char_vec_to_history_vec(t_vchar_vec *history_vec)
 {
 	t_char_vec	char_vec;
 
@@ -17,7 +17,7 @@ t_char_vec	convert_string_to_char_vec(char *string)
 	return (char_vec);
 }
 
-char		**convert_history_vec_to_array(t_vchar_vec *history_vec)
+char	**convert_history_vec_to_array(t_vchar_vec *history_vec)
 {
 	int			i;
 	char		**array;

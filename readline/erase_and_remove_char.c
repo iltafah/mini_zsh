@@ -28,6 +28,3 @@ void	erase_and_remove_curr_char(t_rdline *rdl_vars)
 		update_cursor_data(rdl_vars);
 	}
 }
-
-		// print_after_cursor(rdl_vars, hstry_line[*l_i].elements + *c_i, restore);
-		// print_with_syntax_highlighting(rdl_vars);
