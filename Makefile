@@ -102,10 +102,34 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./readline/text_highlighting_funcs/start_highlighting_mode.c \
 ./readline/update_cursor_data.c \
 ./readline/usefull_history_vec_func.c \
-./vectors/vector_of_char_vectors.c \
-./vectors/vector_of_chars.c \
-./vectors/vector_of_int.c \
-./vectors/vector_of_strings.c
+./vectors/vector_of_char_vectors/add_new_char_vec.c \
+./vectors/vector_of_char_vectors/add_new_char_vec_at_index.c \
+./vectors/vector_of_char_vectors/delete_char_vec_at_index.c \
+./vectors/vector_of_char_vectors/delete_last_char_vec.c \
+./vectors/vector_of_char_vectors/initialize_vec_of_char_vec.c \
+./vectors/vector_of_char_vectors/realloc_and_free_vec.c \
+./vectors/vector_of_chars/add_new_char.c \
+./vectors/vector_of_chars/add_new_char_at_index.c \
+./vectors/vector_of_chars/add_set_of_chars.c \
+./vectors/vector_of_chars/add_set_of_chars_at_index.c \
+./vectors/vector_of_chars/delete_char_at_index.c \
+./vectors/vector_of_chars/initialize_vec_of_char.c \
+./vectors/vector_of_chars/realloc_and_free_vec.c \
+./vectors/vector_of_chars/replace_char_at_index.c \
+./vectors/vector_of_int/add_new_int.c \
+./vectors/vector_of_int/add_new_int_at_index.c \
+./vectors/vector_of_int/delete_int_at_index.c \
+./vectors/vector_of_int/initialize_vec_of_int.c \
+./vectors/vector_of_int/pop_int.c \
+./vectors/vector_of_int/push_int.c \
+./vectors/vector_of_int/realloc_int_vector.c \
+./vectors/vector_of_int/replace_int_at_index.c \
+./vectors/vector_of_string/add_new_element.c \
+./vectors/vector_of_string/add_new_element_at_index.c \
+./vectors/vector_of_string/delete_element_at_index.c \
+./vectors/vector_of_string/initialize_vec_content.c \
+./vectors/vector_of_string/realloc_and_free_vec.c \
+./vectors/vector_of_string/replace_element_at_index.c
 
 OBJ = $(SRC:.c=.o)
 
