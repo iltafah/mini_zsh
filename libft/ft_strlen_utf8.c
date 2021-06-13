@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_char_at_index.c                            :+:      :+:    :+:   */
+/*   ft_strlen_utf8.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:44:03 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:44:05 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/13 19:42:19 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 20:26:18 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vectors.h"
+#include "./libft.h"
 
-void	replace_char_at_index(t_char_vec *vec, char c, int index)
+int	ft_strlen_utf8(char *str)
 {
-	if (index < 0 || index > vec->size)
-		return ;
-	vec->elements[index] = c;
+	int	byte;
+	int	count;
+
+	byte = 0;
+	count = 0;
+	while (str[byte])
+	{
+		if ((str[byte] & 0xc0) != 0x80)
+			count++;
+		byte++;
+	}
+	return (count);
 }

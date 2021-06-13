@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   store_redirection_in_suitable_node.c               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:38:45 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:38:47 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "create_abstract_syntax_tree.h"
 
 t_redirection	*create_single_redirection_node(char *type, char *file)

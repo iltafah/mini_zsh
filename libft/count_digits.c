@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_char_at_index.c                            :+:      :+:    :+:   */
+/*   count_digits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:44:03 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:44:05 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/13 19:29:15 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 20:26:40 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vectors.h"
+#include "./libft.h"
 
-void	replace_char_at_index(t_char_vec *vec, char c, int index)
+int		count_digits(int num)
 {
-	if (index < 0 || index > vec->size)
-		return ;
-	vec->elements[index] = c;
+	int		digit;
+
+	digit = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		digit++;
+		num /= 10;
+	}
+	return (digit);
 }

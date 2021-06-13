@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:35:51 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:35:53 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -33,12 +45,12 @@
 # include "stdio.h"
 # include "../libft/libft.h"
 # include "./parser_typedefs.h"
+# include "../minishell.h"
 # include "./expanding/expanding.h"
 # include "./tokenization/tokenization.h"
 # include "./usefull_functions/usefull_functions.h"
 # include "./check_tokens_syntax/check_tokens_syntax.h"
 # include "./create_abstract_syntax_tree/create_abstract_syntax_tree.h"
-
 int     check_tokens_syntax(t_tokens *tokens_list);
 void 	line_tokenization(char *line, t_tokens **tokens_list);
 void 	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/11 21:06:49 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/13 18:50:51 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void print_tokens(t_tokens *tokens)
 	int spaces = 50;
 	int len;
 	int spaces_time;
-	char type[7][12] = {"start", "pipe", "semicolon", "word", "redir", "newline"};
+	char type[9][13] = {"start", "pipe", "semicolon", "word", "less",
+	"great", "double_less", "double_great", "new_line"};
 
 	while (tokens)
 	{
@@ -238,6 +239,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		(void)argv;
 		create_env_table(&g_vars.env_table, env);
+		g_vars.last_err_num = 0;
 		while (1337)
 		{
 			prompt = get_prompt_name();

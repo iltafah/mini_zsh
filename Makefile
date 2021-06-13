@@ -9,7 +9,6 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./freeing_time/free_abstract_syntax_tree.c \
 ./freeing_time/free_array_of_pointers.c \
 ./freeing_time/free_tokens_list.c \
-./ft_strlen_utf8.c \
 ./get_curr_dir_name.c \
 ./get_next_line/get_next_line.c \
 ./get_prompt_name.c \

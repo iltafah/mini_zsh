@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_char_at_index.c                            :+:      :+:    :+:   */
+/*   convert_int_to_str.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:44:03 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:44:05 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/13 19:29:41 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 20:26:54 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../vectors.h"
+#include "./libft.h"
 
-void	replace_char_at_index(t_char_vec *vec, char c, int index)
+char	*convert_int_to_str(int num)
 {
-	if (index < 0 || index > vec->size)
-		return ;
-	vec->elements[index] = c;
+	char	*str;
+	int		digits;
+	int		len;
+
+	digits = count_digits(num);
+	len = digits + 1;
+	str = malloc(sizeof(char) * len);
+	str[digits] = '\0';
+	while (digits-- >= 0)
+	{
+		str[digits] = (num % 10) + '0';
+		num /= 10;
+	}
+	return (str);
 }

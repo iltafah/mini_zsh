@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_tokens_syntax.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:35:15 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:35:21 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "check_tokens_syntax.h"
 
 void    remember_last_token(t_vars *vars, t_type token)
@@ -9,7 +21,7 @@ void    remember_last_token(t_vars *vars, t_type token)
         vars->command = EXIST;
     else if (token == e_pipe)
         vars->pipe = EXIST;
-    else if (token == e_redir)
+    else if (token == less || token == great || token == double_great)
         vars->redirection = EXIST;
 }
 
@@ -25,80 +37,26 @@ int     check_tokens_syntax(t_tokens *tokens_list)
 {
     t_tokens    *curr_token_node;
     t_vars      vars;
+	int			type;
 
     curr_token_node = tokens_list;
     initialize_tokens_vars(&vars);
     while (curr_token_node && vars.error == NONE)
     {
-        if (curr_token_node->type == e_simple_word)
+		type = curr_token_node->type;
+        if (type == e_simple_word)
             check_word_token_order(&vars, curr_token_node->data);
-        else if (curr_token_node->type == e_pipe)
+        else if (type == e_pipe)
             check_pipe_token_order(&vars);
-        else if (curr_token_node->type == e_semicolon)
+        else if (type == e_semicolon)
             check_semicolon_token_order(&vars);
-        else if (curr_token_node->type == e_redir)
-            check_redirection_token_order(&vars);
-        else if (curr_token_node->type == newline)
+        else if (type == less || type == great || type == double_great)
+            check_redirection_token_order(&vars, type);
+        else if (type == newline)
             check_newline_token_order(&vars);
         curr_token_node = curr_token_node->next;
+    	if (vars.error == EXIST)
+        	return (ERROR);
     }
-    if (vars.error == EXIST)
-        return (ERROR);
     return (VALID);
 }
-
-        // {
-            //if (check_simple_word_syntax(curr_token_node->data) == ERROR)
-            //{
-                // printf("%s> Error: multiline commands not allowed\n", RED);
-                //return (ERROR);
-            // //}
-            // check_simple_word_syntax(curr_token_node->data);
-            // remember_last_token(&vars, e_simple_word);
-            // vars.command = EXIST;
-            // vars.redirection = NONE;
-            // vars.pipe = NONE;
-        // }
-        // {
-            // if (vars.command == NONE || vars.redirection == EXIST)
-            // {
-            //     printf("%sbash: syntax error near unexpected token `|'\n", RED);
-            //     vars.error = EXIST;
-            // }
-            // remember_last_token(&vars, e_simple_cmd_node);
-            // else if (curr_token_node->next == NULL)
-            // {
-            //     printf("%s> Error: multiline commands not allowed\n", RED);
-            //     return (ERROR);
-            // }
-            // vars.pipe = EXIST;
-            // vars.command = NONE;
-            // vars.redirection = NONE;
-        // }
-        // {
-            // if (vars.command == NONE || vars.redirection == EXIST)
-            // {
-            //     printf("%sbash: syntax error near unexpected token `;'\n", RED);
-            //     vars.error = EXIST;
-            // }
-            // remember_last_token(&vars, e_simple_cmd_node);
-            // vars.command = NONE;
-            // vars.redirection = NONE;
-            // vars.pipe = NONE;
-        // }
-        //{
-            // vars.redirection = EXIST;
-            // vars.pipe = NONE;
-            // vars.command = NONE;
-        //}
-
-    // if (vars.redirection == EXIST)
-    // {
-    //     printf("%sbash: syntax error near unexpected token `newline'\n", RED);
-    //     return (ERROR);
-    // }
-    // else if (vars.pipe == EXIST)
-    // {
-    //     printf("%s> Error: multiline commands not allowed\n", RED);
-    //     return (ERROR);
-    // }

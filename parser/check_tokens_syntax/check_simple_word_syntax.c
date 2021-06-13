@@ -1,46 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_simple_word_syntax.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:33:09 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:34:06 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "check_tokens_syntax.h"
 #include "../usefull_functions/usefull_functions.h"
-
-// void    open_and_close_double_quotes(t_vars *vars)
-// {
-//     if (vars->backslash == NONE 
-//     && vars->single_quotes == CLOSED
-//     && vars->double_quotes == CLOSED)
-//     {
-//         vars->double_quotes = OPEND;
-//     }
-//     else if (vars->backslash == NONE
-//     && vars->double_quotes == OPEND)
-//     {
-//         vars->double_quotes = CLOSED;
-//     }
-// }
-
-// void    open_and_close_single_quotes(t_vars *vars)
-// {
-//     if (vars->backslash == NONE
-//     && vars->double_quotes == CLOSED
-//     && vars->single_quotes == CLOSED)
-//     {
-//         vars->single_quotes = OPEND;
-//     }
-//     else if (vars->single_quotes == OPEND)
-//     {
-//         vars->single_quotes = CLOSED;
-//     }
-// }
-
-// void    does_backslash_exist_or_not(t_vars *vars)
-// {
-//     if (vars->backslash == NONE)
-//     {
-//         vars->backslash = EXIST;
-//     }
-//     else
-//     {
-//         vars->backslash = NONE;
-//     }
-// }
 
 void     check_simple_word_syntax(char *token, t_vars *vars)
 {
@@ -56,9 +27,10 @@ void     check_simple_word_syntax(char *token, t_vars *vars)
         i++;
     }
     if (quotes.double_quotes == OPEND || quotes.single_quotes == OPEND
-    || quotes.backslash == EXIST)
+    	|| quotes.backslash == EXIST)
     {
         vars->error = EXIST;
+		g_vars.last_err_num = 258;
         printf("%s> Error: multiline commands not allowed\n", RED);
     }
 }

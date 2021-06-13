@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:31:43 by iltafah           #+#    #+#             */
-/*   Updated: 2019/10/28 01:29:26 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/13 20:18:46 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+char				*convert_int_to_str(int num);
+int					count_digits(int num);
+int					ft_strlen_utf8(char *str);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t count, size_t size);

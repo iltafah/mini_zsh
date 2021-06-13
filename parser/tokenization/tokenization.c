@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenization.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:39:35 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:39:37 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tokenization.h"
 
-t_tokens *create_single_token(char *data, t_type type)
+t_tokens *create_token_node(char *data, t_type type)
 {
 	t_tokens *token_node;
 
@@ -33,7 +45,7 @@ void line_tokenization(char *line, t_tokens **tokens_list)
 	t_type type;
 	t_tokens *curr_token;
 
-	*tokens_list = create_single_token(NULL, e_start);
+	*tokens_list = create_token_node(NULL, e_start);
 	curr_token = *tokens_list;
 	while (*line)
 	{
@@ -42,12 +54,12 @@ void line_tokenization(char *line, t_tokens **tokens_list)
 		else
 		{
 			token = get_token(&line, &type);
-			curr_token->next = create_single_token(token, type);
+			curr_token->next = create_token_node(token, type);
 			curr_token = curr_token->next;
 		}
 	}
 	/////remove this after read line////
-	curr_token->next = create_single_token(NULL, newline);////
+	curr_token->next = create_token_node(NULL, newline);////
 	////////////////////////////////////
 }
 

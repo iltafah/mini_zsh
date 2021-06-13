@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   overwrite_history_file.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:47:27 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:47:28 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./readline.h"
 
 void	overwrite_history_file(t_rdline *rdl_vars)
@@ -19,7 +31,5 @@ void	overwrite_history_file(t_rdline *rdl_vars)
 		write(history_fd, "\n", 1);
 		line_index++;
 	}
-	if (history_vec->last_index != 0 && line_index == history_vec->last_index)
-		write(history_fd, line, history_vec->elements[line_index].used_size);
 	close(history_fd);
 }

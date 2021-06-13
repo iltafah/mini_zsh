@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_dollar_variables.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:32:55 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:33:00 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "expanding.h"
 
 char	*get_dollar_name(char *str, int *index_addr)
@@ -10,7 +22,7 @@ char	*get_dollar_name(char *str, int *index_addr)
 	len = 0;
 	start = *index_addr + 1;
 	i = start;
-	if (ft_isdigit(str[i]))
+	if (ft_isdigit(str[i]) || str[i] == '?')
 	{
 		i++;
 		len++;
@@ -38,6 +50,8 @@ char	*get_dollar_value(char *name, t_env_table env_table)
 
 	if (name[0] == '\0')
 		value = ft_strdup("$");
+	else if (name[0] == '?')
+		value = convert_int_to_str(g_vars.last_err_num);
 	else
 	{
 		i = 0;
@@ -51,6 +65,7 @@ char	*get_dollar_value(char *name, t_env_table env_table)
 			i++;
 		}
 	}
+	g_vars.last_err_num = 0;
 	return (value);
 }
 

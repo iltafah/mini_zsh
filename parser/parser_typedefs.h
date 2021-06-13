@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_typedefs.h                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:37:34 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:37:54 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSER_TYPEDEFS_H
 # define PARSER_TYPEDEFS_H
 
@@ -18,7 +30,10 @@ typedef enum e_type
 	e_pipe,
 	e_semicolon,
 	e_simple_word,
-	e_redir,
+	less,
+	great,
+	double_less,
+	double_great,
 	newline
 } t_type;
 

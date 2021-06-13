@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_abstract_syntax_tree.c                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:38:12 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:38:14 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "create_abstract_syntax_tree.h"
 
-void change_nodes_state(t_state *state, t_type token)
+void	change_nodes_state(t_state *state, t_type token)
 {
     initialize_node_states(state);
-    if (token == e_simple_word || token == e_redir)
+    if (token == e_simple_word || token == less || token == great
+		|| token == double_great)
     {
         state->pipe_seq_node = EXIST;
         state->simple_command_node = EXIST;
@@ -18,7 +31,28 @@ void change_nodes_state(t_state *state, t_type token)
         state->pipe_seq_node = EXIST;
 }
 
-void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
+void	store_tokens_in_suitable_nodes(t_ast_vars *vars, t_tokens *curr_token)
+{
+	int		type;
+
+	type = curr_token->type;
+    if (type == e_simple_word)
+    {
+        store_word_in_suitable_node(vars, curr_token->data);
+        change_nodes_state(&vars->state, e_simple_word);
+    }
+    else if (type == e_pipe)
+        change_nodes_state(&vars->state, e_pipe);
+    else if (type == e_semicolon)
+        change_nodes_state(&vars->state, e_semicolon);
+    else if (type == less || type == great || type == double_great)
+	{
+        store_redir_in_suitable_node(vars, &curr_token);
+		change_nodes_state(&vars->state, type);
+	}
+}
+
+void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
 {
 	t_ast_vars	vars;
     t_tokens	*curr_token;
@@ -29,20 +63,7 @@ void create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
     curr_token = tokens;
     while (curr_token)
     {
-        if (curr_token->type == e_simple_word)
-        {
-            store_word_in_suitable_node(&vars, curr_token->data);
-            change_nodes_state(&vars.state, e_simple_word);
-        }
-        else if (curr_token->type == e_pipe)
-            change_nodes_state(&vars.state, e_pipe);
-        else if (curr_token->type == e_semicolon)
-            change_nodes_state(&vars.state, e_semicolon);
-        else if (curr_token->type == e_redir)
-		{
-            store_redir_in_suitable_node(&vars, &curr_token);
-			change_nodes_state(&vars.state, e_redir);
-		}
+		store_tokens_in_suitable_nodes(&vars, curr_token);
         curr_token = curr_token->next;
     }
 }

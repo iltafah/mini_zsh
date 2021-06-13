@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   store_word_in_suitable_node.c                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/13 19:38:51 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/13 19:38:53 by iltafah          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./create_abstract_syntax_tree.h"
 
 // void initialize_args_vector(t_dynamic_table *dynamic_table)
