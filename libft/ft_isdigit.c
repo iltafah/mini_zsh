@@ -6,13 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 16:11:06 by iltafah           #+#    #+#             */
-/*   Updated: 2019/10/20 16:33:59 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 14:27:32 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	return (c >= 48 && c <= 57);
 }

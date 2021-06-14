@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:46:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:46:59 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 10:46:09 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,8 @@ void	signals_handler(int sig_num)
 	if (sig_num == SIGWINCH)
 		detect_screen_resizing(&g_vars.rdl_vars);
 	else if (sig_num == SIGINT)
+	{
 		show_new_prompt();
+		g_vars.last_err_num = 1;
+	}
 }

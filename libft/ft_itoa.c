@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 22:23:11 by iltafah           #+#    #+#             */
-/*   Updated: 2019/10/27 04:53:13 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 16:10:51 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,17 @@ static int	digits_calc(int n)
 	return (count);
 }
 
-char		*ft_itoa(int n)
+void	store_num_in_str(char *result, unsigned int num, int size)
+{
+	result[size--] = '\0';
+	while (num != 0)
+	{
+		result[size--] = (num % 10) + '0';
+		num /= 10;
+	}
+}
+
+char	*ft_itoa(int n)
 {
 	unsigned int	num;
 	int				n_digits;
@@ -35,17 +45,21 @@ char		*ft_itoa(int n)
 	char			*result;
 
 	n_digits = digits_calc(n);
-	size = n < 0 ? n_digits + 1 : n_digits;
-	if (!(result = (char*)malloc(sizeof(char) * (size + 1))))
+	if (n < 0)
+		size = n_digits + 1;
+	else
+		size = n_digits;
+	result = (char *)malloc(sizeof(char) * (size + 1));
+	if (!result)
 		return (NULL);
-	result[0] = n < 0 ? '-' : result[0];
-	result[0] = n == 0 ? '0' : result[0];
-	result[size--] = '\0';
-	num = n < 0 ? n * -1 : n;
-	while (num != 0)
-	{
-		result[size--] = (num % 10) + '0';
-		num /= 10;
-	}
+	if (n < 0)
+		result[0] = '-';
+	else if (n == 0)
+		result[0] = '0';
+	if (n < 0)
+		num = n * -1;
+	else
+		num = n;
+	store_num_in_str(result, num, size);
 	return (result);
 }

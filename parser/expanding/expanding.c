@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:38 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:35:40 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 11:30:10 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table)
 	data = curr_simple_cmd->node.dir.bottom;
 	expand_args_vec(&data->node.data.args_vec, env_table);
 	expand_redirection_list(data->node.data.redirections, env_table);
+	g_vars.last_err_num = 0;
 }

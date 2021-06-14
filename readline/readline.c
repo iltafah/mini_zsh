@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:14 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:47:15 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 09:31:53 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ char	*read_line(char *prompt)
 		initialize_capabilities(&rdl_vars->capability);
 		initialize_printing_methods(rdl_vars);
 		load_history(rdl_vars);
-		signal(SIGINT, signals_handler);
-		signal(SIGWINCH, signals_handler);
 		is_initialized = true;
 	}
+	signal(SIGINT, signals_handler);
+	signal(SIGWINCH, signals_handler);
 	enable_raw_mode();
 	process_input(rdl_vars, prompt);
 	disable_raw_mode(rdl_vars->original_termios_state);

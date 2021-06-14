@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:32:55 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:33:00 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 11:30:03 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*get_dollar_value(char *name, t_env_table env_table)
 			i++;
 		}
 	}
-	g_vars.last_err_num = 0;
 	return (value);
 }
 

@@ -6,15 +6,15 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 19:01:32 by iltafah           #+#    #+#             */
-/*   Updated: 2019/10/27 04:39:26 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 15:44:01 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		free_it(char **tab)
+static int	free_it(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab[i])
@@ -55,7 +55,7 @@ static size_t	x_word(char const *s, char c)
 	return (x_len);
 }
 
-static int		split_it(char **tab, char const *s, size_t y_len, char c)
+static int	split_it(char **tab, char const *s, size_t y_len, char c)
 {
 	size_t	x_len;
 	size_t	x;
@@ -67,7 +67,8 @@ static int		split_it(char **tab, char const *s, size_t y_len, char c)
 		while ((*s == c) && *s)
 			s++;
 		x_len = x_word(s, c);
-		if (!(tab[y] = (char*)malloc(sizeof(char) * (x_len + 1))))
+		tab[y] = (char *)malloc(sizeof(char) * (x_len + 1));
+		if (!tab[y])
 			return (free_it(tab));
 		x = 0;
 		while (*s != c && *s)
@@ -82,7 +83,7 @@ static int		split_it(char **tab, char const *s, size_t y_len, char c)
 	return (1);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	size_t	y_len;
 	char	**tab;
@@ -90,7 +91,8 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	y_len = y_tab(s, c);
-	if (!(tab = (char**)malloc(sizeof(char*) * (y_len + 1))))
+	tab = (char **)malloc(sizeof(char *) * (y_len + 1));
+	if (!tab)
 		return (NULL);
 	tab[y_len] = 0;
 	if (!(split_it(tab, s, y_len, c)))

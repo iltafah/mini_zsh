@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 17:15:14 by iltafah           #+#    #+#             */
-/*   Updated: 2019/10/20 17:50:46 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 15:44:19 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strchr(const char *s, int c)
 	char	*r;
 	int		len;
 
-	r = (char*)s;
+	r = (char *)s;
 	len = ft_strlen(s) + 1;
 	while (len--)
 	{

@@ -6,13 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:29:15 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 20:26:40 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 14:26:02 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./libft.h"
 
-int		count_digits(int num)
+int	count_digits(int num)
 {
 	int		digit;
 

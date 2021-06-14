@@ -6,13 +6,13 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 13:43:30 by iltafah           #+#    #+#             */
-/*   Updated: 2019/10/27 04:31:14 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 15:51:29 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		checker(char const c, char const *set)
+static int	checker(char const c, char const *set)
 {
 	while (*set)
 	{
@@ -53,7 +53,7 @@ static size_t	end_checker(char const *s1, char const *set)
 	return (0);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
 	size_t	end;
