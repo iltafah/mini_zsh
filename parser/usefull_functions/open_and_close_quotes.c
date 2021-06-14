@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:52 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:39:53 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/14 21:05:44 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void    open_and_close_single_quotes(t_quotes *quotes)
 
 void    open_and_close_quotes(char c, t_quotes *quotes)
 {
-    if (c == SINGLE_QUOTES)
+    if (c == SINGLE_QUOTES || c == SPECIAL_SINGLE_QUOTES)
 		open_and_close_single_quotes(quotes);
-	else if (c == DOUBLE_QUOTES)
+	else if (c == DOUBLE_QUOTES || c == SPECIAL_DOUBLE_QUOTES)
 		open_and_close_double_quotes(quotes);
 }
 
