@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:38 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/14 11:30:10 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 13:21:37 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	expand_args_vec(t_str_vec *args_vec, t_env_table env_table)
 
 void	expand_redirection_list(t_redirection *rdir_list, t_env_table env_table)
 {
-	t_redirection *curr_redir_node;
+	t_redirection	*curr_redir_node;
 
 	curr_redir_node = rdir_list;
 	while (curr_redir_node != NULL)

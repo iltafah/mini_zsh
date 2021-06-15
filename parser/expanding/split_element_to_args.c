@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:22 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:39:23 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 13:51:11 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	get_splitted_arg_and_insert_it(char **arg, t_str_vec *args_vec, int i)
 {
 	t_char_vec	splitted_arg;
-	
+
 	initialize_vec_of_char(&splitted_arg);
 	while (**arg != ' ' && **arg != '\0')
 	{
-		if (**arg == SPECIAL_DOUBLE_QUOTES)
+		if (**arg == SP_DOUBLE_QUOTES)
 		{
 			while (TRUE)
 			{
 				splitted_arg.add_new_element(&splitted_arg, **arg);
 				(*arg)++;
-				if (**arg == SPECIAL_DOUBLE_QUOTES)
+				if (**arg == SP_DOUBLE_QUOTES)
 					break ;
 			}
 		}
@@ -40,7 +40,7 @@ void	split_element_to_args(t_str_vec *vec, int *index)
 {
 	int			i;
 	char		*arg;
-	
+
 	i = *index;
 	arg = vec->elements[i];
 	while (*arg != '\0')

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:37:34 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:37:54 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 17:15:35 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum e_tag
 	e_pipeline_node,
 	e_simple_cmd_node,
 	e_data_node
-} t_tag;
+}	t_tag;
 
 typedef enum e_type
 {
@@ -35,8 +35,7 @@ typedef enum e_type
 	double_less,
 	double_great,
 	newline
-} t_type;
-
+}	t_type;
 
 /*
 ** ************************************************************************** **
@@ -46,10 +45,10 @@ typedef enum e_type
 
 typedef struct s_redirection
 {
-	char *type;
-	char *file;
-	struct s_redirection *next;
-} t_redirection;
+	char					*type;
+	char					*file;
+	struct s_redirection	*next;
+}	t_redirection;
 
 /*
 ** ************************************************************************** **
@@ -61,23 +60,23 @@ typedef struct s_data
 {
 	t_str_vec		args_vec;
 	t_redirection	*redirections;
-} t_data;
+}	t_data;
 
 typedef struct s_dir
 {
-	struct s_ast *next;
-	struct s_ast *bottom;
-} t_dir;
+	struct s_ast	*next;
+	struct s_ast	*bottom;
+}	t_dir;
 
 typedef struct s_ast
 {
-	t_tag tag;
+	t_tag	tag;
 	union u_node
 	{
-		t_dir dir;
-		t_data data;
-	} node;
-} t_ast;
+		t_dir	dir;
+		t_data	data;
+	}	node;
+}	t_ast;
 
 /*
 ** ************************************************************************** **
@@ -87,10 +86,10 @@ typedef struct s_ast
 
 typedef struct s_tokens
 {
-	char *data;
-	t_type type;
-	struct s_tokens *next;
-} t_tokens;
+	char			*data;
+	t_type			type;
+	struct s_tokens	*next;
+}	t_tokens;
 
 /*
 ** ************************************************************************** **

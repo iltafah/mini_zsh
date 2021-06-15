@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:12 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:38:14 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 17:25:34 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,40 @@
 
 void	change_nodes_state(t_state *state, t_type token)
 {
-    initialize_node_states(state);
-    if (token == e_simple_word || token == less || token == great
+	initialize_node_states(state);
+	if (token == e_simple_word || token == less || token == great
 		|| token == double_great)
-    {
-        state->pipe_seq_node = EXIST;
-        state->simple_command_node = EXIST;
-        state->data_node = EXIST;
-    }
-    else if (token == e_pipe)
-    {
-        state->pipe_seq_node = EXIST;
-        state->simple_command_node = EXIST;
-    }
-    else if (token == e_semicolon)
-        state->pipe_seq_node = EXIST;
+	{
+		state->pipe_seq_node = EXIST;
+		state->simple_command_node = EXIST;
+		state->data_node = EXIST;
+	}
+	else if (token == e_pipe)
+	{
+		state->pipe_seq_node = EXIST;
+		state->simple_command_node = EXIST;
+	}
+	else if (token == e_semicolon)
+		state->pipe_seq_node = EXIST;
 }
 
 void	store_tokens_in_suitable_nodes(t_ast_vars *vars, t_tokens *curr_token)
 {
-	int		type;
+	int	type;
 
 	type = curr_token->type;
-    if (type == e_simple_word)
-    {
-        store_word_in_suitable_node(vars, curr_token->data);
-        change_nodes_state(&vars->state, e_simple_word);
-    }
-    else if (type == e_pipe)
-        change_nodes_state(&vars->state, e_pipe);
-    else if (type == e_semicolon)
-        change_nodes_state(&vars->state, e_semicolon);
-    else if (type == less || type == great || type == double_great)
+	if (type == e_simple_word)
 	{
-        store_redir_in_suitable_node(vars, &curr_token);
+		store_word_in_suitable_node(vars, curr_token->data);
+		change_nodes_state(&vars->state, e_simple_word);
+	}
+	else if (type == e_pipe)
+		change_nodes_state(&vars->state, e_pipe);
+	else if (type == e_semicolon)
+		change_nodes_state(&vars->state, e_semicolon);
+	else if (type == less || type == great || type == double_great)
+	{
+		store_redir_in_suitable_node(vars, &curr_token);
 		change_nodes_state(&vars->state, type);
 	}
 }
@@ -55,15 +55,15 @@ void	store_tokens_in_suitable_nodes(t_ast_vars *vars, t_tokens *curr_token)
 void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens)
 {
 	t_ast_vars	vars;
-    t_tokens	*curr_token;
+	t_tokens	*curr_token;
 
 	initialize_ast_vars(&vars);
-    *ast = create_single_node(e_cmdline_node);
-    vars.ast_ptrs.cmd_line = ast;
-    curr_token = tokens;
-    while (curr_token)
-    {
+	*ast = create_single_node(e_cmdline_node);
+	vars.ast_ptrs.cmd_line = ast;
+	curr_token = tokens;
+	while (curr_token)
+	{
 		store_tokens_in_suitable_nodes(&vars, curr_token);
-        curr_token = curr_token->next;
-    }
+		curr_token = curr_token->next;
+	}
 }

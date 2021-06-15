@@ -6,40 +6,40 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:12 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:39:14 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 13:48:30 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./expanding.h"
 
-void		replace_double_quotes(char *c, t_quotes quotes)
+void	replace_double_quotes(char *c, t_quotes quotes)
 {
 	if (quotes.double_quotes == OPEND
-	|| quotes.double_quotes == CLOSED)
-		*c = SPECIAL_DOUBLE_QUOTES;
+		|| quotes.double_quotes == CLOSED)
+		*c = SP_DOUBLE_QUOTES;
 }
 
-void		replace_single_quotes(char *c, t_quotes quotes)
+void	replace_single_quotes(char *c, t_quotes quotes)
 {
 	if (quotes.single_quotes == OPEND || quotes.single_quotes == CLOSED)
-		*c = SPECIAL_SINGLE_QUOTES;
+		*c = SP_SINGLE_QUOTES;
 }
 
-void		replace_backslash(char *c, t_quotes quotes)
+void	replace_backslash(char *c, t_quotes quotes)
 {
 	if (quotes.backslash == EXIST)
 	{
 		if (quotes.double_quotes == OPEND)
 		{
-			if (*(c + 1) == '"' || *(c + 1) == '\\' || *(c + 1) == '$' || *(c + 1) == '`')
-				*c = SPECIAL_BACKSLASH;
+			if (ft_strchr("$`\"\\", *(c + 1)))
+				*c = SP_BACKSLASH;
 		}
 		else if (quotes.single_quotes == CLOSED)
-			*c = SPECIAL_BACKSLASH;
+			*c = SP_BACKSLASH;
 	}
 }
 
-void		give_quotes_special_meaning(char *str)
+void	give_quotes_special_meaning(char *str)
 {
 	int			i;
 	t_quotes	quotes;

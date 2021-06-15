@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:32:55 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/14 21:23:39 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 13:48:05 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*get_dollar_name(char *str, int *index_addr)
 	int		start;
 	char	*name;
 
-	len = 0;
 	start = *index_addr + 1;
 	i = start;
+	len = 0;
 	if (ft_isdigit(str[i]) || str[i] == '?')
 	{
 		i++;
@@ -29,8 +29,8 @@ char	*get_dollar_name(char *str, int *index_addr)
 	}
 	else
 	{
-		while (str[i] != '\0' &&
-			(ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_'))
+		while (str[i] != '\0'
+			&& (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_'))
 		{
 			i++;
 			len++;
@@ -71,7 +71,8 @@ void	expand_unquoted_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 	char		*name;
 	char		*value;
 
-	if (str[*i + 1] != '\0')
+	if (str[*i + 1] != '\0' && str[*i + 1] != SP_BACKSLASH
+		&& str[*i + 1] != BACKSLASH)
 	{
 		name = get_dollar_name(str, i);
 		value = get_dollar_value(name, env);
@@ -79,10 +80,7 @@ void	expand_unquoted_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 		free(name);
 	}
 	else
-	{
-		*i += 1;
 		vec->add_set_of_elements_at_index(vec, "$", vec->used_size);
-	}
 }
 
 void	expand_quoted_var(char *str, int *i, t_char_vec *vec, t_env_table env)
@@ -90,8 +88,10 @@ void	expand_quoted_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 	char		*name;
 	char		*value;
 
-	if (str[*i + 1] != SPECIAL_DOUBLE_QUOTES && str[*i + 1] != SPECIAL_SINGLE_QUOTES
-			&& str[*i + 1] != DOUBLE_QUOTES && str[*i + 1] != SINGLE_QUOTES)
+	if (str[*i + 1] != SP_DOUBLE_QUOTES && str[*i + 1] != SP_SINGLE_QUOTES
+		&& str[*i + 1] != DOUBLE_QUOTES && str[*i + 1] != SINGLE_QUOTES
+		&& str[*i + 1] != SP_BACKSLASH && str[*i + 1] != BACKSLASH
+		&& str[*i + 1] != ' ')
 	{
 		name = get_dollar_name(str, i);
 		value = get_dollar_value(name, env);
@@ -99,42 +99,34 @@ void	expand_quoted_var(char *str, int *i, t_char_vec *vec, t_env_table env)
 		free(name);
 	}
 	else
-	{
-		*i += 1;
 		vec->add_set_of_elements_at_index(vec, "$", vec->used_size);
-	}
 }
 
-void	expand_dollar_vars(char **arg_str, t_env_table env_table)
+void	expand_dollar_vars(char **arg, t_env_table env_table)
 {
 	int			i;
+	t_quotes	vars;
 	t_char_vec	vec;
-	t_quotes	quotes;
 
-	i = 0;
+	i = -1;
 	initialize_vec_of_char(&vec);
-	initialize_quotes_vars(&quotes);
-	while ((*arg_str)[i] != '\0')
+	initialize_quotes_vars(&vars);
+	while ((*arg)[++i] != '\0')
 	{
-		if ((*arg_str)[i] == SPECIAL_SINGLE_QUOTES || (*arg_str)[i] == SPECIAL_DOUBLE_QUOTES)
-			open_and_close_quotes((*arg_str)[i], &quotes);
-		else if ((*arg_str)[i] == DOLLAR)
+		if ((*arg)[i] == SP_SINGLE_QUOTES || (*arg)[i] == SP_DOUBLE_QUOTES)
+			open_and_close_quotes((*arg)[i], &vars);
+		else if ((*arg)[i] == DOLLAR && vars.backslash == NONE
+			&& vars.single_quotes == CLOSED)
 		{
-			if (quotes.double_quotes == OPEND)
-			{
-				expand_quoted_var(*arg_str, &i, &vec, env_table);
-				continue ;
-			}
-			else if (quotes.backslash == NONE && quotes.single_quotes == CLOSED)
-			{
-				expand_unquoted_var(*arg_str, &i, &vec, env_table);
-				continue ;
-			}
+			if (vars.double_quotes == OPEND)
+				expand_quoted_var(*arg, &i, &vec, env_table);
+			else
+				expand_unquoted_var(*arg, &i, &vec, env_table);
+			continue ;
 		}
-		does_backslash_exist((*arg_str)[i], &quotes);
-		vec.add_new_element(&vec, (*arg_str)[i]);
-		i++;
+		does_backslash_exist((*arg)[i], &vars);
+		vec.add_new_element(&vec, (*arg)[i]);
 	}
-	free(*arg_str);
-	*arg_str = vec.elements;
+	free(*arg);
+	*arg = vec.elements;
 }

@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:45 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:38:47 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 17:34:24 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_redirection	*create_single_redirection_node(char *type, char *file)
 {
-	t_redirection *new_redirection_node;
+	t_redirection	*new_redirection_node;
 
 	new_redirection_node = malloc(sizeof(t_redirection));
 	new_redirection_node->type = ft_strdup(type);
@@ -25,9 +25,9 @@ t_redirection	*create_single_redirection_node(char *type, char *file)
 
 void	store_redir_in_suitable_node(t_ast_vars *vars, t_tokens **curr_token)
 {
-	t_redirection **curr_redir_node;
-	char *type;
-	char *file;
+	t_redirection	**curr_redir_node;
+	char			*type;
+	char			*file;
 
 	if (vars->state.data_node == NONE)
 		get_suitable_nodes(vars->state, &vars->ast_ptrs);

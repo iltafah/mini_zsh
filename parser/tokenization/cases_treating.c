@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:39:30 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:39:32 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 17:39:20 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_redirection(char **line, t_type *type)
 
 char	*get_pipe(char **line, t_type *type)
 {
-	char *token;
+	char	*token;
 
 	token = ft_substr(*line, 0, 1);
 	*line = *line + 1;
@@ -68,7 +68,7 @@ char	*get_pipe(char **line, t_type *type)
 
 char	*get_semicolon(char **line, t_type *type)
 {
-	char *token;
+	char	*token;
 
 	token = ft_substr(*line, 0, 1);
 	*line = *line + 1;
@@ -103,13 +103,3 @@ char	*get_simple_word(char **line, t_type *type)
 	*type = e_simple_word;
 	return (token);
 }
-
-//while (((*line)[i] != ' ' && (*line)[i] != '|' && (*line)[i] != ';' &&
-//(*line)[i] != '\0' && (*line)[i] != '>' && (*line)[i] != '<') ||
-//backslash == 1)
-
-
-////don't forget to treat this case =>>   echo \\"hello world" this is not an error
-////and this one too                =>>   echo '\'
-////and this one too				=>>   echo "`"
-////ft_strchr

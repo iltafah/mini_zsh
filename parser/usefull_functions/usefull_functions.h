@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:37:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:37:29 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 20:00:32 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 
 # include "../parser.h"
 
-typedef struct          s_quotes
+typedef struct s_quotes
 {
-    int                 backslash;
-	int					pipe;
-	int					semicolon;
-    int                 double_quotes;
-    int                 single_quotes;
-    int                 old_state;
-    int                 curr_state;
-}                       t_quotes;
+	int		backslash;
+	int		pipe;
+	int		semicolon;
+	int		double_quotes;
+	int		single_quotes;
+	int		old_state;
+	int		curr_state;
+}	t_quotes;
 
-# define SPECIAL_SINGLE_QUOTES -1
-# define SPECIAL_DOUBLE_QUOTES -2
-# define SPECIAL_BACKSLASH -3
+# define SP_SINGLE_QUOTES -1
+# define SP_DOUBLE_QUOTES -2
+# define SP_BACKSLASH -3
 
 void	initialize_quotes_vars(t_quotes *quotes);
-void    open_and_close_double_quotes(t_quotes *quotes);
-void    open_and_close_single_quotes(t_quotes *quotes);
-void    open_and_close_quotes(char c, t_quotes *quotes);
+void	open_and_close_double_quotes(t_quotes *quotes);
+void	open_and_close_single_quotes(t_quotes *quotes);
+void	open_and_close_quotes(char c, t_quotes *quotes);
 int		does_backslash_exist(char c, t_quotes *quotes);
 int		does_semicolon_exist(char c, t_quotes *quotes);
 int		does_pipe_exist(char c, t_quotes *quotes);

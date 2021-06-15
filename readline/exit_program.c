@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   store_word_in_suitable_node.c                      :+:      :+:    :+:   */
+/*   exit_program.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:38:51 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 17:34:56 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/15 20:13:48 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/15 20:14:13 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./create_abstract_syntax_tree.h"
+#include "./readline.h"
 
-void	store_word_in_suitable_node(t_ast_vars *vars, char *word)
+void	exit_program(t_rdline *rdl_vars)
 {
-	char		*element;
-	t_str_vec	*args_vec;
+	t_vchar_vec		*history_vec;
+	t_char_vec		*history_line;
 
-	element = ft_strdup(word);
-	get_suitable_nodes(vars->state, &vars->ast_ptrs);
-	args_vec = &((*vars->ast_ptrs.curr_data)->node.data.args_vec);
-	args_vec->add_new_element(args_vec, element);
+	history_vec = &rdl_vars->history_vec;
+	history_line = history_vec->elements;
+	if (history_line[rdl_vars->l_i].used_size == 0)
+	{
+		g_vars.rdl_vars.history_vec.delete_last_element(history_vec);
+		overwrite_history_file(rdl_vars);
+		ft_putstr_fd("exit\n", rdl_vars->tty_fd);
+		exit(0);
+	}
 }

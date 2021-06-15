@@ -6,11 +6,11 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:23 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:47:24 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 20:14:17 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"./readline.h"
+#include "./readline.h"
 
 void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 {
@@ -51,22 +51,6 @@ void	call_suitable_func(t_func_ptr *func, t_rdline *rdl_v, int key, char c)
 		func[key].first(rdl_v);
 	else if (proto_type == second)
 		func[key].second(rdl_v, c);
-}
-
-void	exit_program(t_rdline *rdl_vars)
-{
-	t_vchar_vec		*history_vec;
-	t_char_vec		*history_line;
-
-	history_vec = &rdl_vars->history_vec;
-	history_line = history_vec->elements;
-	if (history_line[rdl_vars->l_i].used_size == 0)
-	{
-		g_vars.rdl_vars.history_vec.delete_last_element(history_vec);
-		overwrite_history_file(rdl_vars);
-		ft_putstr_fd("exit\n", rdl_vars->tty_fd);
-		exit(0);
-	}
 }
 
 void	start_key_action(t_rdline *rdl_vars, int key, char c)

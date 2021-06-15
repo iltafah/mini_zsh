@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:38:31 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:38:33 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 17:32:06 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	get_suitable_data_node(t_state state, t_ast_ptrs *ast)
 		ast->curr_data = create_data_node(ast->curr_smpl_cmd, BOTTOM);
 	else if (state.data_node == EXIST)
 		ast->curr_data = ast->curr_data;
-			//create_word_node(ast->curr_word_node, NEXT);
 }
 
 void	get_suitable_nodes(t_state state, t_ast_ptrs *ast_ptrs)

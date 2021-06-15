@@ -29,6 +29,9 @@ SRC = ./environment/convert_env_table_to_array.c \
 ./parser/expanding/split_element_to_args.c \
 ./parser/tokenization/cases_treating.c \
 ./parser/tokenization/tokenization.c \
+./parser/usefull_functions/does_backslash_exist.c \
+./parser/usefull_functions/does_pipe_exist.c \
+./parser/usefull_functions/does_semicolon_exist.c \
 ./parser/usefull_functions/open_and_close_quotes.c \
 ./readline/clear_lines.c \
 ./readline/create_key_seq_trie.c \
