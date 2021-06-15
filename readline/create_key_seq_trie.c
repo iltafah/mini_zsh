@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_key_seq_trie.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:00 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:48:02 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 18:26:10 by hlimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	get_key(t_trie_node *trie_root, char c)
 	int					key;
 
 	key = none;
-	if ((int)c < 0 || (int)c > 127)
+	if ((int)c < 0)
 		return (none);
 	if (curr_node == NULL)
 		curr_node = trie_root;

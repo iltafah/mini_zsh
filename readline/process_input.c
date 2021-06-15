@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:23 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:47:24 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 18:28:11 by hlimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 {
 	t_vchar_vec		*history_vec;
-	t_char_vec		*history_line;
 
 	history_vec = &rdl_vars->history_vec;
-	history_line = history_vec->elements;
 	rdl_vars->old_history = convert_history_vec_to_array(history_vec);
 	add_empty_char_vec_to_history_vec(history_vec);
 	rdl_vars->prompt = prompt;

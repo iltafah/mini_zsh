@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   show_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:47:01 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:47:03 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 18:33:28 by hlimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	show_old_history(t_rdline *rdl_vars)
 {
 	t_char_vec		*history_line;
-	t_vchar_vec		*history_vec;
 	int				*l_i;
 	int				*c_i;
 
 	l_i = &rdl_vars->l_i;
 	c_i = &rdl_vars->c_i;
-	history_vec = &rdl_vars->history_vec;
 	history_line = rdl_vars->history_vec.elements;
 	if (*l_i > 0)
 	{	

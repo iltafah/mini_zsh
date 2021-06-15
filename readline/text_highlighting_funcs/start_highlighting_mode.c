@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_highlighting_mode.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:48:11 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:48:12 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 18:35:42 by hlimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void	start_highlighting_mode(t_rdline *rdl_vars)
 {
-	t_vchar_vec		*history_vec;
-	int				used_size;
-
-	history_vec = &rdl_vars->history_vec;
-	used_size = history_vec->elements[rdl_vars->l_i].used_size;
 	if (rdl_vars->reverse_video_mode == 0)
 	{
 		tputs(rdl_vars->capability.make_cursor_invisible, 1, put_char);

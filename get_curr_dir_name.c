@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_curr_dir_name.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hlimouni <hlimouni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:42:12 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:42:14 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/15 18:22:43 by hlimouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@ char	*get_curr_dir_name(void)
 	char	*full_path;
 	char	*curr_dir;
 	int		keep_index;
-	int		len;
 	int		i;
 
 	i = 0;
-	len = 0;
 	keep_index = 0;
 	full_path = getcwd(NULL, 0);
 	if (full_path != NULL)
