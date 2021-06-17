@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 17:45:11 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/17 20:40:01 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,9 @@ int	main(int argc, char **argv, char **env)
 
 // Tests to fix
 
+// echo hello world > file
+//echo $8891
+//echo $_dfedde
 /*[1337] echo $"PWD" */
 /*[42] $fairjfgaiejr\ "ls" */ //noice
 /*[1] echo hello > "" */
