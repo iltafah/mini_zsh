@@ -28,6 +28,8 @@ parser/create_abstract_syntax_tree/store_redirection_in_suitable_node.c \
 parser/create_abstract_syntax_tree/store_word_in_suitable_node.c \
 parser/expanding/expand_dollar_variables.c \
 parser/expanding/expanding.c \
+parser/expanding/get_dollar_name.c \
+parser/expanding/get_dollar_value.c \
 parser/expanding/give_quotes_special_meaning.c \
 parser/expanding/remove_special_quotes.c \
 parser/expanding/split_element_to_args.c \
