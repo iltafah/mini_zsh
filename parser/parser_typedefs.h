@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:37:34 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/17 21:31:45 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/17 21:41:46 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef enum e_type
 	great,
 	double_less,
 	double_great,
-	file,
 	newline
 }	t_type;
 

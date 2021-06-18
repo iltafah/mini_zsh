@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:35:51 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 17:13:41 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/18 12:21:23 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@
 # include "../libft/libft.h"
 # include "./parser_typedefs.h"
 # include "../minishell.h"
+# include "./usefull_functions/usefull_functions.h"
 # include "./expanding/expanding.h"
 # include "./tokenization/tokenization.h"
-# include "./usefull_functions/usefull_functions.h"
 # include "./check_tokens_syntax/check_tokens_syntax.h"
 # include "./create_abstract_syntax_tree/create_abstract_syntax_tree.h"
+
 int		check_tokens_syntax(t_tokens *tokens_list);
 void	line_tokenization(char *line, t_tokens **tokens_list);
 void	create_abstract_syntax_tree(t_ast **ast, t_tokens *tokens);
-void	expand_curr_cmd(t_ast *curr_simple_cmd, t_env_table env_table);
+void	expand_curr_cmd(t_ast *curr_simple_cmd);
 
 #endif

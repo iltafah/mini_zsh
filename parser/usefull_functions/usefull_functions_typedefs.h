@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.h                                        :+:      :+:    :+:   */
+/*   usefull_functions_typedefs.h                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:39:07 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/18 11:18:28 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/18 12:22:20 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/18 12:23:06 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDING_H
-# define EXPANDING_H
+#ifndef USEFULL_FUNCTIONS_TYPEDEFS_H
+# define USEFULL_FUNCTIONS_TYPEDEFS_H
 
-# include "../parser.h"
-
-typedef struct s_expnd_vars
+typedef struct s_quotes
 {
-	t_char_vec	arg_vec;
-	t_quotes	quotes;
-}	t_expnd_vars;
-
-void	give_quotes_special_meaning(char *str);
-void	expand_dollar_vars(char **str_addr);
-void	split_element_to_args(t_str_vec *vec, int *index);
-void	remove_special_quotes(char **str_addr);
+	int		backslash;
+	int		pipe;
+	int		semicolon;
+	int		double_quotes;
+	int		single_quotes;
+	int		old_state;
+	int		curr_state;
+}	t_quotes;
 
 #endif

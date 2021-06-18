@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/17 20:40:01 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/18 12:17:01 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void print_preorder(t_ast *node, int i, t_env_table env_table)
 	else if (node->tag == e_simple_cmd_node)
 	{
 		printf("%s\n\n>>>simple command<<<    ", CYN);
-		expand_curr_cmd(node, env_table);
+		expand_curr_cmd(node);
 	}
 	print_preorder(node->node.dir.bottom, i, env_table);
 	print_preorder(node->node.dir.next, i, env_table);
@@ -162,7 +162,7 @@ void	print_args(t_ast *data_node)
 	printf("---------------------------------------------------------------\n\n");
 }
 
-void	execute_test(t_ast *ast, t_env_table env_table)
+void	execute_test(t_ast *ast)
 {
 	t_ast *curr_pipeline_seq;
 	t_ast *curr_simple_cmd;
@@ -175,7 +175,7 @@ void	execute_test(t_ast *ast, t_env_table env_table)
 		printf("%s ╔███████████████████████ Pipeline ███████████████████████╗\n\n",RED);
 		while (curr_simple_cmd)
 		{
-			expand_curr_cmd(curr_simple_cmd, env_table);
+			expand_curr_cmd(curr_simple_cmd);
 			curr_data_node = curr_simple_cmd->node.dir.bottom;
 			print_cmd_redirection(curr_data_node);
 			print_args(curr_data_node);
@@ -261,7 +261,7 @@ int	main(int argc, char **argv, char **env)
 			/////////////////////////////////
 	
 			// print_preorder(ast, 1, env_table);
-			execute_test(ast, g_vars.env_table);
+			execute_test(ast);
 			/////////////////////////////////
 			/**		  freeing time		**///
 			/////////////////////////////////

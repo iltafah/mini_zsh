@@ -6,25 +6,16 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:37:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/15 20:00:32 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/18 12:29:20 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef USEFULL_FUNCTIONS_H
 # define USEFULL_FUNCTIONS_H
 
+# include "./usefull_functions_typedefs.h"
 # include "../parser.h"
 
-typedef struct s_quotes
-{
-	int		backslash;
-	int		pipe;
-	int		semicolon;
-	int		double_quotes;
-	int		single_quotes;
-	int		old_state;
-	int		curr_state;
-}	t_quotes;
 
 # define SP_SINGLE_QUOTES -1
 # define SP_DOUBLE_QUOTES -2
