@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 19:47:23 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/19 11:44:25 by iltafah          ###   ########.fr       */
+/*   Created: 2021/06/20 16:40:58 by iltafah           #+#    #+#             */
+/*   Updated: 2021/06/20 16:41:02 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	set_rdl_vars(t_rdline *rdl_vars, char *prompt)
 {
 	t_vchar_vec		*history_vec;
-	t_char_vec		*history_line;
 
 	history_vec = &rdl_vars->history_vec;
-	history_line = history_vec->elements;
 	rdl_vars->old_history = convert_history_vec_to_array(history_vec);
 	add_empty_char_vec_to_history_vec(history_vec);
 	rdl_vars->prompt = prompt;
