@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:46:46 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:46:48 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/19 14:32:35 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**convert_history_vec_to_array(t_vchar_vec *history_vec)
 
 	i = 0;
 	line = history_vec->elements;
-	array = malloc(sizeof(char *) * history_vec->used_size + 1);
+	array = malloc(sizeof(char *) * (history_vec->used_size + 1));
 	while (i < history_vec->used_size)
 	{
 		array[i] = strdup(line[i].elements);

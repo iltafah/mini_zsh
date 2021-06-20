@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 09:28:37 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/18 12:17:01 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/20 14:55:44 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,12 +245,12 @@ int	main(int argc, char **argv, char **env)
 			prompt = get_prompt_name();
 			line = read_line(prompt);
 			line_tokenization(line, &tokens_list);
-	
 			print_tokens(tokens_list);
 			if (check_tokens_syntax(tokens_list) == ERROR)
 			{
 				free_tokens_list(&tokens_list);
 				free(line);
+				free(prompt);
 				continue ;
 			}
 			create_abstract_syntax_tree(&ast, tokens_list);

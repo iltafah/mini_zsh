@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:42:50 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:42:52 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/20 14:54:34 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	realloc_vector(t_str_vec *vec)
 	new_table = malloc(sizeof(char *) * (vec->size + 1));
 	while (++i < vec->used_size)
 		new_table[i] = vec->elements[i];
+	new_table[i] = NULL;
 	free(vec->elements);
 	vec->elements = new_table;
 }

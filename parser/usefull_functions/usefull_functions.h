@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:37:27 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/18 12:29:20 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/19 11:25:43 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "./usefull_functions_typedefs.h"
 # include "../parser.h"
-
 
 # define SP_SINGLE_QUOTES -1
 # define SP_DOUBLE_QUOTES -2

@@ -6,23 +6,17 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/18 21:47:00 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/18 21:47:22 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/19 11:25:30 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./expanding.h"
 
-char	*get_dollar_name(char *str, int *index_addr)
+static int	calculate_len_of_dollar_name(char *str, int i)
 {
-	int		i;
 	int		len;
-	int		start;
-	char	*name;
 
-	start = *index_addr + 1;
-	i = start;
 	len = 0;
-	name = NULL;
 	if (ft_isdigit(str[i]) || str[i] == '?')
 	{
 		i++;
@@ -37,10 +31,22 @@ char	*get_dollar_name(char *str, int *index_addr)
 			len++;
 		}
 	}
+	return (len);
+}
+
+char	*get_dollar_name(char *str, int *index_addr)
+{
+	int		len;
+	int		start;
+	char	*name;
+
+	name = NULL;
+	start = *index_addr + 1;
+	len = calculate_len_of_dollar_name(str, start);
 	if (len > 0)
 	{
 		name = ft_substr(str, start, len);
-		*index_addr = i;
+		*index_addr = start + len;
 	}
 	return (name);
 }

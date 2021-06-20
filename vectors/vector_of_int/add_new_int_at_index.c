@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:43:57 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:43:59 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/19 20:46:32 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	add_new_int_at_index(t_int_vec *vec, int num, int index)
 	int		last_element;
 	int		last_index;
 
-	if (index < 0 || index > vec->size)
+	if (index < 0 || index > vec->used_size)
 		return ;
 	add_new_int(vec, num);
 	last_index = vec->used_size - 1;

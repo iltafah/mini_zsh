@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:43:10 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:43:11 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/20 14:58:38 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	add_new_element(t_str_vec *vec, char *element)
 	vec->elements[vec->used_size] = element;
 	vec->elements[vec->used_size + 1] = NULL;
 	vec->used_size += 1;
+	vec->last_index = vec->used_size - 1;
 }

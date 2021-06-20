@@ -6,13 +6,14 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:42:39 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:42:40 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/20 14:49:11 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTORS_H
 # define VECTORS_H
 # include "stdlib.h"
+
 /*
 ** ************************************************************************** **
 								string vector
@@ -26,6 +27,7 @@ struct s_str_vec
 	char	**elements;
 	int		size;
 	int		used_size;
+	int		last_index;
 	void	(*add_new_element)(t_str_vec *, char *);
 	void	(*add_new_element_at_index)(t_str_vec *, char *, int);
 	void	(*replace_element_at_index)(t_str_vec *, char *, int);

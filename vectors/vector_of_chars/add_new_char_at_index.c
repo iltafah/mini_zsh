@@ -6,7 +6,7 @@
 /*   By: iltafah <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 19:44:36 by iltafah           #+#    #+#             */
-/*   Updated: 2021/06/13 19:44:37 by iltafah          ###   ########.fr       */
+/*   Updated: 2021/06/19 21:48:19 by iltafah          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	add_new_char_at_index(t_char_vec *vec, char c, int index)
 {
 	char	last_element;
-	int		last_index;
+	int		i;
 
 	if (index < 0 || index > vec->size)
 		return ;
 	add_new_char(vec, c);
-	last_index = vec->used_size - 1;
-	last_element = vec->elements[last_index];
-	while (last_index > index)
+	last_element = vec->elements[vec->last_index];
+	i = vec->last_index;
+	while (i > index)
 	{
-		vec->elements[last_index] = vec->elements[last_index - 1];
-		last_index--;
+		vec->elements[i] = vec->elements[i - 1];
+		i--;
 	}
 	vec->elements[index] = last_element;
 }
